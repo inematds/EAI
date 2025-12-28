@@ -17,19 +17,33 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#0d0d18]/90 backdrop-blur-xl border-b border-white/10">
       <nav className="container-main flex items-center justify-between py-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 text-white font-display font-bold text-lg shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/50 transition-shadow">
-            <span className="relative z-10">E</span>
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display text-xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-              EAI Games
-            </span>
-            <span className="text-[10px] text-purple-400 font-medium -mt-0.5">Play & Learn</span>
-          </div>
-        </Link>
+        {/* Logos */}
+        <div className="flex items-center gap-4">
+          {/* INEMA.CLUB */}
+          <a
+            href="https://inema.club"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
+          >
+            <span className="text-lg">🌊</span>
+            <span className="font-semibold text-sm hidden sm:inline">INEMA.CLUB</span>
+          </a>
+
+          {/* EAI Games Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 text-white font-display font-bold text-lg shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/50 transition-shadow">
+              <span className="relative z-10">E</span>
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-display text-xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                EAI Games
+              </span>
+              <span className="text-[10px] text-purple-400 font-medium -mt-0.5">Play & Learn</span>
+            </div>
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-1">
