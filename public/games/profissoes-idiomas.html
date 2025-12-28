@@ -1063,13 +1063,9 @@
 
         <div class="game-header">
             <div class="game-info">
-                <div class="info-box">
+                <div class="info-box" style="background: rgba(255,255,255,0.2);">
                     <span>📍</span>
-                    <span>Fase <span id="game-phase">1</span></span>
-                </div>
-                <div class="info-box" id="progress-box">
-                    <span>📊</span>
-                    <span><span id="game-current">1</span>/<span id="game-total">10</span></span>
+                    <span>Fase <span id="game-phase">1</span> - <span id="game-current">1</span>/<span id="game-total">7</span></span>
                 </div>
                 <div class="info-box">
                     <span>⭐</span>
@@ -1171,9 +1167,15 @@
                 icon: '👨‍⚕️',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Patient', translation: 'Paciente', image: '🤒' },
                         { word: 'Medicine', translation: 'Remédio', image: '💊' },
                         { word: 'Hospital', translation: 'Hospital', image: '🏥' },
+                        { word: 'Doctor', translation: 'Médico', image: '👨‍⚕️' },
+                        { word: 'Nurse', translation: 'Enfermeira', image: '👩‍⚕️' },
+                        { word: 'Pain', translation: 'Dor', image: '😣' },
+                        { word: 'Health', translation: 'Saúde', image: '💚' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Stethoscope', translation: 'Estetoscópio', image: '🩺' },
                         { word: 'Prescription', translation: 'Receita', image: '📋' },
                         { word: 'Injection', translation: 'Injeção', image: '💉' },
@@ -1181,8 +1183,25 @@
                         { word: 'Symptom', translation: 'Sintoma', image: '🤧' },
                         { word: 'Treatment', translation: 'Tratamento', image: '🏨' },
                         { word: 'Diagnosis', translation: 'Diagnóstico', image: '📊' },
-                        { word: 'Nurse', translation: 'Enfermeira', image: '👩‍⚕️' },
-                        { word: 'Surgery', translation: 'Cirurgia', image: '🔪' }
+                        { word: 'Fever', translation: 'Febre', image: '🤒' },
+                        { word: 'Headache', translation: 'Dor de cabeça', image: '🤕' },
+                        { word: 'Pharmacy', translation: 'Farmácia', image: '💊' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Surgery', translation: 'Cirurgia', image: '🔪' },
+                        { word: 'Emergency', translation: 'Emergência', image: '🚨' },
+                        { word: 'Ambulance', translation: 'Ambulância', image: '🚑' },
+                        { word: 'Blood', translation: 'Sangue', image: '🩸' },
+                        { word: 'Vaccine', translation: 'Vacina', image: '💉' },
+                        { word: 'Bandage', translation: 'Bandagem', image: '🩹' },
+                        { word: 'Thermometer', translation: 'Termômetro', image: '🌡️' },
+                        { word: 'X-ray', translation: 'Raio-X', image: '🦴' },
+                        { word: 'Allergy', translation: 'Alergia', image: '🤧' },
+                        { word: 'Infection', translation: 'Infecção', image: '🦠' },
+                        { word: 'Recovery', translation: 'Recuperação', image: '💪' },
+                        { word: 'Wheelchair', translation: 'Cadeira de rodas', image: '🦽' },
+                        { word: 'Cough', translation: 'Tosse', image: '😷' },
+                        { word: 'Appointment', translation: 'Consulta', image: '📅' },
+                        { word: 'Laboratory', translation: 'Laboratório', image: '🧪' }
                     ],
                     es: [
                         { word: 'Paciente', translation: 'Paciente', image: '🤒' },
@@ -1207,18 +1226,50 @@
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "The patient needs medicine.", translation: "O paciente precisa de remédio.", image: '💊' },
                         { phrase: "Please take a deep breath.", translation: "Por favor, respire fundo.", image: '🌬️' },
                         { phrase: "Where does it hurt?", translation: "Onde dói?", image: '🤕' },
                         { phrase: "I will check your temperature.", translation: "Vou verificar sua temperatura.", image: '🌡️' },
+                        { phrase: "How are you feeling today?", translation: "Como você está se sentindo hoje?", image: '😊' },
+                        { phrase: "Please sit down.", translation: "Por favor, sente-se.", image: '🪑' },
+                        { phrase: "Open your mouth, please.", translation: "Abra a boca, por favor.", image: '👄' },
+                        // Fase 5 - 10 frases intermediárias
                         { phrase: "Take this medicine twice a day.", translation: "Tome este remédio duas vezes ao dia.", image: '💊' },
-                        { phrase: "You need to rest.", translation: "Você precisa descansar.", image: '🛏️' }
+                        { phrase: "You need to rest for a week.", translation: "Você precisa descansar por uma semana.", image: '🛏️' },
+                        { phrase: "The test results are normal.", translation: "Os resultados do exame estão normais.", image: '📊' },
+                        { phrase: "Do you have any allergies?", translation: "Você tem alguma alergia?", image: '🤧' },
+                        { phrase: "I need to check your blood pressure.", translation: "Preciso verificar sua pressão.", image: '❤️' },
+                        { phrase: "You should drink more water.", translation: "Você deveria beber mais água.", image: '💧' },
+                        { phrase: "The surgery was successful.", translation: "A cirurgia foi um sucesso.", image: '✅' },
+                        { phrase: "Please come back next week.", translation: "Por favor, volte semana que vem.", image: '📅' },
+                        { phrase: "Your heart sounds healthy.", translation: "Seu coração parece saudável.", image: '❤️' },
+                        { phrase: "I will prescribe some medication.", translation: "Vou prescrever alguns medicamentos.", image: '📋' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "The infection is under control.", translation: "A infecção está sob controle.", image: '🦠' },
+                        { phrase: "You need to take antibiotics.", translation: "Você precisa tomar antibióticos.", image: '💊' },
+                        { phrase: "We need to do more tests.", translation: "Precisamos fazer mais exames.", image: '🔬' },
+                        { phrase: "The X-ray shows no fractures.", translation: "O raio-X não mostra fraturas.", image: '🦴' },
+                        { phrase: "Your recovery is going well.", translation: "Sua recuperação está indo bem.", image: '💪' },
+                        { phrase: "Avoid eating heavy meals.", translation: "Evite comer refeições pesadas.", image: '🍽️' },
+                        { phrase: "The wound is healing properly.", translation: "O ferimento está cicatrizando bem.", image: '🩹' },
+                        { phrase: "You should exercise regularly.", translation: "Você deveria se exercitar regularmente.", image: '🏃' },
+                        { phrase: "Call me if the symptoms persist.", translation: "Me ligue se os sintomas persistirem.", image: '📞' },
+                        { phrase: "The vaccine will protect you.", translation: "A vacina vai te proteger.", image: '💉' },
+                        { phrase: "I recommend a specialist.", translation: "Recomendo um especialista.", image: '👨‍⚕️' },
+                        { phrase: "Your blood sugar is high.", translation: "Seu açúcar no sangue está alto.", image: '🩸' },
+                        { phrase: "Please avoid stress.", translation: "Por favor, evite estresse.", image: '😌' },
+                        { phrase: "The treatment will take time.", translation: "O tratamento vai levar tempo.", image: '⏰' },
+                        { phrase: "You are in good health.", translation: "Você está com boa saúde.", image: '💚' }
                     ],
                     es: [
                         { phrase: "El paciente necesita medicina.", translation: "O paciente precisa de remédio.", image: '💊' },
                         { phrase: "Por favor, respire profundo.", translation: "Por favor, respire fundo.", image: '🌬️' },
                         { phrase: "¿Dónde le duele?", translation: "Onde dói?", image: '🤕' },
-                        { phrase: "Voy a revisar su temperatura.", translation: "Vou verificar sua temperatura.", image: '🌡️' }
+                        { phrase: "Voy a revisar su temperatura.", translation: "Vou verificar sua temperatura.", image: '🌡️' },
+                        { phrase: "¿Cómo se siente hoy?", translation: "Como você está se sentindo hoje?", image: '😊' },
+                        { phrase: "Por favor, siéntese.", translation: "Por favor, sente-se.", image: '🪑' },
+                        { phrase: "Abra la boca, por favor.", translation: "Abra a boca, por favor.", image: '👄' }
                     ]
                 },
                 dialogues: {
@@ -1264,7 +1315,15 @@
                 icon: '👮',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
+                        { word: 'Police', translation: 'Polícia', image: '👮' },
                         { word: 'Badge', translation: 'Distintivo', image: '🪪' },
+                        { word: 'Car', translation: 'Carro', image: '🚔' },
+                        { word: 'Help', translation: 'Ajuda', image: '🆘' },
+                        { word: 'Stop', translation: 'Pare', image: '✋' },
+                        { word: 'Safe', translation: 'Seguro', image: '🛡️' },
+                        { word: 'Crime', translation: 'Crime', image: '🚨' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Patrol', translation: 'Patrulha', image: '🚔' },
                         { word: 'Criminal', translation: 'Criminoso', image: '🦹' },
                         { word: 'Arrest', translation: 'Prisão', image: '⛓️' },
@@ -1273,27 +1332,72 @@
                         { word: 'Handcuffs', translation: 'Algemas', image: '⛓️' },
                         { word: 'Report', translation: 'Relatório', image: '📝' },
                         { word: 'Witness', translation: 'Testemunha', image: '👁️' },
+                        { word: 'Thief', translation: 'Ladrão', image: '🥷' },
+                        { word: 'Victim', translation: 'Vítima', image: '😢' },
+                        // Fase 3 - 15 palavras avançadas
                         { word: 'Investigation', translation: 'Investigação', image: '🔬' },
                         { word: 'Law', translation: 'Lei', image: '⚖️' },
-                        { word: 'Safety', translation: 'Segurança', image: '🛡️' }
+                        { word: 'Safety', translation: 'Segurança', image: '🛡️' },
+                        { word: 'Siren', translation: 'Sirene', image: '🚨' },
+                        { word: 'Uniform', translation: 'Uniforme', image: '👮' },
+                        { word: 'Gun', translation: 'Arma', image: '🔫' },
+                        { word: 'Prison', translation: 'Prisão', image: '🏛️' },
+                        { word: 'Judge', translation: 'Juiz', image: '⚖️' },
+                        { word: 'Lawyer', translation: 'Advogado', image: '👨‍⚖️' },
+                        { word: 'Detective', translation: 'Detetive', image: '🕵️' },
+                        { word: 'Fingerprint', translation: 'Impressão digital', image: '👆' },
+                        { word: 'Robbery', translation: 'Roubo', image: '💰' },
+                        { word: 'Emergency', translation: 'Emergência', image: '🚨' },
+                        { word: 'Suspect', translation: 'Suspeito', image: '🤔' },
+                        { word: 'Court', translation: 'Tribunal', image: '🏛️' }
                     ],
                     es: [
+                        { word: 'Policía', translation: 'Polícia', image: '👮' },
                         { word: 'Placa', translation: 'Distintivo', image: '🪪' },
-                        { word: 'Patrulla', translation: 'Patrulha', image: '🚔' },
-                        { word: 'Criminal', translation: 'Criminoso', image: '🦹' },
-                        { word: 'Arresto', translation: 'Prisão', image: '⛓️' },
-                        { word: 'Comisaría', translation: 'Delegacia', image: '🏢' },
-                        { word: 'Evidencia', translation: 'Evidência', image: '🔍' }
+                        { word: 'Coche', translation: 'Carro', image: '🚔' },
+                        { word: 'Ayuda', translation: 'Ajuda', image: '🆘' },
+                        { word: 'Pare', translation: 'Pare', image: '✋' },
+                        { word: 'Seguro', translation: 'Seguro', image: '🛡️' },
+                        { word: 'Crimen', translation: 'Crime', image: '🚨' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "Please show your ID.", translation: "Por favor, mostre sua identidade.", image: '🪪' },
+                        { phrase: "Stop right there!", translation: "Pare aí mesmo!", image: '✋' },
+                        { phrase: "How can I help you?", translation: "Como posso ajudá-lo?", image: '🤝' },
+                        { phrase: "Are you okay?", translation: "Você está bem?", image: '😊' },
+                        { phrase: "Stay calm, please.", translation: "Fique calmo, por favor.", image: '🧘' },
+                        { phrase: "Call 911 for emergencies.", translation: "Ligue 911 para emergências.", image: '📞' },
+                        { phrase: "The police are here to help.", translation: "A polícia está aqui para ajudar.", image: '👮' },
+                        // Fase 5 - 10 frases intermediárias
                         { phrase: "You are under arrest.", translation: "Você está preso.", image: '⛓️' },
                         { phrase: "Can I see your license?", translation: "Posso ver sua carteira?", image: '📄' },
-                        { phrase: "Please stay calm.", translation: "Por favor, fique calmo.", image: '✋' },
                         { phrase: "We are investigating the case.", translation: "Estamos investigando o caso.", image: '🔍' },
-                        { phrase: "Please come to the station.", translation: "Por favor, venha à delegacia.", image: '🏢' }
+                        { phrase: "Please come to the station.", translation: "Por favor, venha à delegacia.", image: '🏢' },
+                        { phrase: "Do you have any witnesses?", translation: "Você tem alguma testemunha?", image: '👁️' },
+                        { phrase: "I need to write a report.", translation: "Preciso escrever um relatório.", image: '📝' },
+                        { phrase: "The suspect has been caught.", translation: "O suspeito foi pego.", image: '🦹' },
+                        { phrase: "Please describe what happened.", translation: "Por favor, descreva o que aconteceu.", image: '💬' },
+                        { phrase: "We found the stolen items.", translation: "Encontramos os itens roubados.", image: '📦' },
+                        { phrase: "Your safety is our priority.", translation: "Sua segurança é nossa prioridade.", image: '🛡️' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "You have the right to remain silent.", translation: "Você tem o direito de permanecer em silêncio.", image: '🤐' },
+                        { phrase: "The evidence points to the suspect.", translation: "A evidência aponta para o suspeito.", image: '🔍' },
+                        { phrase: "We need backup immediately.", translation: "Precisamos de reforço imediatamente.", image: '🚔' },
+                        { phrase: "The area has been secured.", translation: "A área foi assegurada.", image: '✅' },
+                        { phrase: "Please step out of the vehicle.", translation: "Por favor, saia do veículo.", image: '🚗' },
+                        { phrase: "The investigation is ongoing.", translation: "A investigação está em andamento.", image: '🔬' },
+                        { phrase: "We have surveillance footage.", translation: "Temos imagens de vigilância.", image: '📹' },
+                        { phrase: "The crime scene is protected.", translation: "A cena do crime está protegida.", image: '🚧' },
+                        { phrase: "You need to contact a lawyer.", translation: "Você precisa contatar um advogado.", image: '👨‍⚖️' },
+                        { phrase: "The patrol will be here soon.", translation: "A patrulha chegará em breve.", image: '🚔' },
+                        { phrase: "We recovered the stolen vehicle.", translation: "Recuperamos o veículo roubado.", image: '🚗' },
+                        { phrase: "The suspect matched the description.", translation: "O suspeito correspondia à descrição.", image: '🎯' },
+                        { phrase: "Please file an official complaint.", translation: "Por favor, registre uma queixa oficial.", image: '📋' },
+                        { phrase: "Justice will be served.", translation: "A justiça será feita.", image: '⚖️' },
+                        { phrase: "The community is now safe.", translation: "A comunidade agora está segura.", image: '🏘️' }
                     ]
                 },
                 dialogues: {
@@ -2308,6 +2412,8 @@
 
         // Calcula quantas palavras/itens para cada fase
         // Cada fase tem palavras DIFERENTES (não repetidas)
+        // Fase 1: 7 palavras, Fase 2: 10 palavras, Fase 3: 15 palavras
+        // Fase 4: 7 frases, Fase 5: 10 frases, Fase 6: 15 frases
         function getPhaseItems(phaseId) {
             const prof = PROFESSIONS[gameState.currentProfession];
             const phase = PHASES.find(p => p.id === phaseId);
@@ -2315,32 +2421,68 @@
 
             if (phase.type === 'words') {
                 const words = prof.words[lang] || prof.words.en || [];
-                // Fase 1: primeiras 4 palavras (índices 0-3)
-                // Fase 2: próximas 4 palavras (índices 4-7)
-                // Fase 3: últimas palavras restantes (índices 8+)
+                // Fase 1: 7 palavras (índices 0-6)
+                // Fase 2: 10 palavras (índices 7-16)
+                // Fase 3: 15 palavras (índices 17-31)
                 if (phaseId === 1) {
-                    return words.slice(0, Math.min(4, words.length));
+                    const items = words.slice(0, 7);
+                    // Se não tiver 7, repete algumas
+                    while (items.length < 7 && words.length > 0) {
+                        items.push(words[items.length % words.length]);
+                    }
+                    return items;
                 }
                 if (phaseId === 2) {
-                    return words.slice(4, Math.min(8, words.length));
+                    let items = words.slice(7, 17);
+                    // Se não tiver 10, usa palavras disponíveis sem repetir fase 1
+                    if (items.length < 10) {
+                        const available = words.slice(7);
+                        while (items.length < 10 && available.length > 0) {
+                            items.push(available[items.length % available.length]);
+                        }
+                        // Se ainda não tiver, usa do início
+                        if (items.length < 10) {
+                            items = words.slice(0, 10);
+                        }
+                    }
+                    return items;
                 }
-                // Fase 3: palavras restantes ou todas se houver poucas
-                const remaining = words.slice(8);
-                return remaining.length > 0 ? remaining : words.slice(4); // fallback
+                // Fase 3: 15 palavras
+                let items = words.slice(17, 32);
+                if (items.length < 15) {
+                    // Usa todas as palavras disponíveis
+                    items = [...words];
+                    while (items.length < 15 && words.length > 0) {
+                        items.push(words[items.length % words.length]);
+                    }
+                }
+                return items.slice(0, 15);
             } else if (phase.type === 'phrases') {
                 const phrases = prof.phrases?.[lang] || prof.phrases?.en || [];
-                // Fase 4: primeiras 2 frases
-                // Fase 5: próximas 2 frases
-                // Fase 6: frases restantes
+                // Fase 4: 7 frases, Fase 5: 10 frases, Fase 6: 15 frases
                 if (phaseId === 4) {
-                    return phrases.slice(0, Math.min(2, phrases.length));
+                    const items = phrases.slice(0, 7);
+                    while (items.length < 7 && phrases.length > 0) {
+                        items.push(phrases[items.length % phrases.length]);
+                    }
+                    return items.length > 0 ? items : [{phrase: "Hello!", translation: "Olá!", image: "👋"}];
                 }
                 if (phaseId === 5) {
-                    return phrases.slice(2, Math.min(4, phrases.length));
+                    let items = phrases.slice(7, 17);
+                    if (items.length < 10) {
+                        items = phrases.slice(0);
+                        while (items.length < 10 && phrases.length > 0) {
+                            items.push(phrases[items.length % phrases.length]);
+                        }
+                    }
+                    return items.slice(0, 10);
                 }
-                // Fase 6: frases restantes
-                const remaining = phrases.slice(4);
-                return remaining.length > 0 ? remaining : phrases.slice(2);
+                // Fase 6: 15 frases
+                let items = [...phrases];
+                while (items.length < 15 && phrases.length > 0) {
+                    items.push(phrases[items.length % phrases.length]);
+                }
+                return items.slice(0, 15);
             } else if (phase.type === 'dialogue') {
                 return prof.dialogues?.[lang] || prof.dialogues?.en || [];
             } else {
