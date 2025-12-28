@@ -96,7 +96,7 @@ export function GamePlayer({ game }: GamePlayerProps) {
   };
 
   const handleOpenExternal = () => {
-    window.open(game.embedUrl, '_blank');
+    window.open(iframeSrc, '_blank');
   };
 
   const handleReportBlocked = () => {
