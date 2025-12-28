@@ -26,11 +26,11 @@
             --style-accent: #f093fb;
         }
 
-        .style-pixar { --style-primary: #FF6B6B; --style-secondary: #4ECDC4; --style-accent: #FFE66D; }
-        .style-disney { --style-primary: #1E88E5; --style-secondary: #7B1FA2; --style-accent: #FFD54F; }
-        .style-anime { --style-primary: #E91E63; --style-secondary: #9C27B0; --style-accent: #00BCD4; }
-        .style-cartoon { --style-primary: #FF9800; --style-secondary: #4CAF50; --style-accent: #2196F3; }
-        .style-realista { --style-primary: #455A64; --style-secondary: #37474F; --style-accent: #78909C; }
+        .style-pixar { --style-primary: #FF3366; --style-secondary: #00D4AA; --style-accent: #FFD700; }
+        .style-disney { --style-primary: #0099FF; --style-secondary: #CC00FF; --style-accent: #FFCC00; }
+        .style-anime { --style-primary: #FF0066; --style-secondary: #9900FF; --style-accent: #00FFFF; }
+        .style-cartoon { --style-primary: #FF6600; --style-secondary: #00CC00; --style-accent: #00CCFF; }
+        .style-realista { --style-primary: #607D8B; --style-secondary: #455A64; --style-accent: #90A4AE; }
 
         /* ===== TELA INICIAL ===== */
         #start-screen {
@@ -1863,34 +1863,89 @@
                 icon: '🏛️',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
+                        { word: 'House', translation: 'Casa', image: '🏠' },
+                        { word: 'Room', translation: 'Quarto', image: '🛏️' },
+                        { word: 'Door', translation: 'Porta', image: '🚪' },
+                        { word: 'Window', translation: 'Janela', image: '🪟' },
+                        { word: 'Wall', translation: 'Parede', image: '🧱' },
+                        { word: 'Roof', translation: 'Telhado', image: '🏠' },
+                        { word: 'Draw', translation: 'Desenhar', image: '✏️' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Design', translation: 'Design', image: '✏️' },
                         { word: 'Floor plan', translation: 'Planta baixa', image: '📐' },
                         { word: 'Model', translation: 'Maquete', image: '🏠' },
                         { word: 'Space', translation: 'Espaço', image: '📏' },
                         { word: 'Light', translation: 'Luz', image: '💡' },
-                        { word: 'Window', translation: 'Janela', image: '🪟' },
-                        { word: 'Roof', translation: 'Telhado', image: '🏠' },
-                        { word: 'Wall', translation: 'Parede', image: '🧱' },
                         { word: 'Garden', translation: 'Jardim', image: '🌳' },
                         { word: 'Modern', translation: 'Moderno', image: '🏙️' },
                         { word: 'Classic', translation: 'Clássico', image: '🏛️' },
-                        { word: 'Sustainable', translation: 'Sustentável', image: '🌱' }
+                        { word: 'Building', translation: 'Edifício', image: '🏢' },
+                        { word: 'Entrance', translation: 'Entrada', image: '🚪' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Sustainable', translation: 'Sustentável', image: '🌱' },
+                        { word: 'Blueprint', translation: 'Projeto', image: '📋' },
+                        { word: 'Facade', translation: 'Fachada', image: '🏛️' },
+                        { word: 'Interior', translation: 'Interior', image: '🛋️' },
+                        { word: 'Exterior', translation: 'Exterior', image: '🏠' },
+                        { word: 'Landscape', translation: 'Paisagismo', image: '🌳' },
+                        { word: 'Renovation', translation: 'Renovação', image: '🔨' },
+                        { word: 'Column', translation: 'Coluna', image: '🏛️' },
+                        { word: 'Balcony', translation: 'Varanda', image: '🏠' },
+                        { word: 'Staircase', translation: 'Escada', image: '🪜' },
+                        { word: 'Ceiling', translation: 'Teto', image: '🏠' },
+                        { word: 'Foundation', translation: 'Fundação', image: '🏗️' },
+                        { word: 'Ventilation', translation: 'Ventilação', image: '💨' },
+                        { word: 'Acoustics', translation: 'Acústica', image: '🔊' },
+                        { word: 'Minimalist', translation: 'Minimalista', image: '⬜' }
                     ],
                     es: [
-                        { word: 'Diseño', translation: 'Design', image: '✏️' },
-                        { word: 'Plano', translation: 'Planta', image: '📐' },
-                        { word: 'Maqueta', translation: 'Maquete', image: '🏠' },
-                        { word: 'Espacio', translation: 'Espaço', image: '📏' },
-                        { word: 'Luz', translation: 'Luz', image: '💡' },
-                        { word: 'Ventana', translation: 'Janela', image: '🪟' }
+                        { word: 'Casa', translation: 'Casa', image: '🏠' },
+                        { word: 'Habitación', translation: 'Quarto', image: '🛏️' },
+                        { word: 'Puerta', translation: 'Porta', image: '🚪' },
+                        { word: 'Ventana', translation: 'Janela', image: '🪟' },
+                        { word: 'Pared', translation: 'Parede', image: '🧱' },
+                        { word: 'Techo', translation: 'Telhado', image: '🏠' },
+                        { word: 'Dibujar', translation: 'Desenhar', image: '✏️' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
+                        { phrase: "This is my design.", translation: "Este é meu projeto.", image: '✏️' },
+                        { phrase: "The house has three rooms.", translation: "A casa tem três quartos.", image: '🏠' },
+                        { phrase: "I like big windows.", translation: "Gosto de janelas grandes.", image: '🪟' },
+                        { phrase: "The door is here.", translation: "A porta fica aqui.", image: '🚪' },
+                        { phrase: "Let me draw it.", translation: "Deixe-me desenhar.", image: '✏️' },
+                        { phrase: "What style do you prefer?", translation: "Que estilo você prefere?", image: '🎨' },
+                        { phrase: "The garden is beautiful.", translation: "O jardim é bonito.", image: '🌳' },
+                        // Fase 5 - 10 frases intermediárias
                         { phrase: "Let me show you the model.", translation: "Deixe-me mostrar a maquete.", image: '🏠' },
                         { phrase: "Natural light is important.", translation: "Luz natural é importante.", image: '☀️' },
                         { phrase: "This design is sustainable.", translation: "Este design é sustentável.", image: '🌱' },
-                        { phrase: "The living room faces south.", translation: "A sala de estar fica virada para o sul.", image: '🧭' }
+                        { phrase: "The living room faces south.", translation: "A sala fica virada para o sul.", image: '🧭' },
+                        { phrase: "The entrance is spacious.", translation: "A entrada é espaçosa.", image: '🚪' },
+                        { phrase: "Modern buildings need good ventilation.", translation: "Edifícios modernos precisam de boa ventilação.", image: '💨' },
+                        { phrase: "The balcony has a great view.", translation: "A varanda tem uma ótima vista.", image: '🌅' },
+                        { phrase: "I prefer minimalist design.", translation: "Prefiro design minimalista.", image: '⬜' },
+                        { phrase: "The floor plan is efficient.", translation: "A planta é eficiente.", image: '📐' },
+                        { phrase: "Classic style never goes out of fashion.", translation: "Estilo clássico nunca sai de moda.", image: '🏛️' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "The facade combines glass and concrete.", translation: "A fachada combina vidro e concreto.", image: '🏛️' },
+                        { phrase: "Interior design affects our mood.", translation: "Design de interiores afeta nosso humor.", image: '🛋️' },
+                        { phrase: "Landscape architecture is my specialty.", translation: "Paisagismo é minha especialidade.", image: '🌳' },
+                        { phrase: "The renovation preserved historic elements.", translation: "A renovação preservou elementos históricos.", image: '🔨' },
+                        { phrase: "These columns are structural.", translation: "Essas colunas são estruturais.", image: '🏛️' },
+                        { phrase: "The staircase is a focal point.", translation: "A escada é um ponto focal.", image: '🪜' },
+                        { phrase: "High ceilings create a sense of space.", translation: "Tetos altos criam sensação de espaço.", image: '🏠' },
+                        { phrase: "The foundation must be solid.", translation: "A fundação deve ser sólida.", image: '🏗️' },
+                        { phrase: "Good acoustics are essential.", translation: "Boa acústica é essencial.", image: '🔊' },
+                        { phrase: "Sustainable materials reduce impact.", translation: "Materiais sustentáveis reduzem impacto.", image: '🌱' },
+                        { phrase: "The blueprint shows every detail.", translation: "O projeto mostra cada detalhe.", image: '📋' },
+                        { phrase: "We maximize natural ventilation.", translation: "Maximizamos ventilação natural.", image: '💨' },
+                        { phrase: "The building integrates with nature.", translation: "O edifício se integra à natureza.", image: '🌿' },
+                        { phrase: "Architecture reflects culture.", translation: "Arquitetura reflete cultura.", image: '🎭' },
+                        { phrase: "Your dream home starts here.", translation: "Sua casa dos sonhos começa aqui.", image: '✨' }
                     ]
                 },
                 conversations: {
@@ -1915,6 +1970,7 @@
                 icon: '👨‍🌾',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Farm', translation: 'Fazenda', image: '🏡' },
                         { word: 'Tractor', translation: 'Trator', image: '🚜' },
                         { word: 'Harvest', translation: 'Colheita', image: '🌾' },
@@ -1922,27 +1978,72 @@
                         { word: 'Soil', translation: 'Solo', image: '🟫' },
                         { word: 'Crop', translation: 'Plantação', image: '🌽' },
                         { word: 'Water', translation: 'Água', image: '💧' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Sun', translation: 'Sol', image: '☀️' },
                         { word: 'Cow', translation: 'Vaca', image: '🐄' },
                         { word: 'Chicken', translation: 'Galinha', image: '🐔' },
                         { word: 'Vegetable', translation: 'Vegetal', image: '🥬' },
-                        { word: 'Fruit', translation: 'Fruta', image: '🍎' }
-                    ],
-                    es: [
-                        { word: 'Granja', translation: 'Fazenda', image: '🏡' },
-                        { word: 'Tractor', translation: 'Trator', image: '🚜' },
-                        { word: 'Cosecha', translation: 'Colheita', image: '🌾' },
-                        { word: 'Semilla', translation: 'Semente', image: '🌱' },
-                        { word: 'Tierra', translation: 'Solo', image: '🟫' },
-                        { word: 'Cultivo', translation: 'Plantação', image: '🌽' }
+                        { word: 'Fruit', translation: 'Fruta', image: '🍎' },
+                        { word: 'Barn', translation: 'Celeiro', image: '🏚️' },
+                        { word: 'Fence', translation: 'Cerca', image: '🚧' },
+                        { word: 'Field', translation: 'Campo', image: '🌿' },
+                        { word: 'Pig', translation: 'Porco', image: '🐷' },
+                        { word: 'Sheep', translation: 'Ovelha', image: '🐑' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Irrigation', translation: 'Irrigação', image: '💦' },
+                        { word: 'Fertilizer', translation: 'Fertilizante', image: '🧪' },
+                        { word: 'Pesticide', translation: 'Pesticida', image: '🔬' },
+                        { word: 'Greenhouse', translation: 'Estufa', image: '🏠' },
+                        { word: 'Organic', translation: 'Orgânico', image: '🌿' },
+                        { word: 'Wheat', translation: 'Trigo', image: '🌾' },
+                        { word: 'Corn', translation: 'Milho', image: '🌽' },
+                        { word: 'Soybean', translation: 'Soja', image: '🫘' },
+                        { word: 'Plow', translation: 'Arado', image: '🔧' },
+                        { word: 'Silo', translation: 'Silo', image: '🏗️' },
+                        { word: 'Compost', translation: 'Composto', image: '♻️' },
+                        { word: 'Livestock', translation: 'Gado', image: '🐮' },
+                        { word: 'Pasture', translation: 'Pasto', image: '🌱' },
+                        { word: 'Windmill', translation: 'Moinho', image: '🌀' },
+                        { word: 'Scarecrow', translation: 'Espantalho', image: '👻' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "The harvest is ready.", translation: "A colheita está pronta.", image: '🌾' },
                         { phrase: "We plant in spring.", translation: "Plantamos na primavera.", image: '🌱' },
                         { phrase: "The cows need feeding.", translation: "As vacas precisam comer.", image: '🐄' },
-                        { phrase: "Rain is good for the crops.", translation: "Chuva é boa para as plantações.", image: '🌧️' }
+                        { phrase: "Rain is good for the crops.", translation: "Chuva é boa para as plantações.", image: '🌧️' },
+                        { phrase: "The tractor is in the barn.", translation: "O trator está no celeiro.", image: '🚜' },
+                        { phrase: "We grow vegetables here.", translation: "Cultivamos vegetais aqui.", image: '🥬' },
+                        { phrase: "The sun helps plants grow.", translation: "O sol ajuda as plantas a crescer.", image: '☀️' },
+                        // Fase 5 - 10 frases intermediárias
+                        { phrase: "The chickens laid eggs today.", translation: "As galinhas botaram ovos hoje.", image: '🥚' },
+                        { phrase: "We need to water the fields.", translation: "Precisamos regar os campos.", image: '💧' },
+                        { phrase: "The wheat is golden and tall.", translation: "O trigo está dourado e alto.", image: '🌾' },
+                        { phrase: "I milk the cows every morning.", translation: "Ordeno as vacas toda manhã.", image: '🥛' },
+                        { phrase: "The fence needs repair.", translation: "A cerca precisa de reparo.", image: '🚧' },
+                        { phrase: "Seeds are planted in rows.", translation: "Sementes são plantadas em fileiras.", image: '🌱' },
+                        { phrase: "The pig lives in the barn.", translation: "O porco vive no celeiro.", image: '🐷' },
+                        { phrase: "We sell produce at the market.", translation: "Vendemos produtos no mercado.", image: '🏪' },
+                        { phrase: "The soil is rich and fertile.", translation: "O solo é rico e fértil.", image: '🟫' },
+                        { phrase: "Sheep provide wool for us.", translation: "Ovelhas nos fornecem lã.", image: '🐑' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "Organic farming is better for health.", translation: "Agricultura orgânica é melhor para a saúde.", image: '🌿' },
+                        { phrase: "The irrigation system saves water.", translation: "O sistema de irrigação economiza água.", image: '💦' },
+                        { phrase: "We rotate crops every season.", translation: "Rotacionamos culturas a cada estação.", image: '🔄' },
+                        { phrase: "The greenhouse protects from frost.", translation: "A estufa protege da geada.", image: '🏠' },
+                        { phrase: "Compost enriches the soil naturally.", translation: "Composto enriquece o solo naturalmente.", image: '♻️' },
+                        { phrase: "The silo stores grain for winter.", translation: "O silo armazena grãos para o inverno.", image: '🏗️' },
+                        { phrase: "We use sustainable farming methods.", translation: "Usamos métodos de agricultura sustentável.", image: '🌍' },
+                        { phrase: "The scarecrow keeps birds away.", translation: "O espantalho afasta os pássaros.", image: '👻' },
+                        { phrase: "Livestock needs proper care and food.", translation: "O gado precisa de cuidado e comida adequados.", image: '🐮' },
+                        { phrase: "The windmill generates power for us.", translation: "O moinho gera energia para nós.", image: '🌀' },
+                        { phrase: "We avoid using harmful pesticides.", translation: "Evitamos usar pesticidas nocivos.", image: '❌' },
+                        { phrase: "The pasture grass is very green.", translation: "A grama do pasto está muito verde.", image: '🌱' },
+                        { phrase: "Farmers work from dawn to dusk.", translation: "Agricultores trabalham do amanhecer ao anoitecer.", image: '🌅' },
+                        { phrase: "The plow prepares soil for planting.", translation: "O arado prepara o solo para plantio.", image: '🔧' },
+                        { phrase: "We harvest when crops are ripe.", translation: "Colhemos quando as culturas estão maduras.", image: '✅' }
                     ]
                 },
                 conversations: {
@@ -1967,6 +2068,7 @@
                 icon: '🛒',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Store', translation: 'Loja', image: '🏪' },
                         { word: 'Customer', translation: 'Cliente', image: '🧑' },
                         { word: 'Price', translation: 'Preço', image: '💰' },
@@ -1974,28 +2076,72 @@
                         { word: 'Payment', translation: 'Pagamento', image: '💳' },
                         { word: 'Receipt', translation: 'Recibo', image: '🧾' },
                         { word: 'Product', translation: 'Produto', image: '📦' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Sale', translation: 'Promoção', image: '🎉' },
                         { word: 'Cash', translation: 'Dinheiro', image: '💵' },
                         { word: 'Credit card', translation: 'Cartão de crédito', image: '💳' },
                         { word: 'Size', translation: 'Tamanho', image: '📏' },
-                        { word: 'Color', translation: 'Cor', image: '🎨' }
-                    ],
-                    es: [
-                        { word: 'Tienda', translation: 'Loja', image: '🏪' },
-                        { word: 'Cliente', translation: 'Cliente', image: '🧑' },
-                        { word: 'Precio', translation: 'Preço', image: '💰' },
-                        { word: 'Descuento', translation: 'Desconto', image: '🏷️' },
-                        { word: 'Pago', translation: 'Pagamento', image: '💳' },
-                        { word: 'Recibo', translation: 'Recibo', image: '🧾' }
+                        { word: 'Color', translation: 'Cor', image: '🎨' },
+                        { word: 'Shelf', translation: 'Prateleira', image: '📚' },
+                        { word: 'Cart', translation: 'Carrinho', image: '🛒' },
+                        { word: 'Bag', translation: 'Sacola', image: '🛍️' },
+                        { word: 'Change', translation: 'Troco', image: '🪙' },
+                        { word: 'Counter', translation: 'Balcão', image: '🛎️' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Inventory', translation: 'Estoque', image: '📋' },
+                        { word: 'Refund', translation: 'Reembolso', image: '💸' },
+                        { word: 'Exchange', translation: 'Troca', image: '🔄' },
+                        { word: 'Warranty', translation: 'Garantia', image: '✅' },
+                        { word: 'Promotion', translation: 'Promoção', image: '📢' },
+                        { word: 'Commission', translation: 'Comissão', image: '💹' },
+                        { word: 'Wholesale', translation: 'Atacado', image: '📦' },
+                        { word: 'Retail', translation: 'Varejo', image: '🏬' },
+                        { word: 'Brand', translation: 'Marca', image: '®️' },
+                        { word: 'Bargain', translation: 'Pechincha', image: '🤑' },
+                        { word: 'Budget', translation: 'Orçamento', image: '📊' },
+                        { word: 'Checkout', translation: 'Caixa', image: '🛒' },
+                        { word: 'Aisle', translation: 'Corredor', image: '🚶' },
+                        { word: 'Catalog', translation: 'Catálogo', image: '📖' },
+                        { word: 'Loyalty', translation: 'Fidelidade', image: '⭐' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "How can I help you?", translation: "Como posso ajudá-lo?", image: '🤝' },
                         { phrase: "This is on sale today.", translation: "Isso está em promoção hoje.", image: '🏷️' },
                         { phrase: "We accept credit cards.", translation: "Aceitamos cartões de crédito.", image: '💳' },
                         { phrase: "Would you like a bag?", translation: "Gostaria de uma sacola?", image: '🛍️' },
-                        { phrase: "The fitting room is over there.", translation: "O provador fica ali.", image: '🚪' }
+                        { phrase: "The fitting room is there.", translation: "O provador fica ali.", image: '🚪' },
+                        { phrase: "Here is your receipt.", translation: "Aqui está seu recibo.", image: '🧾' },
+                        { phrase: "The price is on the tag.", translation: "O preço está na etiqueta.", image: '🏷️' },
+                        // Fase 5 - 10 frases intermediárias
+                        { phrase: "We have a 20% discount.", translation: "Temos 20% de desconto.", image: '💰' },
+                        { phrase: "Cash or credit card?", translation: "Dinheiro ou cartão?", image: '💳' },
+                        { phrase: "Let me check the stock.", translation: "Deixe-me verificar o estoque.", image: '📋' },
+                        { phrase: "This color is very popular.", translation: "Esta cor é muito popular.", image: '🎨' },
+                        { phrase: "You can try it on.", translation: "Você pode experimentar.", image: '👔' },
+                        { phrase: "The total is fifty dollars.", translation: "O total é cinquenta dólares.", image: '💵' },
+                        { phrase: "Here is your change.", translation: "Aqui está seu troco.", image: '🪙' },
+                        { phrase: "We have different sizes.", translation: "Temos tamanhos diferentes.", image: '📏' },
+                        { phrase: "This product is new.", translation: "Este produto é novo.", image: '✨' },
+                        { phrase: "It comes with warranty.", translation: "Vem com garantia.", image: '✅' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "Would you like to join our loyalty program?", translation: "Gostaria de participar do nosso programa de fidelidade?", image: '⭐' },
+                        { phrase: "This item can be exchanged within 30 days.", translation: "Este item pode ser trocado em 30 dias.", image: '🔄' },
+                        { phrase: "We offer free shipping on orders over $50.", translation: "Oferecemos frete grátis em pedidos acima de $50.", image: '🚚' },
+                        { phrase: "The promotion ends this weekend.", translation: "A promoção termina neste fim de semana.", image: '📢' },
+                        { phrase: "I can give you a special discount.", translation: "Posso dar um desconto especial.", image: '🤑' },
+                        { phrase: "This brand is very reliable.", translation: "Esta marca é muito confiável.", image: '®️' },
+                        { phrase: "You can pay in installments.", translation: "Você pode pagar em parcelas.", image: '💳' },
+                        { phrase: "The checkout is at the front.", translation: "O caixa fica na frente.", image: '🛒' },
+                        { phrase: "We have more options in the catalog.", translation: "Temos mais opções no catálogo.", image: '📖' },
+                        { phrase: "I need to consult my manager.", translation: "Preciso consultar meu gerente.", image: '👔' },
+                        { phrase: "Your refund will be processed.", translation: "Seu reembolso será processado.", image: '💸' },
+                        { phrase: "The wholesale price is different.", translation: "O preço de atacado é diferente.", image: '📦' },
+                        { phrase: "This is our best-selling item.", translation: "Este é nosso item mais vendido.", image: '🏆' },
+                        { phrase: "Would you like gift wrapping?", translation: "Gostaria de embrulho para presente?", image: '🎁' },
+                        { phrase: "Thank you for shopping with us.", translation: "Obrigado por comprar conosco.", image: '🙏' }
                     ]
                 },
                 conversations: {
@@ -2020,6 +2166,7 @@
                 icon: '👨‍🍳',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Kitchen', translation: 'Cozinha', image: '🍳' },
                         { word: 'Recipe', translation: 'Receita', image: '📖' },
                         { word: 'Ingredients', translation: 'Ingredientes', image: '🥗' },
@@ -2027,25 +2174,72 @@
                         { word: 'Pan', translation: 'Panela', image: '🍲' },
                         { word: 'Oven', translation: 'Forno', image: '🔥' },
                         { word: 'Spice', translation: 'Tempero', image: '🧂' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Menu', translation: 'Cardápio', image: '📋' },
                         { word: 'Dish', translation: 'Prato', image: '🍽️' },
-                        { word: 'Taste', translation: 'Sabor', image: '👅' }
-                    ],
-                    es: [
-                        { word: 'Cocina', translation: 'Cozinha', image: '🍳' },
-                        { word: 'Receta', translation: 'Receita', image: '📖' },
-                        { word: 'Ingredientes', translation: 'Ingredientes', image: '🥗' },
-                        { word: 'Cuchillo', translation: 'Faca', image: '🔪' },
-                        { word: 'Sartén', translation: 'Panela', image: '🍲' },
-                        { word: 'Horno', translation: 'Forno', image: '🔥' }
+                        { word: 'Taste', translation: 'Sabor', image: '👅' },
+                        { word: 'Sauce', translation: 'Molho', image: '🥫' },
+                        { word: 'Soup', translation: 'Sopa', image: '🍜' },
+                        { word: 'Salad', translation: 'Salada', image: '🥗' },
+                        { word: 'Meat', translation: 'Carne', image: '🥩' },
+                        { word: 'Fish', translation: 'Peixe', image: '🐟' },
+                        { word: 'Dessert', translation: 'Sobremesa', image: '🍰' },
+                        { word: 'Appetizer', translation: 'Entrada', image: '🥟' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Marinade', translation: 'Marinada', image: '🍖' },
+                        { word: 'Sauté', translation: 'Refogar', image: '🍳' },
+                        { word: 'Broth', translation: 'Caldo', image: '🥣' },
+                        { word: 'Garnish', translation: 'Guarnição', image: '🌿' },
+                        { word: 'Catering', translation: 'Buffet', image: '🍽️' },
+                        { word: 'Cuisine', translation: 'Culinária', image: '🌍' },
+                        { word: 'Grill', translation: 'Grelha', image: '🔥' },
+                        { word: 'Roast', translation: 'Assar', image: '🍗' },
+                        { word: 'Steam', translation: 'Vapor', image: '💨' },
+                        { word: 'Blend', translation: 'Misturar', image: '🥤' },
+                        { word: 'Chop', translation: 'Picar', image: '🔪' },
+                        { word: 'Whisk', translation: 'Bater', image: '🥚' },
+                        { word: 'Simmer', translation: 'Ferver lentamente', image: '🫕' },
+                        { word: 'Season', translation: 'Temperar', image: '🧂' },
+                        { word: 'Plating', translation: 'Empratamento', image: '🍽️' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "Today's special is pasta.", translation: "O especial de hoje é macarrão.", image: '🍝' },
                         { phrase: "The sauce needs more salt.", translation: "O molho precisa de mais sal.", image: '🧂' },
                         { phrase: "Dinner is served!", translation: "O jantar está servido!", image: '🍽️' },
-                        { phrase: "I use fresh ingredients.", translation: "Uso ingredientes frescos.", image: '🥗' }
+                        { phrase: "I use fresh ingredients.", translation: "Uso ingredientes frescos.", image: '🥗' },
+                        { phrase: "The oven is preheating.", translation: "O forno está pré-aquecendo.", image: '🔥' },
+                        { phrase: "This recipe is simple.", translation: "Esta receita é simples.", image: '📖' },
+                        { phrase: "Wash your hands first.", translation: "Lave as mãos primeiro.", image: '🧼' },
+                        // Fase 5 - 10 frases intermediárias
+                        { phrase: "The soup is ready.", translation: "A sopa está pronta.", image: '🍜' },
+                        { phrase: "Chop the vegetables finely.", translation: "Pique os vegetais finamente.", image: '🥬' },
+                        { phrase: "Add salt to taste.", translation: "Adicione sal a gosto.", image: '🧂' },
+                        { phrase: "Let the meat rest.", translation: "Deixe a carne descansar.", image: '🥩' },
+                        { phrase: "Stir the sauce constantly.", translation: "Mexa o molho constantemente.", image: '🥄' },
+                        { phrase: "The fish is grilled perfectly.", translation: "O peixe está grelhado perfeitamente.", image: '🐟' },
+                        { phrase: "Dessert will be ready soon.", translation: "A sobremesa estará pronta em breve.", image: '🍰' },
+                        { phrase: "This dish is my specialty.", translation: "Este prato é minha especialidade.", image: '⭐' },
+                        { phrase: "The appetizer is light.", translation: "A entrada é leve.", image: '🥟' },
+                        { phrase: "Use olive oil for frying.", translation: "Use azeite para fritar.", image: '🫒' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "The presentation is very important.", translation: "A apresentação é muito importante.", image: '🎨' },
+                        { phrase: "Marinate the chicken overnight.", translation: "Marine o frango durante a noite.", image: '🍗' },
+                        { phrase: "The broth adds depth of flavor.", translation: "O caldo adiciona profundidade de sabor.", image: '🥣' },
+                        { phrase: "Fresh herbs enhance any dish.", translation: "Ervas frescas realçam qualquer prato.", image: '🌿' },
+                        { phrase: "Steam the vegetables to keep nutrients.", translation: "Cozinhe os vegetais no vapor para manter nutrientes.", image: '💨' },
+                        { phrase: "Balance sweet and savory flavors.", translation: "Equilibre sabores doces e salgados.", image: '⚖️' },
+                        { phrase: "The catering order is for 100 people.", translation: "O pedido de buffet é para 100 pessoas.", image: '👥' },
+                        { phrase: "Each cuisine has unique techniques.", translation: "Cada culinária tem técnicas únicas.", image: '🌍' },
+                        { phrase: "Let the dough rise for an hour.", translation: "Deixe a massa crescer por uma hora.", image: '🍞' },
+                        { phrase: "The grill gives a smoky flavor.", translation: "A grelha dá um sabor defumado.", image: '🔥' },
+                        { phrase: "Whisking incorporates air into the batter.", translation: "Bater incorpora ar à massa.", image: '🥚' },
+                        { phrase: "Simmer the stew on low heat.", translation: "Cozinhe o ensopado em fogo baixo.", image: '🫕' },
+                        { phrase: "Season generously but taste often.", translation: "Tempere generosamente mas prove frequentemente.", image: '👨‍🍳' },
+                        { phrase: "Plating is an art form.", translation: "Empratamento é uma forma de arte.", image: '🖼️' },
+                        { phrase: "The secret is in the timing.", translation: "O segredo está no tempo.", image: '⏱️' }
                     ]
                 },
                 conversations: {
@@ -2070,6 +2264,7 @@
                 icon: '👨‍🏫',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Classroom', translation: 'Sala de aula', image: '🏫' },
                         { word: 'Student', translation: 'Aluno', image: '👨‍🎓' },
                         { word: 'Lesson', translation: 'Aula', image: '📚' },
@@ -2077,17 +2272,72 @@
                         { word: 'Exam', translation: 'Prova', image: '📋' },
                         { word: 'Blackboard', translation: 'Quadro negro', image: '📐' },
                         { word: 'Grade', translation: 'Nota', image: '💯' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Subject', translation: 'Matéria', image: '📖' },
                         { word: 'Schedule', translation: 'Horário', image: '🕐' },
-                        { word: 'Knowledge', translation: 'Conhecimento', image: '🧠' }
+                        { word: 'Knowledge', translation: 'Conhecimento', image: '🧠' },
+                        { word: 'Textbook', translation: 'Livro didático', image: '📕' },
+                        { word: 'Notebook', translation: 'Caderno', image: '📓' },
+                        { word: 'Pencil', translation: 'Lápis', image: '✏️' },
+                        { word: 'Eraser', translation: 'Borracha', image: '🧽' },
+                        { word: 'Desk', translation: 'Carteira', image: '🪑' },
+                        { word: 'Question', translation: 'Pergunta', image: '❓' },
+                        { word: 'Answer', translation: 'Resposta', image: '✅' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Curriculum', translation: 'Currículo', image: '📋' },
+                        { word: 'Semester', translation: 'Semestre', image: '📅' },
+                        { word: 'Assignment', translation: 'Tarefa', image: '📝' },
+                        { word: 'Lecture', translation: 'Palestra', image: '🎤' },
+                        { word: 'Tutorial', translation: 'Tutorial', image: '💻' },
+                        { word: 'Research', translation: 'Pesquisa', image: '🔍' },
+                        { word: 'Project', translation: 'Projeto', image: '📊' },
+                        { word: 'Presentation', translation: 'Apresentação', image: '📽️' },
+                        { word: 'Quiz', translation: 'Questionário', image: '📝' },
+                        { word: 'Diploma', translation: 'Diploma', image: '🎓' },
+                        { word: 'Scholarship', translation: 'Bolsa de estudos', image: '💰' },
+                        { word: 'Attendance', translation: 'Presença', image: '📋' },
+                        { word: 'Principal', translation: 'Diretor', image: '👔' },
+                        { word: 'Library', translation: 'Biblioteca', image: '📚' },
+                        { word: 'Laboratory', translation: 'Laboratório', image: '🔬' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "Please open your books.", translation: "Por favor, abram seus livros.", image: '📖' },
                         { phrase: "The homework is due tomorrow.", translation: "O dever é para amanhã.", image: '📝' },
                         { phrase: "Any questions?", translation: "Alguma pergunta?", image: '❓' },
-                        { phrase: "Very good answer!", translation: "Resposta muito boa!", image: '✅' }
+                        { phrase: "Very good answer!", translation: "Resposta muito boa!", image: '✅' },
+                        { phrase: "Class begins at nine.", translation: "A aula começa às nove.", image: '🕐' },
+                        { phrase: "Write this in your notebook.", translation: "Escreva isso no caderno.", image: '📓' },
+                        { phrase: "Today we learn math.", translation: "Hoje aprendemos matemática.", image: '🔢' },
+                        // Fase 5 - 10 frases intermediárias
+                        { phrase: "The exam is next week.", translation: "A prova é na semana que vem.", image: '📅' },
+                        { phrase: "Raise your hand to speak.", translation: "Levante a mão para falar.", image: '✋' },
+                        { phrase: "Let's review the lesson.", translation: "Vamos revisar a aula.", image: '📚' },
+                        { phrase: "Work in groups of four.", translation: "Trabalhem em grupos de quatro.", image: '👥' },
+                        { phrase: "Read chapter five tonight.", translation: "Leiam o capítulo cinco esta noite.", image: '📖' },
+                        { phrase: "Your grade improved this term.", translation: "Sua nota melhorou neste período.", image: '📈' },
+                        { phrase: "The library is open until six.", translation: "A biblioteca fica aberta até às seis.", image: '📚' },
+                        { phrase: "Practice makes perfect.", translation: "A prática leva à perfeição.", image: '⭐' },
+                        { phrase: "Don't forget your textbook.", translation: "Não esqueça seu livro didático.", image: '📕' },
+                        { phrase: "Turn to page twenty.", translation: "Virem para a página vinte.", image: '📄' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "The research project is important.", translation: "O projeto de pesquisa é importante.", image: '🔍' },
+                        { phrase: "Your presentation was excellent.", translation: "Sua apresentação foi excelente.", image: '👏' },
+                        { phrase: "The curriculum covers many topics.", translation: "O currículo abrange muitos tópicos.", image: '📋' },
+                        { phrase: "Attendance affects your final grade.", translation: "Presença afeta sua nota final.", image: '📊' },
+                        { phrase: "The laboratory has new equipment.", translation: "O laboratório tem equipamentos novos.", image: '🔬' },
+                        { phrase: "We offer tutoring after class.", translation: "Oferecemos tutoria após a aula.", image: '🤝' },
+                        { phrase: "Critical thinking is essential.", translation: "Pensamento crítico é essencial.", image: '🧠' },
+                        { phrase: "Submit your assignment online.", translation: "Envie sua tarefa online.", image: '💻' },
+                        { phrase: "The semester ends in December.", translation: "O semestre termina em dezembro.", image: '📅' },
+                        { phrase: "Scholarships are available for good students.", translation: "Bolsas estão disponíveis para bons alunos.", image: '💰' },
+                        { phrase: "The quiz will test your knowledge.", translation: "O questionário testará seu conhecimento.", image: '📝' },
+                        { phrase: "Meet me during office hours.", translation: "Encontre-me no horário de atendimento.", image: '🕐' },
+                        { phrase: "Education opens many doors.", translation: "Educação abre muitas portas.", image: '🚪' },
+                        { phrase: "The principal will speak today.", translation: "O diretor falará hoje.", image: '👔' },
+                        { phrase: "Learning is a lifelong journey.", translation: "Aprender é uma jornada para a vida toda.", image: '🌟' }
                     ]
                 },
                 conversations: {
@@ -2112,6 +2362,7 @@
                 icon: '👨‍🚒',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Fire', translation: 'Fogo', image: '🔥' },
                         { word: 'Hose', translation: 'Mangueira', image: '🚿' },
                         { word: 'Truck', translation: 'Caminhão', image: '🚒' },
@@ -2119,17 +2370,72 @@
                         { word: 'Ladder', translation: 'Escada', image: '🪜' },
                         { word: 'Helmet', translation: 'Capacete', image: '⛑️' },
                         { word: 'Emergency', translation: 'Emergência', image: '🚨' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Safety', translation: 'Segurança', image: '🛡️' },
                         { word: 'Alarm', translation: 'Alarme', image: '🔔' },
-                        { word: 'Smoke', translation: 'Fumaça', image: '💨' }
+                        { word: 'Smoke', translation: 'Fumaça', image: '💨' },
+                        { word: 'Water', translation: 'Água', image: '💧' },
+                        { word: 'Building', translation: 'Prédio', image: '🏢' },
+                        { word: 'Exit', translation: 'Saída', image: '🚪' },
+                        { word: 'Victim', translation: 'Vítima', image: '🤕' },
+                        { word: 'Oxygen', translation: 'Oxigênio', image: '💨' },
+                        { word: 'Burn', translation: 'Queimadura', image: '🔥' },
+                        { word: 'Danger', translation: 'Perigo', image: '⚠️' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Extinguisher', translation: 'Extintor', image: '🧯' },
+                        { word: 'Hydrant', translation: 'Hidrante', image: '🚰' },
+                        { word: 'Evacuation', translation: 'Evacuação', image: '🏃' },
+                        { word: 'First aid', translation: 'Primeiros socorros', image: '🩹' },
+                        { word: 'Station', translation: 'Estação', image: '🏠' },
+                        { word: 'Uniform', translation: 'Uniforme', image: '👔' },
+                        { word: 'Mask', translation: 'Máscara', image: '😷' },
+                        { word: 'Axe', translation: 'Machado', image: '🪓' },
+                        { word: 'Siren', translation: 'Sirene', image: '🚨' },
+                        { word: 'Training', translation: 'Treinamento', image: '💪' },
+                        { word: 'Flames', translation: 'Chamas', image: '🔥' },
+                        { word: 'Hazard', translation: 'Risco', image: '☢️' },
+                        { word: 'Sprinkler', translation: 'Sprinkler', image: '💦' },
+                        { word: 'Ambulance', translation: 'Ambulância', image: '🚑' },
+                        { word: 'Hero', translation: 'Herói', image: '🦸' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "Everyone stay calm!", translation: "Todos fiquem calmos!", image: '✋' },
                         { phrase: "Exit the building now!", translation: "Saiam do prédio agora!", image: '🚪' },
                         { phrase: "The fire is under control.", translation: "O fogo está sob controle.", image: '✅' },
-                        { phrase: "Is anyone still inside?", translation: "Ainda tem alguém lá dentro?", image: '❓' }
+                        { phrase: "Is anyone still inside?", translation: "Ainda tem alguém lá dentro?", image: '❓' },
+                        { phrase: "Call 911 immediately!", translation: "Ligue para emergência agora!", image: '📞' },
+                        { phrase: "Stay low to the ground.", translation: "Fique baixo no chão.", image: '⬇️' },
+                        { phrase: "Don't use the elevator.", translation: "Não use o elevador.", image: '🚫' },
+                        // Fase 5 - 10 frases intermediárias
+                        { phrase: "The smoke is toxic.", translation: "A fumaça é tóxica.", image: '☠️' },
+                        { phrase: "Cover your nose and mouth.", translation: "Cubra o nariz e a boca.", image: '😷' },
+                        { phrase: "We need more water pressure.", translation: "Precisamos de mais pressão de água.", image: '💧' },
+                        { phrase: "Check for victims upstairs.", translation: "Verifique se há vítimas lá em cima.", image: '🔍' },
+                        { phrase: "The ladder is ready.", translation: "A escada está pronta.", image: '🪜' },
+                        { phrase: "Put on your oxygen mask.", translation: "Coloque sua máscara de oxigênio.", image: '😷' },
+                        { phrase: "The building is unstable.", translation: "O prédio está instável.", image: '⚠️' },
+                        { phrase: "We saved everyone inside.", translation: "Salvamos todos lá dentro.", image: '🙏' },
+                        { phrase: "The fire started in the kitchen.", translation: "O fogo começou na cozinha.", image: '🍳' },
+                        { phrase: "Use the fire extinguisher.", translation: "Use o extintor de incêndio.", image: '🧯' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "Evacuate all floors immediately.", translation: "Evacuem todos os andares imediatamente.", image: '🏃' },
+                        { phrase: "The fire spread to the roof.", translation: "O fogo se espalhou para o telhado.", image: '🏠' },
+                        { phrase: "We need backup from another station.", translation: "Precisamos de reforço de outra estação.", image: '🚒' },
+                        { phrase: "First aid is being administered.", translation: "Primeiros socorros estão sendo administrados.", image: '🩹' },
+                        { phrase: "The hydrant pressure is good.", translation: "A pressão do hidrante está boa.", image: '🚰' },
+                        { phrase: "This is a hazardous materials situation.", translation: "Esta é uma situação de materiais perigosos.", image: '☢️' },
+                        { phrase: "The ambulance is on its way.", translation: "A ambulância está a caminho.", image: '🚑' },
+                        { phrase: "Practice fire drills regularly.", translation: "Pratique simulações de incêndio regularmente.", image: '📋' },
+                        { phrase: "Sprinklers activated automatically.", translation: "Os sprinklers ativaram automaticamente.", image: '💦' },
+                        { phrase: "The rescue mission was successful.", translation: "A missão de resgate foi bem-sucedida.", image: '✅' },
+                        { phrase: "Firefighters risk their lives daily.", translation: "Bombeiros arriscam suas vidas diariamente.", image: '🦸' },
+                        { phrase: "Training saves lives in emergencies.", translation: "Treinamento salva vidas em emergências.", image: '💪' },
+                        { phrase: "Keep emergency exits clear.", translation: "Mantenha as saídas de emergência desobstruídas.", image: '🚪' },
+                        { phrase: "Smoke detectors should be tested monthly.", translation: "Detectores de fumaça devem ser testados mensalmente.", image: '🔔' },
+                        { phrase: "Never play with fire or matches.", translation: "Nunca brinque com fogo ou fósforos.", image: '🔥' }
                     ]
                 },
                 conversations: {
@@ -2154,6 +2460,7 @@
                 icon: '👨‍✈️',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Airplane', translation: 'Avião', image: '✈️' },
                         { word: 'Cockpit', translation: 'Cabine', image: '🎛️' },
                         { word: 'Runway', translation: 'Pista', image: '🛫' },
@@ -2161,17 +2468,72 @@
                         { word: 'Flight', translation: 'Voo', image: '🛩️' },
                         { word: 'Airport', translation: 'Aeroporto', image: '🏢' },
                         { word: 'Altitude', translation: 'Altitude', image: '📏' },
+                        // Fase 2 - 10 palavras intermediárias
                         { word: 'Landing', translation: 'Aterrissagem', image: '🛬' },
                         { word: 'Turbulence', translation: 'Turbulência', image: '🌪️' },
-                        { word: 'Control', translation: 'Controle', image: '🎮' }
+                        { word: 'Control', translation: 'Controle', image: '🎮' },
+                        { word: 'Takeoff', translation: 'Decolagem', image: '🛫' },
+                        { word: 'Wing', translation: 'Asa', image: '✈️' },
+                        { word: 'Fuel', translation: 'Combustível', image: '⛽' },
+                        { word: 'Crew', translation: 'Tripulação', image: '👥' },
+                        { word: 'Seatbelt', translation: 'Cinto de segurança', image: '💺' },
+                        { word: 'Tower', translation: 'Torre', image: '🗼' },
+                        { word: 'Captain', translation: 'Capitão', image: '👨‍✈️' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Navigation', translation: 'Navegação', image: '🧭' },
+                        { word: 'Radar', translation: 'Radar', image: '📡' },
+                        { word: 'Autopilot', translation: 'Piloto automático', image: '🤖' },
+                        { word: 'Throttle', translation: 'Acelerador', image: '🎚️' },
+                        { word: 'Propeller', translation: 'Hélice', image: '💨' },
+                        { word: 'Cabin', translation: 'Cabine', image: '🪑' },
+                        { word: 'Copilot', translation: 'Copiloto', image: '👨‍✈️' },
+                        { word: 'Instrument', translation: 'Instrumento', image: '🎛️' },
+                        { word: 'Weather', translation: 'Clima', image: '🌤️' },
+                        { word: 'Clearance', translation: 'Autorização', image: '✅' },
+                        { word: 'Descent', translation: 'Descida', image: '⬇️' },
+                        { word: 'Approach', translation: 'Aproximação', image: '🎯' },
+                        { word: 'Emergency', translation: 'Emergência', image: '🚨' },
+                        { word: 'Route', translation: 'Rota', image: '🗺️' },
+                        { word: 'Horizon', translation: 'Horizonte', image: '🌅' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "Prepare for takeoff.", translation: "Preparem-se para decolar.", image: '🛫' },
                         { phrase: "We're cruising at 35,000 feet.", translation: "Estamos voando a 35.000 pés.", image: '✈️' },
                         { phrase: "Please fasten your seatbelts.", translation: "Por favor, apertem os cintos.", image: '💺' },
-                        { phrase: "We'll be landing in 30 minutes.", translation: "Pousar em 30 minutos.", image: '🛬' }
+                        { phrase: "We'll be landing in 30 minutes.", translation: "Pousar em 30 minutos.", image: '🛬' },
+                        { phrase: "Welcome aboard flight 247.", translation: "Bem-vindos ao voo 247.", image: '👋' },
+                        { phrase: "The weather is clear.", translation: "O tempo está limpo.", image: '☀️' },
+                        { phrase: "We are ready for departure.", translation: "Estamos prontos para partir.", image: '✅' },
+                        // Fase 5 - 10 frases intermediárias
+                        { phrase: "Tower, requesting permission to land.", translation: "Torre, solicitando permissão para pousar.", image: '🗼' },
+                        { phrase: "The flight time is two hours.", translation: "O tempo de voo é duas horas.", image: '⏱️' },
+                        { phrase: "Please remain seated.", translation: "Por favor, permaneçam sentados.", image: '💺' },
+                        { phrase: "We have fuel for eight hours.", translation: "Temos combustível para oito horas.", image: '⛽' },
+                        { phrase: "The crew is ready.", translation: "A tripulação está pronta.", image: '👥' },
+                        { phrase: "Check all instruments.", translation: "Verifiquem todos os instrumentos.", image: '🎛️' },
+                        { phrase: "We are approaching the airport.", translation: "Estamos nos aproximando do aeroporto.", image: '🏢' },
+                        { phrase: "Autopilot is engaged.", translation: "O piloto automático está acionado.", image: '🤖' },
+                        { phrase: "There is light turbulence ahead.", translation: "Há turbulência leve à frente.", image: '🌪️' },
+                        { phrase: "The captain will make an announcement.", translation: "O capitão fará um anúncio.", image: '📢' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "We're changing altitude due to weather.", translation: "Estamos mudando de altitude devido ao clima.", image: '🌤️' },
+                        { phrase: "Navigation systems are functioning properly.", translation: "Os sistemas de navegação estão funcionando corretamente.", image: '🧭' },
+                        { phrase: "The radar shows clear skies ahead.", translation: "O radar mostra céu limpo à frente.", image: '📡' },
+                        { phrase: "We have clearance for runway 24.", translation: "Temos autorização para a pista 24.", image: '✅' },
+                        { phrase: "Beginning our descent now.", translation: "Iniciando nossa descida agora.", image: '⬇️' },
+                        { phrase: "The approach will be from the east.", translation: "A aproximação será pelo leste.", image: '🎯' },
+                        { phrase: "Emergency procedures are in place.", translation: "Procedimentos de emergência estão em vigor.", image: '🚨' },
+                        { phrase: "We're following the planned route.", translation: "Estamos seguindo a rota planejada.", image: '🗺️' },
+                        { phrase: "The horizon is visible and clear.", translation: "O horizonte está visível e limpo.", image: '🌅' },
+                        { phrase: "Throttle set for cruising speed.", translation: "Acelerador ajustado para velocidade de cruzeiro.", image: '🎚️' },
+                        { phrase: "The propeller is working perfectly.", translation: "A hélice está funcionando perfeitamente.", image: '💨' },
+                        { phrase: "Cabin pressure is stable.", translation: "A pressão da cabine está estável.", image: '✅' },
+                        { phrase: "Copilot, take the controls.", translation: "Copiloto, assuma os controles.", image: '👨‍✈️' },
+                        { phrase: "We expect a smooth landing.", translation: "Esperamos uma aterrissagem suave.", image: '🛬' },
+                        { phrase: "Thank you for flying with us.", translation: "Obrigado por voar conosco.", image: '🙏' }
                     ]
                 },
                 conversations: {
@@ -2196,24 +2558,80 @@
                 icon: '🐕‍🦺',
                 words: {
                     en: [
+                        // Fase 1 - 7 palavras básicas
                         { word: 'Pet', translation: 'Animal de estimação', image: '🐕' },
                         { word: 'Clinic', translation: 'Clínica', image: '🏥' },
                         { word: 'Vaccine', translation: 'Vacina', image: '💉' },
                         { word: 'Health', translation: 'Saúde', image: '❤️' },
                         { word: 'Care', translation: 'Cuidado', image: '🤲' },
-                        { word: 'Surgery', translation: 'Cirurgia', image: '🔬' },
                         { word: 'Medicine', translation: 'Remédio', image: '💊' },
-                        { word: 'Check-up', translation: 'Consulta', image: '📋' },
                         { word: 'Animal', translation: 'Animal', image: '🐾' },
-                        { word: 'Treatment', translation: 'Tratamento', image: '🩺' }
+                        // Fase 2 - 10 palavras intermediárias
+                        { word: 'Surgery', translation: 'Cirurgia', image: '🔬' },
+                        { word: 'Check-up', translation: 'Consulta', image: '📋' },
+                        { word: 'Treatment', translation: 'Tratamento', image: '🩺' },
+                        { word: 'Dog', translation: 'Cachorro', image: '🐕' },
+                        { word: 'Cat', translation: 'Gato', image: '🐱' },
+                        { word: 'Bird', translation: 'Pássaro', image: '🐦' },
+                        { word: 'Rabbit', translation: 'Coelho', image: '🐰' },
+                        { word: 'Hamster', translation: 'Hamster', image: '🐹' },
+                        { word: 'Sick', translation: 'Doente', image: '🤒' },
+                        { word: 'Healthy', translation: 'Saudável', image: '💪' },
+                        // Fase 3 - 15 palavras avançadas
+                        { word: 'Diagnosis', translation: 'Diagnóstico', image: '🔍' },
+                        { word: 'X-ray', translation: 'Raio-X', image: '📷' },
+                        { word: 'Ultrasound', translation: 'Ultrassom', image: '📺' },
+                        { word: 'Prescription', translation: 'Receita', image: '📝' },
+                        { word: 'Anesthesia', translation: 'Anestesia', image: '💉' },
+                        { word: 'Parasite', translation: 'Parasita', image: '🦠' },
+                        { word: 'Infection', translation: 'Infecção', image: '🔴' },
+                        { word: 'Allergy', translation: 'Alergia', image: '🤧' },
+                        { word: 'Nutrition', translation: 'Nutrição', image: '🥗' },
+                        { word: 'Spay', translation: 'Castrar (fêmea)', image: '✂️' },
+                        { word: 'Neuter', translation: 'Castrar (macho)', image: '✂️' },
+                        { word: 'Adoption', translation: 'Adoção', image: '🏠' },
+                        { word: 'Shelter', translation: 'Abrigo', image: '🏡' },
+                        { word: 'Stethoscope', translation: 'Estetoscópio', image: '🩺' },
+                        { word: 'Recovery', translation: 'Recuperação', image: '✅' }
                     ]
                 },
                 phrases: {
                     en: [
+                        // Fase 4 - 7 frases básicas
                         { phrase: "Your pet is healthy.", translation: "Seu pet está saudável.", image: '✅' },
                         { phrase: "Time for the vaccine.", translation: "Hora da vacina.", image: '💉' },
                         { phrase: "Give this medicine twice a day.", translation: "Dê este remédio duas vezes ao dia.", image: '💊' },
-                        { phrase: "Bring him back in a week.", translation: "Traga-o de volta em uma semana.", image: '📅' }
+                        { phrase: "Bring him back in a week.", translation: "Traga-o de volta em uma semana.", image: '📅' },
+                        { phrase: "How old is your pet?", translation: "Quantos anos tem seu pet?", image: '🎂' },
+                        { phrase: "What is wrong with him?", translation: "O que há de errado com ele?", image: '❓' },
+                        { phrase: "Let me examine your pet.", translation: "Deixe-me examinar seu pet.", image: '🩺' },
+                        // Fase 5 - 10 frases intermediárias
+                        { phrase: "The dog needs a vaccine.", translation: "O cachorro precisa de vacina.", image: '🐕' },
+                        { phrase: "Your cat is in good condition.", translation: "Seu gato está em boas condições.", image: '🐱' },
+                        { phrase: "The bird has a wing injury.", translation: "O pássaro tem uma lesão na asa.", image: '🐦' },
+                        { phrase: "I recommend a special diet.", translation: "Recomendo uma dieta especial.", image: '🥗' },
+                        { phrase: "The medicine will help recovery.", translation: "O remédio ajudará na recuperação.", image: '💊' },
+                        { phrase: "We need to run some tests.", translation: "Precisamos fazer alguns exames.", image: '🔬' },
+                        { phrase: "Keep the wound clean.", translation: "Mantenha a ferida limpa.", image: '🩹' },
+                        { phrase: "Your rabbit is very calm.", translation: "Seu coelho está muito calmo.", image: '🐰' },
+                        { phrase: "He needs rest for a few days.", translation: "Ele precisa descansar por alguns dias.", image: '😴' },
+                        { phrase: "The treatment is working well.", translation: "O tratamento está funcionando bem.", image: '📈' },
+                        // Fase 6 - 15 frases avançadas
+                        { phrase: "The X-ray shows no fractures.", translation: "O raio-X não mostra fraturas.", image: '📷' },
+                        { phrase: "We need to perform surgery.", translation: "Precisamos realizar uma cirurgia.", image: '🔬' },
+                        { phrase: "The ultrasound revealed the problem.", translation: "O ultrassom revelou o problema.", image: '📺' },
+                        { phrase: "I'm prescribing antibiotics.", translation: "Estou prescrevendo antibióticos.", image: '📝' },
+                        { phrase: "The anesthesia will keep him calm.", translation: "A anestesia o manterá calmo.", image: '💉' },
+                        { phrase: "He has a parasite infection.", translation: "Ele tem uma infecção parasitária.", image: '🦠' },
+                        { phrase: "Your pet has a food allergy.", translation: "Seu pet tem alergia alimentar.", image: '🤧' },
+                        { phrase: "Proper nutrition is essential.", translation: "Nutrição adequada é essencial.", image: '🥗' },
+                        { phrase: "We recommend spaying your cat.", translation: "Recomendamos castrar sua gata.", image: '✂️' },
+                        { phrase: "Consider adopting from a shelter.", translation: "Considere adotar de um abrigo.", image: '🏠' },
+                        { phrase: "The stethoscope helps check the heart.", translation: "O estetoscópio ajuda a verificar o coração.", image: '❤️' },
+                        { phrase: "Full recovery will take two weeks.", translation: "A recuperação completa levará duas semanas.", image: '📅' },
+                        { phrase: "Annual check-ups are very important.", translation: "Check-ups anuais são muito importantes.", image: '📋' },
+                        { phrase: "Your hamster is perfectly healthy.", translation: "Seu hamster está perfeitamente saudável.", image: '🐹' },
+                        { phrase: "Love and care help animals heal.", translation: "Amor e cuidado ajudam animais a se curar.", image: '💕' }
                     ]
                 },
                 conversations: {
