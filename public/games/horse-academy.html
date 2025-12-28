@@ -593,6 +593,168 @@
       transition: width 0.5s;
     }
 
+    /* === IMAGENS DO TUTORIAL === */
+    .tutorial-image {
+      width: 220px;
+      height: 160px;
+      margin: 1rem auto;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      background: linear-gradient(180deg, #87CEEB 0%, #90EE90 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.3s ease;
+      border: 4px solid #5D4037;
+    }
+
+    .tutorial-image svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .tutorial-image .scene {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .tutorial-image .ground {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30%;
+      background: linear-gradient(180deg, #7CB342, #558B2F);
+    }
+
+    .tutorial-image .figure {
+      font-size: 3rem;
+      position: relative;
+      z-index: 2;
+      animation: gentleBounce 2s ease-in-out infinite;
+    }
+
+    .tutorial-image .figure-small {
+      font-size: 2rem;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .tutorial-image .action-icon {
+      position: absolute;
+      font-size: 2rem;
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    .tutorial-image.approaching .figure-small {
+      left: 20%;
+      animation: walkToHorse 2s ease-in-out infinite;
+    }
+
+    @keyframes walkToHorse {
+      0%, 100% { left: 20%; }
+      50% { left: 30%; }
+    }
+
+    .tutorial-image.petting .action-icon {
+      top: 20%;
+      right: 35%;
+    }
+
+    .tutorial-image.mounting .figure-small {
+      bottom: 40%;
+      animation: mountUp 2s ease-in-out infinite;
+    }
+
+    @keyframes mountUp {
+      0%, 100% { bottom: 25%; }
+      50% { bottom: 45%; }
+    }
+
+    .tutorial-image.balancing .figure {
+      animation: balanceWobble 1.5s ease-in-out infinite;
+    }
+
+    @keyframes balanceWobble {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+
+    .tutorial-image.reins .action-icon {
+      top: 35%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .tutorial-image.walking .figure {
+      animation: walkSlow 1s ease-in-out infinite;
+    }
+
+    @keyframes walkSlow {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+    }
+
+    .tutorial-image.trotting .figure {
+      animation: trotMove 0.5s ease-in-out infinite;
+    }
+
+    @keyframes trotMove {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(5px) translateY(-8px); }
+    }
+
+    .tutorial-image.galloping .figure {
+      animation: gallopFast 0.3s ease-in-out infinite;
+    }
+
+    @keyframes gallopFast {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(10px) translateY(-15px); }
+    }
+
+    .tutorial-image .dust {
+      position: absolute;
+      bottom: 30%;
+      font-size: 1.5rem;
+      opacity: 0.6;
+      animation: dustMove 0.5s ease-out infinite;
+    }
+
+    @keyframes dustMove {
+      0% { opacity: 0.6; transform: translateX(0) scale(1); }
+      100% { opacity: 0; transform: translateX(-30px) scale(0.5); }
+    }
+
+    .tutorial-image.complete {
+      background: linear-gradient(180deg, #FFD700 0%, #FFA000 50%, #7CB342 100%);
+    }
+
+    .tutorial-image.complete .figure {
+      animation: celebrateBounce 0.5s ease-in-out infinite;
+    }
+
+    @keyframes celebrateBounce {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+
     /* === CORRIDA === */
     .race-screen {
       background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 50%, #228B22 100%);
@@ -1357,6 +1519,15 @@
         <div class="progress-fill" id="tutorialProgress" style="width: 0%"></div>
       </div>
 
+      <!-- Imagem ilustrativa do passo atual -->
+      <div class="tutorial-image approaching" id="tutorialImage">
+        <div class="ground"></div>
+        <div class="scene">
+          <span class="figure">🐴</span>
+          <span class="figure-small" id="tutorialRider">👧</span>
+        </div>
+      </div>
+
       <div class="step-number" id="stepNumber">1</div>
       <h3 class="step-title" id="stepTitle">Conhecendo seu Cavalo</h3>
       <p class="step-description" id="stepDescription">
@@ -1557,70 +1728,181 @@
         description: 'Primeiro, vamos conhecer seu cavalo! Aproxime-se dele com calma e carinho.',
         action: '🐴 Aproximar do Cavalo',
         skill: 'trust',
-        bonus: 20
+        bonus: 20,
+        imageClass: 'approaching',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure">🐴</span>
+            <span class="figure-small" style="left: 15%; bottom: 35%;">${rider}</span>
+            <span class="action-icon" style="top: 30%; left: 40%;">💭</span>
+          </div>
+        `
       },
       {
         title: 'Acariciando o Cavalo',
         description: 'Muito bem! Agora acaricie seu cavalo para ganhar a confiança dele.',
         action: '🤚 Acariciar',
         skill: 'trust',
-        bonus: 30
+        bonus: 30,
+        imageClass: 'petting',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure">🐴</span>
+            <span class="figure-small" style="left: 30%; bottom: 35%;">${rider}</span>
+            <span class="action-icon" style="top: 15%; right: 30%;">🤚</span>
+            <span class="action-icon" style="top: 25%; right: 35%;">❤️</span>
+          </div>
+        `
+      },
+      {
+        title: 'Colocando a Sela',
+        description: 'Antes de subir, precisamos colocar a sela no cavalo com cuidado.',
+        action: '🪑 Colocar Sela',
+        skill: 'trust',
+        bonus: 25,
+        imageClass: 'saddling',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure">🐴</span>
+            <span class="figure-small" style="left: 25%; bottom: 35%;">${rider}</span>
+            <span class="action-icon" style="top: 20%; left: 50%;">🪑</span>
+          </div>
+        `
       },
       {
         title: 'Subindo no Cavalo',
-        description: 'Seu cavalo já confia em você! Agora vamos subir com cuidado.',
+        description: 'Seu cavalo já confia em você! Coloque o pé no estribo e suba com cuidado.',
         action: '🧗 Subir no Cavalo',
         skill: 'balance',
-        bonus: 25
+        bonus: 25,
+        imageClass: 'mounting',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure">🐴</span>
+            <span class="figure-small" style="left: 40%; bottom: 45%;">${rider}</span>
+            <span class="action-icon" style="bottom: 40%; left: 35%;">⬆️</span>
+          </div>
+        `
       },
       {
         title: 'Mantendo o Equilíbrio',
-        description: 'Ótimo! Mantenha-se firme na sela. Sinta o movimento do cavalo.',
-        action: '⚖️ Manter Equilíbrio',
+        description: 'Ótimo! Mantenha-se firme na sela. Sinta o movimento do cavalo e balance junto.',
+        action: '⚖️ Equilibrar',
         skill: 'balance',
-        bonus: 35
+        bonus: 35,
+        imageClass: 'balancing',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure" style="font-size: 4rem;">🐴</span>
+            <span class="figure-small" style="top: 15%; left: 45%;">${rider}</span>
+            <span class="action-icon" style="top: 5%; left: 30%;">⚖️</span>
+          </div>
+        `
       },
       {
         title: 'Segurando as Rédeas',
-        description: 'Pegue as rédeas com firmeza, mas sem apertar muito!',
-        action: '🎠 Pegar as Rédeas',
+        description: 'Pegue as rédeas com firmeza, mas sem apertar muito! Elas servem para guiar.',
+        action: '🎠 Pegar Rédeas',
         skill: 'control',
-        bonus: 30
+        bonus: 30,
+        imageClass: 'reins',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure" style="font-size: 4rem;">🐴</span>
+            <span class="figure-small" style="top: 15%; left: 45%;">${rider}</span>
+            <span class="action-icon" style="top: 30%; left: 55%;">〰️</span>
+            <span class="action-icon" style="top: 5%; right: 20%;">✋</span>
+          </div>
+        `
       },
       {
         title: 'Primeiro Passo',
-        description: 'Vamos dar o primeiro passo! Pressione levemente os calcanhares.',
-        action: '🚶 Primeiro Passo',
+        description: 'Vamos dar o primeiro passo! Pressione levemente os calcanhares no cavalo.',
+        action: '🚶 Dar Primeiro Passo',
         skill: 'control',
-        bonus: 40
+        bonus: 40,
+        imageClass: 'walking',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure" style="font-size: 4rem;">🐴</span>
+            <span class="figure-small" style="top: 15%; left: 45%;">${rider}</span>
+            <span class="action-icon" style="bottom: 35%; left: 20%;">👟</span>
+          </div>
+        `
       },
       {
         title: 'Andando Devagar',
-        description: 'Excelente! Continue andando devagar, controlando a direção.',
-        action: '🚶 Andar Devagar',
+        description: 'Excelente! Continue andando devagar, controlando a direção com as rédeas.',
+        action: '🚶 Continuar Andando',
         skill: 'speed',
-        bonus: 25
+        bonus: 25,
+        imageClass: 'walking',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure" style="font-size: 4rem;">🐴</span>
+            <span class="figure-small" style="top: 15%; left: 45%;">${rider}</span>
+            <span class="dust" style="left: 15%;">💨</span>
+          </div>
+        `
       },
       {
         title: 'Trotando',
-        description: 'Você está pronto para trotar! Aumente um pouco a velocidade.',
-        action: '🏃 Trotar',
+        description: 'Você está pronto para trotar! Aumente a velocidade e suba e desça com o ritmo.',
+        action: '🏃 Trotar!',
         skill: 'speed',
-        bonus: 45
+        bonus: 45,
+        imageClass: 'trotting',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure" style="font-size: 4rem;">🏇</span>
+            <span class="dust" style="left: 20%;">💨</span>
+            <span class="dust" style="left: 10%;">💨</span>
+          </div>
+        `
       },
       {
         title: 'Galopando',
-        description: 'Hora de galopar! Sinta o vento no rosto!',
-        action: '🏇 Galopar',
+        description: 'Hora de galopar! Incline o corpo para frente e sinta o vento no rosto!',
+        action: '🏇 Galopar!',
         skill: 'speed',
-        bonus: 60
+        bonus: 60,
+        imageClass: 'galloping',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure" style="font-size: 4.5rem;">🏇</span>
+            <span class="dust" style="left: 25%;">💨</span>
+            <span class="dust" style="left: 15%;">💨</span>
+            <span class="dust" style="left: 5%;">💨</span>
+            <span class="action-icon" style="top: 10%; right: 20%;">💨</span>
+          </div>
+        `
       },
       {
         title: 'Parabéns! Tutorial Completo!',
-        description: 'Você aprendeu a cavalgar! Agora está pronto para a corrida!',
-        action: '🏁 Ir para Corrida',
+        description: 'Você aprendeu a cavalgar! Agora está pronto para a grande corrida!',
+        action: '🏁 Ir para Corrida!',
         skill: null,
-        bonus: 0
+        bonus: 0,
+        imageClass: 'complete',
+        imageContent: (rider) => `
+          <div class="ground"></div>
+          <div class="scene">
+            <span class="figure" style="font-size: 4rem;">🏆</span>
+            <span class="action-icon" style="top: 10%; left: 20%;">⭐</span>
+            <span class="action-icon" style="top: 15%; right: 20%;">🌟</span>
+            <span class="action-icon" style="top: 5%; left: 50%;">✨</span>
+          </div>
+        `
       }
     ];
 
@@ -1798,6 +2080,7 @@
 
     function updateTutorialStep() {
       const step = tutorialSteps[gameState.tutorialStep];
+      const riderEmoji = gameState.rider.gender === 'girl' ? '👧' : '👦';
 
       document.getElementById('stepNumber').textContent = gameState.tutorialStep + 1;
       document.getElementById('stepTitle').textContent = step.title;
@@ -1807,6 +2090,11 @@
       const progress = ((gameState.tutorialStep + 1) / tutorialSteps.length) * 100;
       document.getElementById('tutorialProgress').style.width = progress + '%';
 
+      // Atualizar imagem ilustrativa
+      const tutorialImage = document.getElementById('tutorialImage');
+      tutorialImage.className = 'tutorial-image ' + step.imageClass;
+      tutorialImage.innerHTML = step.imageContent(riderEmoji);
+
       // Atualizar barras de habilidade
       document.getElementById('trustBar').style.width = gameState.skills.trust + '%';
       document.getElementById('balanceBar').style.width = gameState.skills.balance + '%';
@@ -1815,7 +2103,7 @@
 
       // Mover cavaleiro na arena
       const riderElement = document.getElementById('riderOnHorse');
-      const leftPos = 20 + (gameState.tutorialStep * 7);
+      const leftPos = 20 + (gameState.tutorialStep * 6);
       riderElement.style.left = leftPos + '%';
     }
 
@@ -1830,10 +2118,19 @@
 
       if (gameState.tutorialStep >= tutorialSteps.length) {
         // Tutorial completo - ir para corrida
-        EAI.giveReward('coins', 20);
+        if (typeof EAI !== 'undefined' && EAI.giveReward) {
+          EAI.giveReward('coins', 20);
+        }
         setTimeout(() => startRace(), 1000);
       } else {
         updateTutorialStep();
+
+        // Feedback visual de progresso
+        const tutorialImage = document.getElementById('tutorialImage');
+        tutorialImage.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          tutorialImage.style.transform = 'scale(1)';
+        }, 200);
       }
     }
 
