@@ -626,6 +626,108 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
+        /* Mapa do País - Fase 3+ */
+        .map-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .map-display {
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-svg {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 10px;
+        }
+
+        .map-country-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        .map-flag {
+            font-size: 24px;
+            margin-top: 5px;
+        }
+
+        /* Modal de Mapa Grande */
+        .map-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        .map-modal.active {
+            display: flex;
+        }
+
+        .map-modal-content {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .map-modal-svg {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        .map-modal-country {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .map-modal-flag {
+            font-size: 60px;
+        }
+
+        .map-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -1150,15 +1252,25 @@
         </div>
     </div>
 
+    <!-- Modal do Mapa Grande -->
+    <div class="map-modal" id="map-modal" onclick="closeMapModal()">
+        <span class="map-modal-close">&times;</span>
+        <div class="map-modal-content" onclick="event.stopPropagation()">
+            <div class="map-modal-svg" id="map-modal-svg"></div>
+            <div class="map-modal-country" id="map-modal-country"></div>
+            <div class="map-modal-flag" id="map-modal-flag"></div>
+        </div>
+    </div>
+
     <script>
         // ===== DADOS DO JOGO =====
         const LANGUAGES = [
-            { id: 'en', name: 'Inglês', flag: '🇬🇧', voice: 'en-US' },
-            { id: 'es', name: 'Espanhol', flag: '🇪🇸', voice: 'es-ES' },
-            { id: 'fr', name: 'Francês', flag: '🇫🇷', voice: 'fr-FR' },
-            { id: 'de', name: 'Alemão', flag: '🇩🇪', voice: 'de-DE' },
-            { id: 'it', name: 'Italiano', flag: '🇮🇹', voice: 'it-IT' },
-            { id: 'jp', name: 'Japonês', flag: '🇯🇵', voice: 'ja-JP' }
+            { id: 'en', name: 'Inglês', flag: '🇬🇧', voice: 'en-US', country: 'Reino Unido', mapEmoji: '🗺️', mapSvg: `<svg viewBox="0 0 100 120" style="width:100%;height:100%"><path d="M45,10 L55,8 L60,15 L58,25 L65,30 L60,40 L55,35 L50,45 L55,55 L50,70 L55,80 L50,90 L45,95 L40,90 L35,80 L40,70 L35,55 L40,45 L35,35 L40,25 L35,15 Z" fill="#2E7D32" stroke="#1B5E20" stroke-width="1"/><ellipse cx="30" cy="50" rx="8" ry="12" fill="#2E7D32" stroke="#1B5E20"/><ellipse cx="65" cy="25" rx="5" ry="8" fill="#2E7D32" stroke="#1B5E20"/></svg>` },
+            { id: 'es', name: 'Espanhol', flag: '🇪🇸', voice: 'es-ES', country: 'Espanha', mapEmoji: '🗺️', mapSvg: `<svg viewBox="0 0 100 100" style="width:100%;height:100%"><path d="M10,30 L30,25 L50,20 L70,25 L90,30 L95,50 L90,70 L70,80 L50,85 L30,80 L10,70 L5,50 Z" fill="#FFC107" stroke="#FF8F00" stroke-width="1"/><path d="M40,75 L45,90 L50,95 L55,90 L60,75" fill="#FFC107" stroke="#FF8F00"/></svg>` },
+            { id: 'fr', name: 'Francês', flag: '🇫🇷', voice: 'fr-FR', country: 'França', mapEmoji: '🗺️', mapSvg: `<svg viewBox="0 0 100 100" style="width:100%;height:100%"><path d="M20,15 L50,10 L80,15 L90,30 L85,50 L90,70 L80,85 L50,90 L20,85 L10,70 L15,50 L10,30 Z" fill="#1976D2" stroke="#0D47A1" stroke-width="1"/></svg>` },
+            { id: 'de', name: 'Alemão', flag: '🇩🇪', voice: 'de-DE', country: 'Alemanha', mapEmoji: '🗺️', mapSvg: `<svg viewBox="0 0 100 120" style="width:100%;height:100%"><path d="M30,10 L70,10 L80,20 L85,40 L80,60 L85,80 L75,100 L50,110 L25,100 L15,80 L20,60 L15,40 L20,20 Z" fill="#424242" stroke="#212121" stroke-width="1"/></svg>` },
+            { id: 'it', name: 'Italiano', flag: '🇮🇹', voice: 'it-IT', country: 'Itália', mapEmoji: '🗺️', mapSvg: `<svg viewBox="0 0 100 140" style="width:100%;height:100%"><path d="M40,5 L60,5 L70,15 L65,30 L70,40 L60,50 L55,65 L60,80 L55,95 L50,110 L45,125 L40,130 L35,125 L40,110 L35,95 L40,80 L35,65 L40,50 L30,40 L35,30 L30,15 Z" fill="#4CAF50" stroke="#2E7D32" stroke-width="1"/><ellipse cx="25" cy="100" rx="10" ry="15" fill="#4CAF50" stroke="#2E7D32"/><ellipse cx="60" cy="120" rx="8" ry="10" fill="#4CAF50" stroke="#2E7D32"/></svg>` },
+            { id: 'jp', name: 'Japonês', flag: '🇯🇵', voice: 'ja-JP', country: 'Japão', mapEmoji: '🗺️', mapSvg: `<svg viewBox="0 0 100 140" style="width:100%;height:100%"><path d="M30,10 L50,5 L70,10 L75,25 L70,40 L75,55 L70,70 L60,85 L50,95 L40,85 L30,70 L25,55 L30,40 L25,25 Z" fill="#E53935" stroke="#C62828" stroke-width="1"/><ellipse cx="60" cy="100" rx="12" ry="18" fill="#E53935" stroke="#C62828"/><ellipse cx="35" cy="110" rx="8" ry="12" fill="#E53935" stroke="#C62828"/><ellipse cx="55" cy="125" rx="6" ry="8" fill="#E53935" stroke="#C62828"/></svg>` }
         ];
 
         const PROFESSIONS = {
@@ -2804,6 +2916,36 @@
             document.getElementById('instructions-modal').style.display = 'none';
         }
 
+        // ===== MAPA DO PAÍS =====
+        function openMapModal() {
+            const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
+            if (!lang) return;
+
+            document.getElementById('map-modal-svg').innerHTML = lang.mapSvg;
+            document.getElementById('map-modal-country').textContent = lang.country;
+            document.getElementById('map-modal-flag').textContent = lang.flag;
+            document.getElementById('map-modal').classList.add('active');
+        }
+
+        function closeMapModal() {
+            document.getElementById('map-modal').classList.remove('active');
+        }
+
+        function getMapHtml() {
+            const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
+            if (!lang) return '';
+
+            return `
+                <div class="map-container">
+                    <div class="map-display" onclick="openMapModal()" style="cursor: pointer;" title="Clique para ampliar">
+                        <div class="map-svg">${lang.mapSvg}</div>
+                        <div class="map-country-name">${lang.country}</div>
+                        <div class="map-flag">${lang.flag}</div>
+                    </div>
+                </div>
+            `;
+        }
+
         // ===== CUSTOMIZAÇÃO =====
         function renderCustomization() {
             // Estilos
@@ -3197,6 +3339,10 @@
             // Atualizar HUD
             updateGameHUD();
 
+            // Mostrar mapa nas fases 3+
+            const showMap = gameState.currentPhase >= 3;
+            const mapHtml = showMap ? getMapHtml() : '';
+
             const content = document.getElementById('game-content');
             content.innerHTML = `
                 <div class="teacher-area">
@@ -3212,6 +3358,8 @@
                         </button>
                     </div>
                 </div>
+
+                ${mapHtml}
 
                 <div class="image-area">
                     <div class="word-image">${word.image}</div>
@@ -3326,6 +3474,9 @@
             // Atualizar HUD
             updateGameHUD();
 
+            // Sempre mostrar mapa nas fases de frases (4+)
+            const mapHtml = getMapHtml();
+
             const content = document.getElementById('game-content');
             content.innerHTML = `
                 <div class="teacher-area">
@@ -3341,6 +3492,8 @@
                         </button>
                     </div>
                 </div>
+
+                ${mapHtml}
 
                 <div class="image-area">
                     <div class="word-image">${phrase.image}</div>
