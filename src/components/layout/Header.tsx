@@ -19,17 +19,6 @@ export function Header() {
       <nav className="container-main flex items-center justify-between py-4">
         {/* Logos */}
         <div className="flex items-center gap-4">
-          {/* INEMA.CLUB */}
-          <a
-            href="https://inema.club"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
-          >
-            <span className="text-lg">🌊</span>
-            <span className="font-semibold text-sm hidden sm:inline">INEMA.CLUB</span>
-          </a>
-
           {/* EAI Games Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 text-white font-display font-bold text-lg shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/50 transition-shadow">
@@ -43,6 +32,17 @@ export function Header() {
               <span className="text-[10px] text-purple-400 font-medium -mt-0.5">Play & Learn</span>
             </div>
           </Link>
+
+          {/* INEMA.CLUB */}
+          <a
+            href="https://inema.club"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
+          >
+            <span className="text-lg">🌊</span>
+            <span className="font-semibold text-sm hidden sm:inline">INEMA.CLUB</span>
+          </a>
         </div>
 
         {/* Desktop Navigation */}
