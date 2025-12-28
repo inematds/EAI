@@ -1005,6 +1005,166 @@
     .hidden {
       display: none !important;
     }
+
+    /* === MODAL DE INSTRUÇÕES === */
+    .instructions-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .instructions-modal.active {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .instructions-content {
+      background: linear-gradient(180deg, #2d2d44 0%, #1a1a2e 100%);
+      border-radius: 15px;
+      padding: 25px;
+      max-width: 600px;
+      width: 100%;
+      margin: 20px auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      border: 3px solid #9B59B6;
+    }
+
+    .close-instructions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #E74C3C;
+      color: white;
+      border: 2px solid #000;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-instructions:hover {
+      background: #C0392B;
+    }
+
+    .instructions-title {
+      text-align: center;
+      font-size: 1.6rem;
+      color: #FFD700;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .instructions-section {
+      background: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-left: 4px solid #9B59B6;
+    }
+
+    .instructions-section h3 {
+      color: #BB86FC;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .instructions-section p {
+      color: #ccc;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .instructions-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .instructions-section li {
+      padding: 5px 0;
+      color: #bbb;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+    }
+
+    .instructions-section li:last-child {
+      border-bottom: none;
+    }
+
+    .instructions-section.magic-tips {
+      background: rgba(155, 89, 182, 0.2);
+      border-left-color: #FFD700;
+    }
+
+    .instructions-section.magic-tips h3 {
+      color: #FFD700;
+    }
+
+    .instructions-section.magic-tips li {
+      color: #F1C40F;
+    }
+
+    .help-btn-float {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #9B59B6, #8E44AD);
+      color: white;
+      border: 3px solid #000;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(155, 89, 182, 0.5);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .help-btn-float:hover {
+      transform: scale(1.1);
+    }
+
+    .close-btn-instructions {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: linear-gradient(180deg, #9B59B6 0%, #8E44AD 100%);
+      border: 3px solid #000;
+      color: white;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      text-transform: uppercase;
+      border-radius: 8px;
+    }
+
+    .close-btn-instructions:hover {
+      background: linear-gradient(180deg, #BB79D6 0%, #9B59B6 100%);
+    }
+
+    .keyboard-key {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #444;
+      border: 1px solid #666;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 0.85rem;
+      margin: 0 2px;
+    }
   </style>
 </head>
 <body>
@@ -1302,6 +1462,71 @@
     </div>
   </div>
 
+  <!-- Botão de ajuda flutuante -->
+  <button class="help-btn-float" onclick="showInstructions()" title="Como Jogar">❓</button>
+
+  <!-- Modal de Instruções -->
+  <div class="instructions-modal" id="instructionsModal">
+    <div class="instructions-content">
+      <button class="close-instructions" onclick="hideInstructions()">✕</button>
+      <h2 class="instructions-title">📖 Como Jogar - Dragon World</h2>
+
+      <div class="instructions-section">
+        <h3>🎮 Sobre o Jogo</h3>
+        <p>Bem-vindo ao Dragon World! Um mundo mágico estilo Minecraft onde você pode criar poções, equipar asas, chocar dragões e se transformar em criaturas fantásticas!</p>
+      </div>
+
+      <div class="instructions-section">
+        <h3>🎯 Recursos do Jogo</h3>
+        <ul>
+          <li>🎒 <strong>Inventário</strong> - Guarde materiais, equipamentos e poções</li>
+          <li>⚗️ <strong>Fazer Poções</strong> - Crie poções de vida, mana, voo e transformação</li>
+          <li>⚒️ <strong>Mesa de Criação</strong> - Fabrique asas, armaduras e ovos de dragão</li>
+          <li>🥚 <strong>Ovos de Dragão</strong> - Choque ovos clicando neles várias vezes</li>
+          <li>🐉 <strong>Virar Dragão</strong> - Transforme-se quando tiver um dragão de estimação</li>
+          <li>🦊 <strong>Animais</strong> - Transforme-se em lobo, raposa, águia, urso ou fênix</li>
+          <li>🗺️ <strong>Mapas</strong> - Explore diferentes mundos (Normal, Reino dos Dragões, Ilhas, Nether)</li>
+        </ul>
+      </div>
+
+      <div class="instructions-section">
+        <h3>⌨️ Controles</h3>
+        <ul>
+          <li><span class="keyboard-key">←</span> <span class="keyboard-key">→</span> ou <span class="keyboard-key">A</span> <span class="keyboard-key">D</span> - Mover</li>
+          <li><span class="keyboard-key">Espaço</span> - Pular / Voar (se tiver asas)</li>
+          <li><span class="keyboard-key">E</span> - Interagir com objetos</li>
+          <li><span class="keyboard-key">M</span> - Abrir mapa</li>
+          <li><span class="keyboard-key">ESC</span> - Fechar menus</li>
+        </ul>
+      </div>
+
+      <div class="instructions-section">
+        <h3>⚔️ Desafios</h3>
+        <ul>
+          <li>🥚 Choque todos os ovos de dragão (clique várias vezes!)</li>
+          <li>🦋 Consiga asas para poder voar</li>
+          <li>🐉 Desbloqueie a transformação em dragão</li>
+          <li>🗺️ Explore e desbloqueie todos os mapas</li>
+          <li>📈 Suba de nível para ficar mais forte</li>
+        </ul>
+      </div>
+
+      <div class="instructions-section magic-tips">
+        <h3>✨ Dicas Mágicas</h3>
+        <ul>
+          <li>🌟 <strong>Clique nos ovos várias vezes</strong> - cada clique aumenta o progresso de chocar!</li>
+          <li>🌟 <strong>Fique parado</strong> - a cada 30 segundos você ganha ouro e pode achar materiais</li>
+          <li>🌟 <strong>Use poções de voo</strong> antes de ter asas para experimentar voar</li>
+          <li>🌟 <strong>Águia e Fênix</strong> podem voar quando você se transforma neles!</li>
+          <li>🌟 <strong>Subir de nível</strong> te dá cristais, ouro e gemas de bônus!</li>
+          <li>🌟 <strong>Reino dos Dragões</strong> tem visual especial - explore todos os mapas!</li>
+        </ul>
+      </div>
+
+      <button class="close-btn-instructions" onclick="hideInstructions()">Entendi! 🐉</button>
+    </div>
+  </div>
+
   <script>
     // Game State
     const gameState = {
@@ -1431,6 +1656,15 @@
       'bear': { name: 'Urso', emoji: '🐻', unlocked: false, cost: 100 },
       'phoenix': { name: 'Fênix', emoji: '🔥', unlocked: false, cost: 200, canFly: true }
     };
+
+    // Instruções
+    function showInstructions() {
+      document.getElementById('instructionsModal').classList.add('active');
+    }
+
+    function hideInstructions() {
+      document.getElementById('instructionsModal').classList.remove('active');
+    }
 
     // Initialize game
     function init() {
