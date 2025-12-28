@@ -1067,6 +1067,10 @@
                     <span>📍</span>
                     <span>Fase <span id="game-phase">1</span></span>
                 </div>
+                <div class="info-box" id="progress-box">
+                    <span>📊</span>
+                    <span><span id="game-current">1</span>/<span id="game-total">10</span></span>
+                </div>
                 <div class="info-box">
                     <span>⭐</span>
                     <span id="game-score">0</span>
@@ -1075,11 +1079,20 @@
                     <span>❤️</span>
                     <span id="game-lives">3</span>
                 </div>
+                <div class="info-box" id="style-box">
+                    <span id="style-icon">🎬</span>
+                    <span id="style-name">Pixar</span>
+                </div>
             </div>
             <div class="coins-display">
                 <span>🪙</span>
                 <span id="game-coins">0</span>
             </div>
+        </div>
+
+        <!-- Barra de Progresso -->
+        <div style="max-width: 900px; margin: 0 auto 20px; background: rgba(0,0,0,0.3); border-radius: 10px; height: 20px; overflow: hidden;">
+            <div id="progress-bar" style="height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.5s; border-radius: 10px;"></div>
         </div>
 
         <div class="game-content" id="game-content">
@@ -2151,8 +2164,14 @@
 
         function updatePreview() {
             const char = CHARACTERS.find(c => c.id === gameState.character);
+            const style = VISUAL_STYLES.find(s => s.id === gameState.style);
             document.getElementById('preview-char').textContent = char ? char.icon : '👤';
-            document.getElementById('preview-name').textContent = char ? char.name : 'Personagem';
+
+            let previewName = char ? char.name : 'Personagem';
+            if (style) {
+                previewName += ` (${style.name})`;
+            }
+            document.getElementById('preview-name').textContent = previewName;
         }
 
         function saveCustomization() {
@@ -2286,6 +2305,31 @@
         }
 
         // ===== JOGO =====
+
+        // Calcula quantas palavras/itens para cada fase
+        function getPhaseItems(phaseId) {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const phase = PHASES.find(p => p.id === phaseId);
+            const lang = gameState.currentLanguage;
+
+            if (phase.type === 'words') {
+                const words = prof.words[lang] || prof.words.en || [];
+                // Fase 1: 4 palavras, Fase 2: 6 palavras, Fase 3: todas
+                if (phaseId === 1) return words.slice(0, Math.min(4, words.length));
+                if (phaseId === 2) return words.slice(0, Math.min(7, words.length));
+                return words; // Fase 3: todas
+            } else if (phase.type === 'phrases') {
+                const phrases = prof.phrases?.[lang] || prof.phrases?.en || [];
+                if (phaseId === 4) return phrases.slice(0, Math.min(3, phrases.length));
+                if (phaseId === 5) return phrases.slice(0, Math.min(5, phrases.length));
+                return phrases;
+            } else if (phase.type === 'dialogue') {
+                return prof.dialogues?.[lang] || prof.dialogues?.en || [];
+            } else {
+                return prof.conversations?.[lang] || prof.conversations?.en || [];
+            }
+        }
+
         function startPhase(phaseId) {
             gameState.currentPhase = phaseId;
             gameState.score = 0;
@@ -2294,11 +2338,13 @@
             gameState.conversationIndex = 0;
             gameState.dialogueIndex = 0;
             gameState.dialogueLineIndex = 0;
+            gameState.totalItems = getPhaseItems(phaseId).length;
 
             hideAll();
             document.getElementById('game-screen').style.display = 'block';
             document.getElementById('game-phase').textContent = phaseId;
             updateGameHUD();
+            updateStyleDisplay();
 
             const phase = PHASES.find(p => p.id === phaseId);
 
@@ -2317,11 +2363,31 @@
             document.getElementById('game-score').textContent = gameState.score;
             document.getElementById('game-lives').textContent = gameState.lives;
             document.getElementById('game-coins').textContent = gameState.coins;
+
+            // Atualizar progresso
+            const current = gameState.wordIndex + 1;
+            const total = gameState.totalItems || 1;
+            document.getElementById('game-current').textContent = Math.min(current, total);
+            document.getElementById('game-total').textContent = total;
+
+            // Atualizar barra de progresso
+            const progress = (gameState.wordIndex / total) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        function updateStyleDisplay() {
+            const style = VISUAL_STYLES.find(s => s.id === gameState.style);
+            if (style) {
+                document.getElementById('style-icon').textContent = style.icon;
+                document.getElementById('style-name').textContent = style.name;
+            }
         }
 
         function renderWordLearning() {
             const prof = PROFESSIONS[gameState.currentProfession];
-            const words = prof.words[gameState.currentLanguage] || prof.words.en;
+            const allWords = prof.words[gameState.currentLanguage] || prof.words.en;
+            const words = getPhaseItems(gameState.currentPhase);
+            gameState.totalItems = words.length;
 
             if (gameState.wordIndex >= words.length) {
                 endPhase(true);
@@ -2329,7 +2395,10 @@
             }
 
             const word = words[gameState.wordIndex];
-            const char = CHARACTERS.find(c => c.id === gameState.character);
+            const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
+
+            // Atualizar HUD
+            updateGameHUD();
 
             const content = document.getElementById('game-content');
             content.innerHTML = `
@@ -2341,8 +2410,8 @@
                             <br>
                             <small style="color: #666;">significa "${word.translation}" em português</small>
                         </div>
-                        <button class="speak-btn" onclick="speakWord('${word.word}')">
-                            🔊 Ouvir pronúncia
+                        <button class="speak-btn" onclick="speakWord('${word.word.replace(/'/g, "\\'")}')">
+                            🔊 Ouvir novamente
                         </button>
                     </div>
                 </div>
@@ -2350,18 +2419,21 @@
                 <div class="image-area">
                     <div class="word-image">${word.image}</div>
                     <div class="word-translation">${word.word}</div>
-                    <div class="word-pronunciation">Clique em "Ouvir" para a pronúncia</div>
+                    <div class="word-pronunciation">Ouça e repita!</div>
                 </div>
 
                 <div class="quiz-area">
-                    <div class="quiz-question">Como se diz "${word.translation}" em ${LANGUAGES.find(l => l.id === gameState.currentLanguage).name}?</div>
+                    <div class="quiz-question">Como se diz "${word.translation}" em ${lang.name}?</div>
                     <div class="options-container" id="options-container">
                         <!-- Opções geradas dinamicamente -->
                     </div>
                 </div>
             `;
 
-            generateOptions(word, words);
+            // Falar automaticamente ao entrar
+            setTimeout(() => speakWord(word.word), 300);
+
+            generateOptions(word, allWords);
         }
 
         function generateOptions(correctWord, allWords) {
@@ -2381,8 +2453,10 @@
             container.innerHTML = '';
 
             options.forEach(opt => {
+                const escapedWord = opt.word.replace(/'/g, "\\'");
+                const escapedCorrect = correctWord.word.replace(/'/g, "\\'");
                 container.innerHTML += `
-                    <button class="option-btn" onclick="checkAnswer('${opt.word}', '${correctWord.word}', this)">
+                    <button class="option-btn" onclick="checkAnswer('${escapedWord}', '${escapedCorrect}', this)">
                         ${opt.image} ${opt.word}
                     </button>
                 `;
@@ -2396,12 +2470,14 @@
             if (selected === correct) {
                 button.classList.add('correct');
                 gameState.score += 100;
+
+                // Falar a resposta correta
                 speakWord(correct);
 
                 setTimeout(() => {
                     gameState.wordIndex++;
                     renderWordLearning();
-                }, 1500);
+                }, 2000); // Tempo maior para ouvir
             } else {
                 button.classList.add('wrong');
                 gameState.lives--;
@@ -2412,6 +2488,9 @@
                         btn.classList.add('correct');
                     }
                 });
+
+                // Falar a resposta correta para aprender
+                speakWord(correct);
 
                 if (gameState.lives <= 0) {
                     setTimeout(() => endPhase(false), 1500);
@@ -2429,7 +2508,9 @@
         // ===== FRASES - Fases 4-6 =====
         function renderPhraseLearning() {
             const prof = PROFESSIONS[gameState.currentProfession];
-            const phrases = prof.phrases?.[gameState.currentLanguage] || prof.phrases?.en || [];
+            const allPhrases = prof.phrases?.[gameState.currentLanguage] || prof.phrases?.en || [];
+            const phrases = getPhaseItems(gameState.currentPhase);
+            gameState.totalItems = phrases.length;
 
             if (phrases.length === 0) {
                 // Fallback para palavras se não houver frases
@@ -2445,6 +2526,9 @@
             const phrase = phrases[gameState.wordIndex];
             const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
 
+            // Atualizar HUD
+            updateGameHUD();
+
             const content = document.getElementById('game-content');
             content.innerHTML = `
                 <div class="teacher-area">
@@ -2456,7 +2540,7 @@
                             <small style="color: #666;">"${phrase.translation}"</small>
                         </div>
                         <button class="speak-btn" onclick="speakWord('${phrase.phrase.replace(/'/g, "\\'")}')">
-                            🔊 Ouvir em ${lang.name}
+                            🔊 Ouvir novamente
                         </button>
                     </div>
                 </div>
@@ -2468,12 +2552,15 @@
                 </div>
 
                 <div class="quiz-area">
-                    <div class="quiz-question">Complete a frase correta em ${lang.name}:</div>
+                    <div class="quiz-question">Qual é a frase correta em ${lang.name}?</div>
                     <div class="options-container" id="options-container"></div>
                 </div>
             `;
 
-            generatePhraseOptions(phrase, phrases);
+            // Falar automaticamente ao entrar
+            setTimeout(() => speakWord(phrase.phrase), 300);
+
+            generatePhraseOptions(phrase, allPhrases.length > 0 ? allPhrases : phrases);
         }
 
         function generatePhraseOptions(correctPhrase, allPhrases) {
@@ -2512,7 +2599,7 @@
                 setTimeout(() => {
                     gameState.wordIndex++;
                     renderPhraseLearning();
-                }, 1500);
+                }, 2500); // Tempo maior para ouvir a frase
             } else {
                 button.classList.add('wrong');
                 gameState.lives--;
@@ -2522,6 +2609,9 @@
                         btn.classList.add('correct');
                     }
                 });
+
+                // Falar a resposta correta para aprender
+                speakWord(correct);
 
                 if (gameState.lives <= 0) {
                     setTimeout(() => endPhase(false), 1500);
