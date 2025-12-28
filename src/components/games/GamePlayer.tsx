@@ -6,6 +6,9 @@ import { Game } from '@/types';
 import { cn } from '@/lib/utils';
 import { isFavorite, toggleFavorite, trackGameClick, addToHistory } from '@/lib/storage';
 
+// Detecta o basePath do Next.js
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 interface GamePlayerProps {
   game: Game;
 }
@@ -20,8 +23,8 @@ export function GamePlayer({ game }: GamePlayerProps) {
 
   // Check if it's an EAI game (hosted on our platform)
   const isEaiGame = game.embedUrl.startsWith('/');
-  // Get the proper URL for the iframe
-  const iframeSrc = isEaiGame ? game.embedUrl : game.embedUrl;
+  // Get the proper URL for the iframe (add basePath for local games)
+  const iframeSrc = isEaiGame ? `${basePath}${game.embedUrl}` : game.embedUrl;
 
   // Load favorite status
   useEffect(() => {
@@ -149,7 +152,7 @@ export function GamePlayer({ game }: GamePlayerProps) {
             <iframe
               ref={iframeRef}
               key={key}
-              src={game.embedUrl}
+              src={iframeSrc}
               title={game.title}
               className="h-full w-full border-0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
