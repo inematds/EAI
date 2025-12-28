@@ -214,7 +214,7 @@
                 <span style="font-size: 1.1rem;">🌊</span>
                 <span class="text">INEMA.CLUB</span>
             </a>
-            <a href="https://inematds.github.io/EAI/" class="eai-link eai-link-home">
+            <a href="https://eai.inema.club/" class="eai-link eai-link-home">
                 <span style="font-size: 1.1rem;">🎮</span>
                 <span class="text">EAI Games</span>
             </a>
