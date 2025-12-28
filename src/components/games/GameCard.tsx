@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Play, ExternalLink, Heart } from 'lucide-react';
+import { Play, Heart, Sparkles, Users } from 'lucide-react';
 import { Game } from '@/types';
 import { cn } from '@/lib/utils';
 import { isFavorite, toggleFavorite, addToHistory, trackGameClick } from '@/lib/storage';
@@ -16,6 +16,7 @@ export function GameCard({ game, variant = 'default' }: GameCardProps) {
   const isFeatured = variant === 'featured';
   const isLarge = variant === 'large';
   const [favorited, setFavorited] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     setFavorited(isFavorite(game.id));
@@ -28,8 +29,7 @@ export function GameCard({ game, variant = 'default' }: GameCardProps) {
 
     // Check if it's an internal game (starts with /)
     if (game.embedUrl.startsWith('/')) {
-      // Open internal games with full URL
-      window.open(window.location.origin + game.embedUrl, '_blank');
+      window.open(window.location.origin + '/EAI' + game.embedUrl, '_blank');
     } else {
       window.open(game.embedUrl, '_blank');
     }
@@ -41,20 +41,33 @@ export function GameCard({ game, variant = 'default' }: GameCardProps) {
     setFavorited(newState);
   };
 
+  const isEaiGame = game.embedUrl.startsWith('/');
+
   return (
     <div
       onClick={handlePlay}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        'group relative block overflow-hidden rounded-xl bg-white shadow-sm border border-zinc-100 transition-all duration-200 cursor-pointer',
-        'hover:shadow-lg hover:border-zinc-200 hover:-translate-y-1',
+        'group relative block overflow-hidden rounded-2xl cursor-pointer',
+        'bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm',
+        'border border-white/10 transition-all duration-500',
+        'hover:border-purple-500/50 hover:shadow-[0_0_40px_rgba(139,92,246,0.2)]',
+        'hover:scale-[1.02] hover:-translate-y-1',
         isFeatured && 'md:col-span-2 md:row-span-2',
         isLarge && 'col-span-full md:col-span-2'
       )}
     >
+      {/* Animated glow effect on hover */}
+      <div className={cn(
+        'absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 opacity-0 blur-sm transition-opacity duration-500 -z-10',
+        isHovered && 'opacity-50'
+      )} />
+
       {/* Thumbnail */}
       <div
         className={cn(
-          'relative w-full overflow-hidden bg-zinc-100',
+          'relative w-full overflow-hidden',
           isLarge ? 'aspect-[21/9]' : isFeatured ? 'aspect-[16/10]' : 'aspect-[4/3]'
         )}
       >
@@ -62,23 +75,27 @@ export function GameCard({ game, variant = 'default' }: GameCardProps) {
           src={game.thumbnailUrl}
           alt={game.title}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
           sizes={isFeatured || isLarge ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 640px) 50vw, 25vw'}
         />
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        {/* Dark gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d18] via-transparent to-transparent" />
 
-        {/* Play Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Hover overlay with play button */}
+        <div className={cn(
+          'absolute inset-0 bg-purple-900/30 backdrop-blur-[2px] flex items-center justify-center transition-opacity duration-300',
+          isHovered ? 'opacity-100' : 'opacity-0'
+        )}>
           <div className={cn(
-            'flex items-center justify-center rounded-full bg-white/95 shadow-xl transition-all duration-300',
-            'opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100',
-            isLarge || isFeatured ? 'h-16 w-16' : 'h-12 w-12'
+            'flex items-center justify-center rounded-full transition-all duration-500',
+            'bg-gradient-to-r from-purple-600 to-pink-600 shadow-[0_0_30px_rgba(168,85,247,0.6)]',
+            isHovered ? 'scale-100 opacity-100' : 'scale-50 opacity-0',
+            isLarge || isFeatured ? 'h-20 w-20' : 'h-14 w-14'
           )}>
             <Play className={cn(
-              'fill-current',
-              isLarge || isFeatured ? 'h-7 w-7 text-primary' : 'h-5 w-5 text-primary'
+              'fill-white text-white ml-1',
+              isLarge || isFeatured ? 'h-9 w-9' : 'h-6 w-6'
             )} />
           </div>
         </div>
@@ -87,69 +104,79 @@ export function GameCard({ game, variant = 'default' }: GameCardProps) {
         <button
           onClick={handleFavorite}
           className={cn(
-            'absolute top-2 left-2 flex h-8 w-8 items-center justify-center rounded-full transition-all z-10',
+            'absolute top-3 left-3 flex h-9 w-9 items-center justify-center rounded-xl transition-all duration-300 z-10',
             favorited
-              ? 'bg-red-500 text-white'
-              : 'bg-black/50 text-white opacity-0 group-hover:opacity-100 hover:bg-red-500'
+              ? 'bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.5)]'
+              : 'bg-black/40 backdrop-blur-sm text-white/70 opacity-0 group-hover:opacity-100 hover:bg-pink-500 hover:text-white'
           )}
           title={favorited ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
         >
           <Heart className={cn('h-4 w-4', favorited && 'fill-current')} />
         </button>
 
-        {/* EAI Badge - platform games */}
-        {game.embedUrl.startsWith('/') && (
-          <div className="absolute right-2 top-2 rounded-full bg-gradient-to-r from-primary to-arcade px-2.5 py-1 text-xs font-semibold text-white shadow-sm flex items-center gap-1">
-            <span className="font-bold">EAI</span>
+        {/* EAI Badge */}
+        {isEaiGame && (
+          <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-1.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+            <Sparkles className="h-3 w-3" />
+            EAI
           </div>
         )}
 
-        {/* Featured Badge - only show if not EAI game */}
-        {game.featured && !game.embedUrl.startsWith('/') && (
-          <div className="absolute right-2 top-2 rounded-full bg-accent px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
+        {/* Featured Badge */}
+        {game.featured && !isEaiGame && (
+          <div className="absolute right-3 top-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
             Destaque
-          </div>
-        )}
-
-        {/* Category Badge - bottom */}
-        <div className="absolute bottom-2 right-2">
-          <div
-            className={cn(
-              'rounded-full px-2.5 py-1 text-xs font-medium text-white shadow-sm',
-              game.area === 'ARCADE' ? 'bg-arcade' : 'bg-educational'
-            )}
-          >
-            {game.category}
-          </div>
-        </div>
-
-        {/* Title overlay for large cards */}
-        {(isLarge || isFeatured) && (
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-            <h3 className={cn(
-              'font-display font-bold text-white',
-              isLarge ? 'text-xl' : 'text-lg'
-            )}>
-              {game.title}
-            </h3>
-            <p className="text-sm text-white/80 line-clamp-1 mt-1">
-              {game.description}
-            </p>
           </div>
         )}
       </div>
 
-      {/* Content - only for default cards */}
-      {!isLarge && !isFeatured && (
-        <div className="p-3">
-          <h3 className="font-display font-semibold text-zinc-900 line-clamp-1 text-sm">
-            {game.title}
-          </h3>
-          <div className="mt-1.5 flex items-center gap-2 text-xs text-zinc-500">
-            <span>{game.playCount.toLocaleString('pt-BR')} jogadas</span>
-          </div>
+      {/* Content */}
+      <div className={cn(
+        'relative p-4',
+        (isLarge || isFeatured) && 'absolute bottom-0 left-0 right-0'
+      )}>
+        {/* Category Badge */}
+        <div className="mb-2">
+          <span
+            className={cn(
+              'inline-block rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide',
+              game.area === 'ARCADE'
+                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+            )}
+          >
+            {game.category}
+          </span>
         </div>
-      )}
+
+        {/* Title */}
+        <h3 className={cn(
+          'font-display font-bold text-white line-clamp-1',
+          isLarge ? 'text-xl' : isFeatured ? 'text-lg' : 'text-sm'
+        )}>
+          {game.title}
+        </h3>
+
+        {/* Description for large/featured */}
+        {(isLarge || isFeatured) && (
+          <p className="text-sm text-white/60 line-clamp-2 mt-1.5">
+            {game.description}
+          </p>
+        )}
+
+        {/* Stats */}
+        <div className="flex items-center gap-3 mt-2 text-xs text-white/40">
+          <span className="flex items-center gap-1">
+            <Users className="h-3 w-3" />
+            {game.playCount.toLocaleString('pt-BR')}
+          </span>
+          {game.ageRange && (
+            <span className="px-1.5 py-0.5 rounded bg-white/5 text-white/50">
+              {game.ageRange} anos
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
