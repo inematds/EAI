@@ -16,7 +16,15 @@ const CURRENCY_VALUES = {
 function getWallet() {
   try {
     const data = localStorage.getItem(WALLET_KEY);
-    return data ? JSON.parse(data) : { coins: 0, diamonds: 0, gold: 0 };
+    if (data) {
+      const parsed = JSON.parse(data);
+      return {
+        coins: parsed.coins || 0,
+        diamonds: parsed.diamonds || 0,
+        gold: parsed.gold || 0
+      };
+    }
+    return { coins: 0, diamonds: 0, gold: 0 };
   } catch {
     return { coins: 0, diamonds: 0, gold: 0 };
   }
