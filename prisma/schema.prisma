@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum GameArea {
+  ARCADE
+  EDUCATIONAL
+}
+
+enum NewsletterArea {
+  PROFESSIONAL
+  STUDIO
+}
+
+model Game {
+  id              String    @id @default(uuid())
+  slug            String    @unique
+  title           String
+  description     String
+  thumbnailUrl    String    @map("thumbnail_url")
+  embedUrl        String    @map("embed_url")
+  area            GameArea
+  category        String
+  subject         String?
+  ageRange        String?   @map("age_range")
+  educationalGoal String?   @map("educational_goal")
+  tags            String[]
+  playCount       Int       @default(0) @map("play_count")
+  featured        Boolean   @default(false)
+  active          Boolean   @default(true)
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  categoryRef     Category? @relation(fields: [categoryId], references: [id])
+  categoryId      String?   @map("category_id")
+
+  @@map("games")
+  @@index([area])
+  @@index([category])
+  @@index([featured])
+  @@index([active])
+}
+
+model Category {
+  id    String   @id @default(uuid())
+  slug  String   @unique
+  name  String
+  area  GameArea
+  icon  String?
+  order Int      @default(0)
+
+  games Game[]
+
+  @@map("categories")
+  @@index([area])
+}
+
+model NewsletterSubscription {
+  id        String         @id @default(uuid())
+  email     String
+  area      NewsletterArea
+  createdAt DateTime       @default(now()) @map("created_at")
+
+  @@unique([email, area])
+  @@map("newsletter_subscriptions")
+}
