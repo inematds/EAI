@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, Search, Gamepad2, BookOpen, Briefcase, Wrench } from 'lucide-react';
+import { Menu, X, Search, Gamepad2, BookOpen, Briefcase, Wrench, Heart } from 'lucide-react';
 
 const navigation = [
   { name: 'Arcade', href: '/arcade', icon: Gamepad2 },
@@ -48,13 +48,21 @@ export function Header() {
           ))}
         </div>
 
-        {/* Search & Mobile Menu Button */}
-        <div className="flex items-center gap-3">
+        {/* Search, Favorites & Mobile Menu Button */}
+        <div className="flex items-center gap-2">
           <Link
             href="/busca"
             className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-600 transition hover:bg-zinc-100 hover:text-primary"
+            title="Buscar"
           >
             <Search className="h-5 w-5" />
+          </Link>
+          <Link
+            href="/meus-jogos"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-600 transition hover:bg-zinc-100 hover:text-red-500"
+            title="Meus Jogos"
+          >
+            <Heart className="h-5 w-5" />
           </Link>
 
           <button
