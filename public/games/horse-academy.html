@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia de Cavalos - EAI Games</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #7CB342 100%);
+      min-height: 100vh;
+      font-family: 'Comic Sans MS', 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* === TELAS === */
+    .screen {
+      display: none;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .screen.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === TELA INICIAL === */
+    .title-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(180deg, #FFB347 0%, #FFCC80 30%, #87CEEB 60%, #7CB342 100%);
+    }
+
+    .game-logo {
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: #5D4037;
+      text-shadow: 4px 4px 0 #FFF, 6px 6px 0 rgba(0,0,0,0.2);
+      margin-bottom: 0.5rem;
+    }
+
+    .game-subtitle {
+      font-size: 1.5rem;
+      color: #795548;
+      margin-bottom: 2rem;
+    }
+
+    .horse-animation {
+      font-size: 8rem;
+      animation: horseRun 1s ease-in-out infinite;
+    }
+
+    @keyframes horseRun {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    .start-btn {
+      background: linear-gradient(135deg, #8B4513, #A0522D);
+      color: white;
+      border: 4px solid #5D4037;
+      padding: 1.5rem 4rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      border-radius: 2rem;
+      cursor: pointer;
+      margin-top: 2rem;
+      transition: all 0.3s;
+      box-shadow: 0 8px 0 #5D4037, 0 12px 20px rgba(0,0,0,0.3);
+    }
+
+    .start-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 0 #5D4037, 0 16px 25px rgba(0,0,0,0.3);
+    }
+
+    .start-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #5D4037;
+    }
+
+    /* === SELEÇÃO DE PERSONAGEM === */
+    .character-select {
+      background: linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #5D4037;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 0 white;
+    }
+
+    .gender-options {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .gender-card {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 4px solid transparent;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .gender-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .gender-card.selected {
+      border-color: #FF6B6B;
+      background: #FFF5F5;
+    }
+
+    .gender-avatar {
+      font-size: 6rem;
+      display: block;
+      text-align: center;
+    }
+
+    .gender-label {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #5D4037;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    .customization-panel {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .custom-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .custom-label {
+      font-size: 1.2rem;
+      color: #5D4037;
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .color-options, .style-options {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .color-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 4px solid white;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .color-btn:hover, .color-btn.selected {
+      transform: scale(1.2);
+      border-color: #5D4037;
+    }
+
+    .style-btn {
+      padding: 0.75rem 1.5rem;
+      border: 3px solid #DDD;
+      border-radius: 1rem;
+      background: white;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .style-btn:hover, .style-btn.selected {
+      border-color: #8B4513;
+      background: #FFF8E1;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 1rem;
+      border: 3px solid #DDD;
+      border-radius: 1rem;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .name-input:focus {
+      outline: none;
+      border-color: #8B4513;
+    }
+
+    .preview-container {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(180deg, #E3F2FD, #BBDEFB);
+      border-radius: 2rem;
+      margin: 2rem 0;
+    }
+
+    .character-preview {
+      font-size: 8rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .character-hair {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .nav-btn {
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn.back {
+      background: #9E9E9E;
+      color: white;
+    }
+
+    .nav-btn.next {
+      background: linear-gradient(135deg, #4CAF50, #388E3C);
+      color: white;
+      box-shadow: 0 4px 0 #2E7D32;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* === CUSTOMIZAÇÃO DO CAVALO === */
+    .horse-customization {
+      background: linear-gradient(180deg, #FFF8E1 0%, #FFECB3 100%);
+    }
+
+    .horse-preview-large {
+      text-align: center;
+      padding: 3rem;
+      background: linear-gradient(180deg, #E8F5E9, #C8E6C9);
+      border-radius: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .horse-preview-large::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(180deg, transparent, #7CB342);
+    }
+
+    .horse-display {
+      position: relative;
+      display: inline-block;
+    }
+
+    .horse-body {
+      font-size: 10rem;
+      filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.3));
+    }
+
+    .horse-accessory {
+      position: absolute;
+      font-size: 3rem;
+    }
+
+    .horse-saddle {
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .horse-hat {
+      top: -10%;
+      left: 30%;
+    }
+
+    .horse-ribbon {
+      top: 5%;
+      right: 10%;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 1rem 1rem 0 0;
+      background: #DDD;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: #8B4513;
+    }
+
+    .tab-content {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+    }
+
+    .item-card {
+      background: #F5F5F5;
+      border: 3px solid transparent;
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .item-card.selected {
+      border-color: #FF6B6B;
+      background: #FFF5F5;
+    }
+
+    .item-card.locked {
+      opacity: 0.5;
+      position: relative;
+    }
+
+    .item-card.locked::after {
+      content: '🔒';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 1rem;
+    }
+
+    .item-icon {
+      font-size: 3rem;
+      display: block;
+    }
+
+    .item-name {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+
+    .item-price {
+      font-size: 0.8rem;
+      color: #F59E0B;
+      font-weight: bold;
+    }
+
+    /* === TUTORIAL === */
+    .tutorial-screen {
+      background: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 50%, #7CB342 100%);
+    }
+
+    .tutorial-arena {
+      background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 60%, #90EE90 60%, #228B22 100%);
+      border-radius: 2rem;
+      padding: 2rem;
+      min-height: 400px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .arena-fence {
+      position: absolute;
+      bottom: 20%;
+      left: 0;
+      right: 0;
+      height: 60px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .fence-post {
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(180deg, #8B4513, #A0522D);
+      border-radius: 4px;
+    }
+
+    .fence-rail {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background: #8B4513;
+    }
+
+    .fence-rail.top { top: 10px; }
+    .fence-rail.bottom { top: 40px; }
+
+    .rider-on-horse {
+      position: absolute;
+      bottom: 25%;
+      left: 20%;
+      transition: all 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .rider {
+      font-size: 4rem;
+      position: relative;
+      z-index: 2;
+      margin-bottom: -30px;
+    }
+
+    .horse-in-arena {
+      font-size: 6rem;
+      filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    }
+
+    .tutorial-step {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .step-number {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #FF6B6B, #EE5A5A);
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 60px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-size: 1.8rem;
+      color: #5D4037;
+      margin-bottom: 1rem;
+    }
+
+    .step-description {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(135deg, #4CAF50, #388E3C);
+      color: white;
+      box-shadow: 0 4px 0 #2E7D32;
+    }
+
+    .action-btn.secondary {
+      background: #FFF3E0;
+      color: #E65100;
+      border: 3px solid #FFB74D;
+    }
+
+    .action-btn:active {
+      transform: translateY(2px);
+    }
+
+    .progress-bar {
+      height: 20px;
+      background: #E0E0E0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      transition: width 0.5s ease;
+      border-radius: 10px;
+    }
+
+    .skill-indicators {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1rem;
+    }
+
+    .skill {
+      text-align: center;
+    }
+
+    .skill-icon {
+      font-size: 2rem;
+    }
+
+    .skill-bar {
+      width: 80px;
+      height: 8px;
+      background: #E0E0E0;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: #2196F3;
+      border-radius: 4px;
+      transition: width 0.5s;
+    }
+
+    /* === CORRIDA === */
+    .race-screen {
+      background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 50%, #228B22 100%);
+    }
+
+    .race-track {
+      background: linear-gradient(180deg,
+        #87CEEB 0%, #87CEEB 40%,
+        #8B7355 40%, #A08060 45%,
+        #7CB342 45%, #558B2F 100%);
+      border-radius: 2rem;
+      padding: 2rem;
+      min-height: 450px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-lane {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 100px;
+      display: flex;
+      align-items: center;
+    }
+
+    .lane-marker {
+      position: absolute;
+      left: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .finish-line {
+      position: absolute;
+      right: 20px;
+      top: 0;
+      bottom: 0;
+      width: 30px;
+      background: repeating-linear-gradient(
+        0deg,
+        white 0px, white 20px,
+        black 20px, black 40px
+      );
+    }
+
+    .racer {
+      position: absolute;
+      left: 50px;
+      display: flex;
+      align-items: center;
+      transition: left 0.3s ease;
+    }
+
+    .racer-horse {
+      font-size: 4rem;
+    }
+
+    .racer-name {
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+
+    .race-controls {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .race-instruction {
+      font-size: 1.5rem;
+      color: #5D4037;
+      margin-bottom: 1rem;
+    }
+
+    .tap-btn {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF6B6B, #EE5A5A);
+      border: 6px solid #C62828;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.1s;
+      box-shadow: 0 8px 0 #B71C1C;
+    }
+
+    .tap-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #B71C1C;
+    }
+
+    /* === VITÓRIA === */
+    .victory-screen {
+      background: linear-gradient(180deg, #FFD700 0%, #FFA000 50%, #FF6F00 100%);
+      text-align: center;
+    }
+
+    .trophy {
+      font-size: 12rem;
+      animation: trophyBounce 1s ease infinite;
+    }
+
+    @keyframes trophyBounce {
+      0%, 100% { transform: scale(1) rotate(-5deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    .victory-title {
+      font-size: 3rem;
+      color: white;
+      text-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+      margin: 1rem 0;
+    }
+
+    .victory-subtitle {
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2rem;
+    }
+
+    .stats-panel {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 2px solid #EEE;
+    }
+
+    .stat-row:last-child {
+      border-bottom: none;
+    }
+
+    .stat-label {
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #5D4037;
+    }
+
+    /* === RANKING === */
+    .ranking-screen {
+      background: linear-gradient(180deg, #1A237E 0%, #283593 50%, #3949AB 100%);
+    }
+
+    .ranking-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #FFD700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 2rem;
+    }
+
+    .ranking-list {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .ranking-item:hover {
+      background: #F5F5F5;
+    }
+
+    .ranking-item.gold { background: linear-gradient(135deg, #FFD700, #FFA000); color: white; }
+    .ranking-item.silver { background: linear-gradient(135deg, #C0C0C0, #9E9E9E); color: white; }
+    .ranking-item.bronze { background: linear-gradient(135deg, #CD7F32, #A0522D); color: white; }
+
+    .rank-position {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .rank-avatar {
+      font-size: 2.5rem;
+    }
+
+    .rank-info {
+      flex: 1;
+    }
+
+    .rank-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .rank-horse {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .rank-score {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .rank-medals {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    /* === LOJA === */
+    .shop-screen {
+      background: linear-gradient(180deg, #FFE0B2 0%, #FFCC80 100%);
+    }
+
+    .shop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .coins-display {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .shop-categories {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .category-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      background: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .category-btn.active {
+      background: linear-gradient(135deg, #8B4513, #A0522D);
+      color: white;
+    }
+
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .shop-item {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 3px solid transparent;
+    }
+
+    .shop-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .shop-item.owned {
+      border-color: #4CAF50;
+      background: #E8F5E9;
+    }
+
+    .shop-item-icon {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .shop-item-name {
+      font-size: 1rem;
+      color: #5D4037;
+      font-weight: bold;
+    }
+
+    .shop-item-price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #F59E0B;
+      font-weight: bold;
+    }
+
+    .buy-btn {
+      margin-top: 0.75rem;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, #4CAF50, #388E3C);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .buy-btn:disabled {
+      background: #CCC;
+      cursor: not-allowed;
+    }
+
+    /* === MENU LATERAL === */
+    .menu-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid #8B4513;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 600px) {
+      .game-logo { font-size: 2.5rem; }
+      .horse-animation { font-size: 5rem; }
+      .gender-options { flex-direction: column; align-items: center; }
+      .horse-body { font-size: 6rem; }
+      .character-preview { font-size: 5rem; }
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-btn" onclick="showScreen('menu')" id="menuBtn" style="display:none">☰</button>
+
+  <!-- TELA INICIAL -->
+  <div class="screen title-screen active" id="titleScreen">
+    <div class="game-logo">🐴 Academia de Cavalos</div>
+    <div class="game-subtitle">Aprenda a cavalgar e seja o melhor!</div>
+    <div class="horse-animation">🐎</div>
+    <button class="start-btn" onclick="startGame()">🏇 JOGAR</button>
+    <button class="start-btn" style="background: linear-gradient(135deg, #FFD700, #FFA000); margin-top: 1rem;" onclick="showScreen('ranking')">🏆 Ranking</button>
+  </div>
+
+  <!-- SELEÇÃO DE PERSONAGEM -->
+  <div class="screen character-select" id="characterScreen">
+    <h2 class="section-title">👤 Crie seu Cavaleiro</h2>
+
+    <div class="gender-options">
+      <div class="gender-card selected" onclick="selectGender('girl')" id="girlCard">
+        <span class="gender-avatar">👧</span>
+        <div class="gender-label">Menina</div>
+      </div>
+      <div class="gender-card" onclick="selectGender('boy')" id="boyCard">
+        <span class="gender-avatar">👦</span>
+        <div class="gender-label">Menino</div>
+      </div>
+    </div>
+
+    <div class="preview-container">
+      <div class="character-preview" id="characterPreview">
+        👧
+      </div>
+    </div>
+
+    <div class="customization-panel">
+      <div class="custom-section">
+        <label class="custom-label">📝 Nome do Cavaleiro</label>
+        <input type="text" class="name-input" id="riderName" placeholder="Digite seu nome..." maxlength="15">
+      </div>
+
+      <div class="custom-section">
+        <label class="custom-label">🎨 Cor da Roupa</label>
+        <div class="color-options">
+          <button class="color-btn selected" style="background: #E91E63;" onclick="selectClothColor('#E91E63')"></button>
+          <button class="color-btn" style="background: #2196F3;" onclick="selectClothColor('#2196F3')"></button>
+          <button class="color-btn" style="background: #4CAF50;" onclick="selectClothColor('#4CAF50')"></button>
+          <button class="color-btn" style="background: #9C27B0;" onclick="selectClothColor('#9C27B0')"></button>
+          <button class="color-btn" style="background: #FF9800;" onclick="selectClothColor('#FF9800')"></button>
+          <button class="color-btn" style="background: #795548;" onclick="selectClothColor('#795548')"></button>
+        </div>
+      </div>
+
+      <div class="custom-section">
+        <label class="custom-label">💇 Estilo do Cabelo</label>
+        <div class="style-options">
+          <button class="style-btn selected" onclick="selectHairStyle('curto')">Curto</button>
+          <button class="style-btn" onclick="selectHairStyle('longo')">Longo</button>
+          <button class="style-btn" onclick="selectHairStyle('cacheado')">Cacheado</button>
+          <button class="style-btn" onclick="selectHairStyle('rabo')">Rabo de Cavalo</button>
+        </div>
+      </div>
+
+      <div class="custom-section">
+        <label class="custom-label">🎨 Cor do Cabelo</label>
+        <div class="color-options">
+          <button class="color-btn selected" style="background: #4A3728;" onclick="selectHairColor('#4A3728')"></button>
+          <button class="color-btn" style="background: #1A1A1A;" onclick="selectHairColor('#1A1A1A')"></button>
+          <button class="color-btn" style="background: #D4A574;" onclick="selectHairColor('#D4A574')"></button>
+          <button class="color-btn" style="background: #C41E3A;" onclick="selectHairColor('#C41E3A')"></button>
+          <button class="color-btn" style="background: #FFD700;" onclick="selectHairColor('#FFD700')"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn back" onclick="showScreen('title')">← Voltar</button>
+      <button class="nav-btn next" onclick="showScreen('horseCustom')">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- CUSTOMIZAÇÃO DO CAVALO -->
+  <div class="screen horse-customization" id="horseCustomScreen">
+    <h2 class="section-title">🐴 Crie seu Cavalo</h2>
+
+    <div class="horse-preview-large">
+      <div class="horse-display" id="horseDisplay">
+        <span class="horse-body" id="horseBody">🐴</span>
+        <span class="horse-accessory horse-saddle" id="horseSaddle"></span>
+        <span class="horse-accessory horse-hat" id="horseHat"></span>
+        <span class="horse-accessory horse-ribbon" id="horseRibbon"></span>
+      </div>
+    </div>
+
+    <div class="customization-panel">
+      <div class="custom-section">
+        <label class="custom-label">📝 Nome do Cavalo</label>
+        <input type="text" class="name-input" id="horseName" placeholder="Digite o nome do cavalo..." maxlength="15">
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('cores')">🎨 Cores</button>
+        <button class="tab-btn" onclick="showTab('tipo')">🐎 Tipo</button>
+        <button class="tab-btn" onclick="showTab('pelos')">✨ Pelos</button>
+      </div>
+
+      <div class="tab-content active" id="tab-cores">
+        <label class="custom-label">Cor do Cavalo</label>
+        <div class="item-grid">
+          <div class="item-card selected" onclick="selectHorseColor('brown')">
+            <span class="item-icon">🟤</span>
+            <span class="item-name">Marrom</span>
+          </div>
+          <div class="item-card" onclick="selectHorseColor('black')">
+            <span class="item-icon">⚫</span>
+            <span class="item-name">Preto</span>
+          </div>
+          <div class="item-card" onclick="selectHorseColor('white')">
+            <span class="item-icon">⚪</span>
+            <span class="item-name">Branco</span>
+          </div>
+          <div class="item-card" onclick="selectHorseColor('golden')">
+            <span class="item-icon">🟡</span>
+            <span class="item-name">Dourado</span>
+          </div>
+          <div class="item-card" onclick="selectHorseColor('spotted')">
+            <span class="item-icon">🔵</span>
+            <span class="item-name">Malhado</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-tipo">
+        <label class="custom-label">Raça do Cavalo</label>
+        <div class="item-grid">
+          <div class="item-card selected" onclick="selectHorseType('normal')">
+            <span class="item-icon">🐴</span>
+            <span class="item-name">Comum</span>
+          </div>
+          <div class="item-card" onclick="selectHorseType('racing')">
+            <span class="item-icon">🏇</span>
+            <span class="item-name">Corrida</span>
+          </div>
+          <div class="item-card" onclick="selectHorseType('pony')">
+            <span class="item-icon">🐎</span>
+            <span class="item-name">Pônei</span>
+          </div>
+          <div class="item-card locked" onclick="showLocked()">
+            <span class="item-icon">🦄</span>
+            <span class="item-name">Unicórnio</span>
+            <span class="item-price">🪙 500</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-pelos">
+        <label class="custom-label">Estilo da Crina</label>
+        <div class="item-grid">
+          <div class="item-card selected" onclick="selectManeStyle('normal')">
+            <span class="item-icon">〰️</span>
+            <span class="item-name">Normal</span>
+          </div>
+          <div class="item-card" onclick="selectManeStyle('wavy')">
+            <span class="item-icon">🌊</span>
+            <span class="item-name">Ondulado</span>
+          </div>
+          <div class="item-card" onclick="selectManeStyle('braided')">
+            <span class="item-icon">🎀</span>
+            <span class="item-name">Trançado</span>
+          </div>
+          <div class="item-card" onclick="selectManeStyle('fluffy')">
+            <span class="item-icon">☁️</span>
+            <span class="item-name">Fofo</span>
+          </div>
+        </div>
+
+        <label class="custom-label" style="margin-top: 1rem;">Pelos nas Patas</label>
+        <div class="item-grid">
+          <div class="item-card selected" onclick="selectLegHair('none')">
+            <span class="item-icon">🦵</span>
+            <span class="item-name">Sem pelos</span>
+          </div>
+          <div class="item-card" onclick="selectLegHair('fluffy')">
+            <span class="item-icon">🧶</span>
+            <span class="item-name">Peludinho</span>
+          </div>
+          <div class="item-card" onclick="selectLegHair('long')">
+            <span class="item-icon">🌾</span>
+            <span class="item-name">Pelo longo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn back" onclick="showScreen('character')">← Voltar</button>
+      <button class="nav-btn next" onclick="startTutorial()">Começar Tutorial →</button>
+    </div>
+  </div>
+
+  <!-- TUTORIAL -->
+  <div class="screen tutorial-screen" id="tutorialScreen">
+    <h2 class="section-title" id="tutorialTitle">📚 Aprendendo a Cavalgar</h2>
+
+    <div class="tutorial-arena" id="tutorialArena">
+      <div class="arena-fence">
+        <div class="fence-post"></div>
+        <div class="fence-post"></div>
+        <div class="fence-post"></div>
+        <div class="fence-post"></div>
+        <div class="fence-post"></div>
+        <div class="fence-rail top"></div>
+        <div class="fence-rail bottom"></div>
+      </div>
+
+      <div class="rider-on-horse" id="riderOnHorse">
+        <div class="rider" id="riderInArena">👧</div>
+        <div class="horse-in-arena" id="horseInArena">🐴</div>
+      </div>
+    </div>
+
+    <div class="tutorial-step">
+      <div class="progress-bar">
+        <div class="progress-fill" id="tutorialProgress" style="width: 0%"></div>
+      </div>
+
+      <div class="step-number" id="stepNumber">1</div>
+      <h3 class="step-title" id="stepTitle">Conhecendo seu Cavalo</h3>
+      <p class="step-description" id="stepDescription">
+        Primeiro, vamos conhecer seu cavalo! Aproxime-se dele com calma e carinho.
+      </p>
+
+      <div class="action-buttons">
+        <button class="action-btn primary" id="mainActionBtn" onclick="doAction()">
+          🐴 Aproximar do Cavalo
+        </button>
+      </div>
+
+      <div class="skill-indicators">
+        <div class="skill">
+          <span class="skill-icon">🤝</span>
+          <div>Confiança</div>
+          <div class="skill-bar"><div class="skill-bar-fill" id="trustBar" style="width: 0%"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-icon">⚖️</span>
+          <div>Equilíbrio</div>
+          <div class="skill-bar"><div class="skill-bar-fill" id="balanceBar" style="width: 0%"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-icon">🎯</span>
+          <div>Controle</div>
+          <div class="skill-bar"><div class="skill-bar-fill" id="controlBar" style="width: 0%"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-icon">💨</span>
+          <div>Velocidade</div>
+          <div class="skill-bar"><div class="skill-bar-fill" id="speedBar" style="width: 0%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORRIDA -->
+  <div class="screen race-screen" id="raceScreen">
+    <h2 class="section-title" style="color: white;">🏁 Grande Corrida!</h2>
+
+    <div class="race-track">
+      <div class="finish-line"></div>
+
+      <div class="track-lane" style="top: 60px;">
+        <span class="lane-marker">1</span>
+        <div class="racer" id="racer1" style="left: 50px;">
+          <span class="racer-horse" id="playerHorse">🏇</span>
+          <span class="racer-name" id="playerNameRace">Você</span>
+        </div>
+      </div>
+
+      <div class="track-lane" style="top: 160px;">
+        <span class="lane-marker">2</span>
+        <div class="racer" id="racer2" style="left: 50px;">
+          <span class="racer-horse">🏇</span>
+          <span class="racer-name">Luna</span>
+        </div>
+      </div>
+
+      <div class="track-lane" style="top: 260px;">
+        <span class="lane-marker">3</span>
+        <div class="racer" id="racer3" style="left: 50px;">
+          <span class="racer-horse">🏇</span>
+          <span class="racer-name">Pedro</span>
+        </div>
+      </div>
+
+      <div class="track-lane" style="top: 360px;">
+        <span class="lane-marker">4</span>
+        <div class="racer" id="racer4" style="left: 50px;">
+          <span class="racer-horse">🏇</span>
+          <span class="racer-name">Maria</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="race-controls">
+      <div class="race-instruction" id="raceInstruction">Toque rápido para correr! 🏃</div>
+      <button class="tap-btn" id="tapBtn" onclick="tapRace()">
+        🏇<br>CORRER!
+      </button>
+    </div>
+  </div>
+
+  <!-- VITÓRIA -->
+  <div class="screen victory-screen" id="victoryScreen">
+    <div class="trophy">🏆</div>
+    <h2 class="victory-title" id="victoryTitle">PARABÉNS!</h2>
+    <p class="victory-subtitle" id="victorySubtitle">Você é um verdadeiro cavaleiro!</p>
+
+    <div class="stats-panel">
+      <div class="stat-row">
+        <span class="stat-label">📍 Posição</span>
+        <span class="stat-value" id="finalPosition">1º Lugar</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">⏱️ Tempo</span>
+        <span class="stat-value" id="finalTime">00:12.5</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">🪙 Moedas Ganhas</span>
+        <span class="stat-value" id="coinsEarned">+50</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">⭐ Pontuação</span>
+        <span class="stat-value" id="finalScore">1000</span>
+      </div>
+    </div>
+
+    <div class="nav-buttons" style="margin-top: 2rem;">
+      <button class="nav-btn next" onclick="showScreen('ranking')">🏆 Ver Ranking</button>
+      <button class="nav-btn back" onclick="showScreen('title')">🏠 Menu</button>
+    </div>
+  </div>
+
+  <!-- RANKING -->
+  <div class="screen ranking-screen" id="rankingScreen">
+    <h2 class="ranking-title">🏆 Ranking dos Melhores</h2>
+
+    <div class="ranking-list" id="rankingList">
+      <!-- Preenchido via JS -->
+    </div>
+
+    <div class="nav-buttons" style="margin-top: 2rem;">
+      <button class="nav-btn back" onclick="showScreen('title')">🏠 Voltar ao Menu</button>
+      <button class="nav-btn next" onclick="showScreen('shop')">🛒 Loja</button>
+    </div>
+  </div>
+
+  <!-- LOJA -->
+  <div class="screen shop-screen" id="shopScreen">
+    <div class="shop-header">
+      <h2 class="section-title" style="margin: 0;">🛒 Loja</h2>
+      <div class="coins-display">
+        🪙 <span id="shopCoins">0</span>
+      </div>
+    </div>
+
+    <div class="shop-categories">
+      <button class="category-btn active" onclick="showShopCategory('selas')">🪑 Selas</button>
+      <button class="category-btn" onclick="showShopCategory('arreios')">⛓️ Arreios</button>
+      <button class="category-btn" onclick="showShopCategory('chapeus')">🎩 Chapéus</button>
+      <button class="category-btn" onclick="showShopCategory('enfeites')">✨ Enfeites</button>
+    </div>
+
+    <div class="shop-grid" id="shopGrid">
+      <!-- Preenchido via JS -->
+    </div>
+
+    <div class="nav-buttons" style="margin-top: 2rem;">
+      <button class="nav-btn back" onclick="showScreen('title')">🏠 Voltar ao Menu</button>
+    </div>
+  </div>
+
+  <script src="eai-wallet.js"></script>
+  <script src="eai-counter.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => initEaiCounter('horse-academy'));</script>
+
+  <script>
+    // === ESTADO DO JOGO ===
+    const gameState = {
+      rider: {
+        name: '',
+        gender: 'girl',
+        clothColor: '#E91E63',
+        hairStyle: 'curto',
+        hairColor: '#4A3728'
+      },
+      horse: {
+        name: '',
+        color: 'brown',
+        type: 'normal',
+        maneStyle: 'normal',
+        legHair: 'none'
+      },
+      skills: {
+        trust: 0,
+        balance: 0,
+        control: 0,
+        speed: 0
+      },
+      coins: 100,
+      ownedItems: ['saddle-basic'],
+      equipped: {
+        saddle: null,
+        bridle: null,
+        hat: null,
+        decoration: null
+      },
+      tutorialStep: 0,
+      score: 0
+    };
+
+    const tutorialSteps = [
+      {
+        title: 'Conhecendo seu Cavalo',
+        description: 'Primeiro, vamos conhecer seu cavalo! Aproxime-se dele com calma e carinho.',
+        action: '🐴 Aproximar do Cavalo',
+        skill: 'trust',
+        bonus: 20
+      },
+      {
+        title: 'Acariciando o Cavalo',
+        description: 'Muito bem! Agora acaricie seu cavalo para ganhar a confiança dele.',
+        action: '🤚 Acariciar',
+        skill: 'trust',
+        bonus: 30
+      },
+      {
+        title: 'Subindo no Cavalo',
+        description: 'Seu cavalo já confia em você! Agora vamos subir com cuidado.',
+        action: '🧗 Subir no Cavalo',
+        skill: 'balance',
+        bonus: 25
+      },
+      {
+        title: 'Mantendo o Equilíbrio',
+        description: 'Ótimo! Mantenha-se firme na sela. Sinta o movimento do cavalo.',
+        action: '⚖️ Manter Equilíbrio',
+        skill: 'balance',
+        bonus: 35
+      },
+      {
+        title: 'Segurando as Rédeas',
+        description: 'Pegue as rédeas com firmeza, mas sem apertar muito!',
+        action: '🎠 Pegar as Rédeas',
+        skill: 'control',
+        bonus: 30
+      },
+      {
+        title: 'Primeiro Passo',
+        description: 'Vamos dar o primeiro passo! Pressione levemente os calcanhares.',
+        action: '🚶 Primeiro Passo',
+        skill: 'control',
+        bonus: 40
+      },
+      {
+        title: 'Andando Devagar',
+        description: 'Excelente! Continue andando devagar, controlando a direção.',
+        action: '🚶 Andar Devagar',
+        skill: 'speed',
+        bonus: 25
+      },
+      {
+        title: 'Trotando',
+        description: 'Você está pronto para trotar! Aumente um pouco a velocidade.',
+        action: '🏃 Trotar',
+        skill: 'speed',
+        bonus: 45
+      },
+      {
+        title: 'Galopando',
+        description: 'Hora de galopar! Sinta o vento no rosto!',
+        action: '🏇 Galopar',
+        skill: 'speed',
+        bonus: 60
+      },
+      {
+        title: 'Parabéns! Tutorial Completo!',
+        description: 'Você aprendeu a cavalgar! Agora está pronto para a corrida!',
+        action: '🏁 Ir para Corrida',
+        skill: null,
+        bonus: 0
+      }
+    ];
+
+    const shopItems = {
+      selas: [
+        { id: 'saddle-basic', name: 'Sela Básica', icon: '🪑', price: 0, owned: true },
+        { id: 'saddle-western', name: 'Sela Western', icon: '🤠', price: 50 },
+        { id: 'saddle-english', name: 'Sela Inglesa', icon: '👑', price: 80 },
+        { id: 'saddle-racing', name: 'Sela de Corrida', icon: '🏎️', price: 120 },
+        { id: 'saddle-golden', name: 'Sela Dourada', icon: '✨', price: 200 }
+      ],
+      arreios: [
+        { id: 'bridle-basic', name: 'Arreio Básico', icon: '⛓️', price: 0, owned: true },
+        { id: 'bridle-leather', name: 'Arreio de Couro', icon: '🟤', price: 40 },
+        { id: 'bridle-silver', name: 'Arreio Prateado', icon: '⚪', price: 100 },
+        { id: 'bridle-gold', name: 'Arreio Dourado', icon: '🟡', price: 150 }
+      ],
+      chapeus: [
+        { id: 'hat-cowboy', name: 'Chapéu Cowboy', icon: '🤠', price: 30 },
+        { id: 'hat-rider', name: 'Capacete', icon: '⛑️', price: 50 },
+        { id: 'hat-crown', name: 'Coroa', icon: '👑', price: 200 },
+        { id: 'hat-flower', name: 'Flores', icon: '🌸', price: 40 }
+      ],
+      enfeites: [
+        { id: 'deco-ribbon', name: 'Laço', icon: '🎀', price: 20 },
+        { id: 'deco-flowers', name: 'Guirlanda', icon: '💐', price: 35 },
+        { id: 'deco-bells', name: 'Sinos', icon: '🔔', price: 45 },
+        { id: 'deco-stars', name: 'Estrelas', icon: '⭐', price: 60 }
+      ]
+    };
+
+    let raceInterval = null;
+    let raceSpeed = 0;
+    let playerPosition = 50;
+    let opponents = [50, 50, 50];
+    let raceStartTime = 0;
+
+    // === FUNÇÕES DE TELA ===
+    function showScreen(screenName) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+      const screenMap = {
+        'title': 'titleScreen',
+        'character': 'characterScreen',
+        'horseCustom': 'horseCustomScreen',
+        'tutorial': 'tutorialScreen',
+        'race': 'raceScreen',
+        'victory': 'victoryScreen',
+        'ranking': 'rankingScreen',
+        'shop': 'shopScreen'
+      };
+
+      const screenId = screenMap[screenName];
+      if (screenId) {
+        document.getElementById(screenId).classList.add('active');
+        document.getElementById('menuBtn').style.display = screenName === 'title' ? 'none' : 'block';
+
+        if (screenName === 'ranking') loadRanking();
+        if (screenName === 'shop') loadShop();
+      }
+    }
+
+    function startGame() {
+      loadGameState();
+      showScreen('character');
+    }
+
+    // === PERSONALIZAÇÃO DO CAVALEIRO ===
+    function selectGender(gender) {
+      gameState.rider.gender = gender;
+      document.getElementById('girlCard').classList.toggle('selected', gender === 'girl');
+      document.getElementById('boyCard').classList.toggle('selected', gender === 'boy');
+      updateCharacterPreview();
+    }
+
+    function selectClothColor(color) {
+      gameState.rider.clothColor = color;
+      document.querySelectorAll('.customization-panel .color-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      event.target.classList.add('selected');
+    }
+
+    function selectHairStyle(style) {
+      gameState.rider.hairStyle = style;
+      document.querySelectorAll('.style-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      event.target.classList.add('selected');
+    }
+
+    function selectHairColor(color) {
+      gameState.rider.hairColor = color;
+    }
+
+    function updateCharacterPreview() {
+      const preview = document.getElementById('characterPreview');
+      preview.textContent = gameState.rider.gender === 'girl' ? '👧' : '👦';
+    }
+
+    // === PERSONALIZAÇÃO DO CAVALO ===
+    function showTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      event.target.classList.add('active');
+      document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    function selectHorseColor(color) {
+      gameState.horse.color = color;
+      updateItemSelection(event.target);
+    }
+
+    function selectHorseType(type) {
+      gameState.horse.type = type;
+      updateItemSelection(event.target);
+      updateHorsePreview();
+    }
+
+    function selectManeStyle(style) {
+      gameState.horse.maneStyle = style;
+      updateItemSelection(event.target);
+    }
+
+    function selectLegHair(style) {
+      gameState.horse.legHair = style;
+      updateItemSelection(event.target);
+    }
+
+    function updateItemSelection(element) {
+      const parent = element.closest('.item-grid');
+      parent.querySelectorAll('.item-card').forEach(card => card.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    function updateHorsePreview() {
+      const horseBody = document.getElementById('horseBody');
+      if (gameState.horse.type === 'pony') {
+        horseBody.textContent = '🐎';
+      } else if (gameState.horse.type === 'racing') {
+        horseBody.textContent = '🏇';
+      } else {
+        horseBody.textContent = '🐴';
+      }
+    }
+
+    function showLocked() {
+      alert('Este item está bloqueado! Complete mais corridas para desbloquear.');
+    }
+
+    // === TUTORIAL ===
+    function startTutorial() {
+      gameState.rider.name = document.getElementById('riderName').value || 'Cavaleiro';
+      gameState.horse.name = document.getElementById('horseName').value || 'Trovão';
+
+      gameState.tutorialStep = 0;
+      gameState.skills = { trust: 0, balance: 0, control: 0, speed: 0 };
+
+      updateTutorialStep();
+      showScreen('tutorial');
+
+      // Atualizar avatar na arena
+      document.getElementById('riderInArena').textContent = gameState.rider.gender === 'girl' ? '👧' : '👦';
+    }
+
+    function updateTutorialStep() {
+      const step = tutorialSteps[gameState.tutorialStep];
+
+      document.getElementById('stepNumber').textContent = gameState.tutorialStep + 1;
+      document.getElementById('stepTitle').textContent = step.title;
+      document.getElementById('stepDescription').textContent = step.description;
+      document.getElementById('mainActionBtn').innerHTML = step.action;
+
+      const progress = ((gameState.tutorialStep + 1) / tutorialSteps.length) * 100;
+      document.getElementById('tutorialProgress').style.width = progress + '%';
+
+      // Atualizar barras de habilidade
+      document.getElementById('trustBar').style.width = gameState.skills.trust + '%';
+      document.getElementById('balanceBar').style.width = gameState.skills.balance + '%';
+      document.getElementById('controlBar').style.width = gameState.skills.control + '%';
+      document.getElementById('speedBar').style.width = gameState.skills.speed + '%';
+
+      // Mover cavaleiro na arena
+      const riderElement = document.getElementById('riderOnHorse');
+      const leftPos = 20 + (gameState.tutorialStep * 7);
+      riderElement.style.left = leftPos + '%';
+    }
+
+    function doAction() {
+      const step = tutorialSteps[gameState.tutorialStep];
+
+      if (step.skill) {
+        gameState.skills[step.skill] = Math.min(100, gameState.skills[step.skill] + step.bonus);
+      }
+
+      gameState.tutorialStep++;
+
+      if (gameState.tutorialStep >= tutorialSteps.length) {
+        // Tutorial completo - ir para corrida
+        EAI.giveReward('coins', 20);
+        setTimeout(() => startRace(), 1000);
+      } else {
+        updateTutorialStep();
+      }
+    }
+
+    // === CORRIDA ===
+    function startRace() {
+      showScreen('race');
+
+      playerPosition = 50;
+      opponents = [50, 50, 50];
+      raceSpeed = 0;
+      raceStartTime = Date.now();
+
+      document.getElementById('playerNameRace').textContent = gameState.rider.name;
+      document.getElementById('racer1').style.left = '50px';
+      document.getElementById('racer2').style.left = '50px';
+      document.getElementById('racer3').style.left = '50px';
+      document.getElementById('racer4').style.left = '50px';
+
+      // Movimento dos oponentes
+      raceInterval = setInterval(() => {
+        // Oponentes se movem
+        for (let i = 0; i < 3; i++) {
+          opponents[i] += Math.random() * 8 + 2;
+          const racerNum = i + 2;
+          document.getElementById('racer' + racerNum).style.left = opponents[i] + 'px';
+
+          // Verificar se oponente venceu
+          if (opponents[i] >= 600) {
+            endRace(i + 2);
+            return;
+          }
+        }
+
+        // Desacelerar jogador
+        raceSpeed = Math.max(0, raceSpeed - 0.5);
+        playerPosition += raceSpeed;
+        document.getElementById('racer1').style.left = playerPosition + 'px';
+
+        // Verificar se jogador venceu
+        if (playerPosition >= 600) {
+          endRace(1);
+        }
+      }, 100);
+    }
+
+    function tapRace() {
+      raceSpeed = Math.min(15, raceSpeed + 3);
+      playerPosition += 5;
+      document.getElementById('racer1').style.left = playerPosition + 'px';
+
+      // Animação do botão
+      const btn = document.getElementById('tapBtn');
+      btn.style.transform = 'scale(0.95)';
+      setTimeout(() => btn.style.transform = '', 100);
+
+      if (playerPosition >= 600) {
+        endRace(1);
+      }
+    }
+
+    function endRace(winnerPosition) {
+      clearInterval(raceInterval);
+
+      const raceTime = ((Date.now() - raceStartTime) / 1000).toFixed(1);
+      let position = 1;
+
+      // Calcular posição do jogador
+      opponents.forEach(pos => {
+        if (pos > playerPosition) position++;
+      });
+
+      // Calcular pontuação
+      let score = 0;
+      let coins = 0;
+
+      if (position === 1) {
+        score = 1000;
+        coins = 50;
+        document.getElementById('victoryTitle').textContent = '🏆 CAMPEÃO!';
+        document.getElementById('victorySubtitle').textContent = 'Você venceu a corrida!';
+      } else if (position === 2) {
+        score = 700;
+        coins = 30;
+        document.getElementById('victoryTitle').textContent = '🥈 SEGUNDO LUGAR!';
+        document.getElementById('victorySubtitle').textContent = 'Quase lá! Continue treinando!';
+      } else if (position === 3) {
+        score = 500;
+        coins = 20;
+        document.getElementById('victoryTitle').textContent = '🥉 TERCEIRO LUGAR!';
+        document.getElementById('victorySubtitle').textContent = 'Bom esforço!';
+      } else {
+        score = 200;
+        coins = 10;
+        document.getElementById('victoryTitle').textContent = '4º LUGAR';
+        document.getElementById('victorySubtitle').textContent = 'Não desista! Tente novamente!';
+      }
+
+      gameState.score = score;
+      gameState.coins += coins;
+
+      document.getElementById('finalPosition').textContent = position + 'º Lugar';
+      document.getElementById('finalTime').textContent = '00:' + raceTime;
+      document.getElementById('coinsEarned').textContent = '+' + coins;
+      document.getElementById('finalScore').textContent = score;
+
+      // Salvar no ranking
+      saveToRanking(position, score, raceTime);
+
+      // Dar recompensas
+      EAI.giveReward('coins', coins);
+
+      setTimeout(() => showScreen('victory'), 500);
+    }
+
+    // === RANKING ===
+    function saveToRanking(position, score, time) {
+      let ranking = JSON.parse(localStorage.getItem('horse_ranking') || '[]');
+
+      ranking.push({
+        name: gameState.rider.name,
+        horseName: gameState.horse.name,
+        gender: gameState.rider.gender,
+        position: position,
+        score: score,
+        time: time,
+        date: new Date().toISOString()
+      });
+
+      // Ordenar por score e manter top 20
+      ranking.sort((a, b) => b.score - a.score);
+      ranking = ranking.slice(0, 20);
+
+      localStorage.setItem('horse_ranking', JSON.stringify(ranking));
+    }
+
+    function loadRanking() {
+      const ranking = JSON.parse(localStorage.getItem('horse_ranking') || '[]');
+      const list = document.getElementById('rankingList');
+
+      if (ranking.length === 0) {
+        list.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">Nenhuma corrida ainda! Seja o primeiro!</p>';
+        return;
+      }
+
+      let html = '';
+      ranking.forEach((entry, index) => {
+        let rankClass = '';
+        let medal = '';
+
+        if (index === 0) { rankClass = 'gold'; medal = '🥇'; }
+        else if (index === 1) { rankClass = 'silver'; medal = '🥈'; }
+        else if (index === 2) { rankClass = 'bronze'; medal = '🥉'; }
+
+        const avatar = entry.gender === 'girl' ? '👧' : '👦';
+
+        html += `
+          <div class="ranking-item ${rankClass}">
+            <div class="rank-position">${medal || (index + 1)}</div>
+            <span class="rank-avatar">${avatar}</span>
+            <div class="rank-info">
+              <div class="rank-name">${entry.name}</div>
+              <div class="rank-horse">🐴 ${entry.horseName}</div>
+            </div>
+            <div class="rank-score">${entry.score} pts</div>
+          </div>
+        `;
+      });
+
+      list.innerHTML = html;
+    }
+
+    // === LOJA ===
+    function loadShop() {
+      document.getElementById('shopCoins').textContent = gameState.coins;
+      showShopCategory('selas');
+    }
+
+    function showShopCategory(category) {
+      document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const items = shopItems[category];
+      const grid = document.getElementById('shopGrid');
+
+      let html = '';
+      items.forEach(item => {
+        const owned = gameState.ownedItems.includes(item.id);
+        const canBuy = gameState.coins >= item.price && !owned;
+
+        html += `
+          <div class="shop-item ${owned ? 'owned' : ''}">
+            <span class="shop-item-icon">${item.icon}</span>
+            <div class="shop-item-name">${item.name}</div>
+            ${owned ? '<div style="color: #4CAF50; font-weight: bold;">✓ Adquirido</div>' :
+              `<div class="shop-item-price">🪙 ${item.price}</div>
+               <button class="buy-btn" ${canBuy ? `onclick="buyItem('${item.id}', ${item.price})"` : 'disabled'}>
+                 ${canBuy ? 'Comprar' : 'Sem moedas'}
+               </button>`
+            }
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    function buyItem(itemId, price) {
+      if (gameState.coins >= price) {
+        gameState.coins -= price;
+        gameState.ownedItems.push(itemId);
+        saveGameState();
+        loadShop();
+        alert('Item comprado com sucesso! 🎉');
+      }
+    }
+
+    // === PERSISTÊNCIA ===
+    function saveGameState() {
+      localStorage.setItem('horse_game_state', JSON.stringify({
+        coins: gameState.coins,
+        ownedItems: gameState.ownedItems
+      }));
+    }
+
+    function loadGameState() {
+      const saved = localStorage.getItem('horse_game_state');
+      if (saved) {
+        const data = JSON.parse(saved);
+        gameState.coins = data.coins || 100;
+        gameState.ownedItems = data.ownedItems || ['saddle-basic'];
+      }
+    }
+
+    // === INICIALIZAÇÃO ===
+    loadGameState();
+  </script>
+  <script src="eai-header.js"></script>
+</body>
+</html>

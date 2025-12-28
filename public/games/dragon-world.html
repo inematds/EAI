@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragon World - Mundo dos Dragões</title>
+  <script src="eai-wallet.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #1a1a2e;
+      min-height: 100vh;
+      overflow: hidden;
+      image-rendering: pixelated;
+    }
+
+    /* Pixel art style */
+    .pixel-border {
+      border: 4px solid #000;
+      box-shadow:
+        4px 0 0 #000,
+        -4px 0 0 #000,
+        0 4px 0 #000,
+        0 -4px 0 #000;
+    }
+
+    .game-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Left Sidebar - Inventory */
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, #2d2d44 0%, #1a1a2e 100%);
+      border-right: 4px solid #444;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    .sidebar-title {
+      color: #FFD700;
+      font-size: 16px;
+      text-align: center;
+      padding: 10px;
+      background: #333;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #000;
+    }
+
+    /* Stats Panel */
+    .stats-panel {
+      background: rgba(0,0,0,0.5);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #444;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .stat-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .stat-bar {
+      flex: 1;
+      height: 16px;
+      background: #333;
+      border: 2px solid #222;
+      position: relative;
+    }
+
+    .stat-fill {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .stat-fill.health { background: linear-gradient(90deg, #ff0000, #ff4444); }
+    .stat-fill.mana { background: linear-gradient(90deg, #0066ff, #00aaff); }
+    .stat-fill.exp { background: linear-gradient(90deg, #00ff00, #44ff44); }
+
+    .stat-value {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: white;
+      text-shadow: 1px 1px #000;
+    }
+
+    /* Inventory Grid */
+    .inventory-section {
+      margin-bottom: 15px;
+    }
+
+    .inventory-title {
+      color: #aaa;
+      font-size: 12px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .inv-slot {
+      aspect-ratio: 1;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .inv-slot:hover {
+      border-color: #FFD700;
+      background: rgba(255,215,0,0.1);
+    }
+
+    .inv-slot.selected {
+      border-color: #00ff00;
+      box-shadow: 0 0 10px #00ff00;
+    }
+
+    .inv-slot.empty {
+      opacity: 0.5;
+    }
+
+    .item-count {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      font-size: 10px;
+      color: white;
+      text-shadow: 1px 1px #000;
+    }
+
+    /* Equipment slots */
+    .equipment-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .equip-slot {
+      aspect-ratio: 1;
+      background: rgba(100,0,100,0.3);
+      border: 2px solid #660066;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .equip-slot:hover {
+      border-color: #ff00ff;
+    }
+
+    .equip-label {
+      position: absolute;
+      bottom: -18px;
+      font-size: 8px;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    /* Main Game Area */
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: rgba(0,0,0,0.7);
+      border-bottom: 4px solid #333;
+    }
+
+    .game-title {
+      color: #9B59B6;
+      font-size: 24px;
+      text-shadow: 2px 2px #000, 0 0 20px #9B59B6;
+    }
+
+    .currency-display {
+      display: flex;
+      gap: 20px;
+    }
+
+    .currency {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.5);
+      padding: 8px 15px;
+      border: 2px solid #444;
+    }
+
+    .currency-icon {
+      font-size: 20px;
+    }
+
+    .currency-value {
+      color: #FFD700;
+      font-size: 16px;
+    }
+
+    /* Game World */
+    .game-world {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* World/Map */
+    .world-canvas {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Ground layers */
+    .ground-layer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+    }
+
+    .grass {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          #228B22 0px,
+          #228B22 32px,
+          #1d7a1d 32px,
+          #1d7a1d 64px
+        );
+    }
+
+    .dirt {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          #8B4513 0px,
+          #8B4513 32px,
+          #7a3d10 32px,
+          #7a3d10 64px
+        );
+    }
+
+    /* Sky with gradient */
+    .sky {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 40%;
+      background: linear-gradient(180deg,
+        #1a1a2e 0%,
+        #2d2d44 30%,
+        #4a4a6a 60%,
+        #6a6a8a 100%
+      );
+    }
+
+    /* Pixel stars */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 40%;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2px 2px at 50px 160px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 90px 40px, white, transparent),
+        radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(2px 2px at 160px 120px, white, transparent);
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Moon */
+    .moon {
+      position: absolute;
+      top: 50px;
+      right: 100px;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at 30% 30%, #fffacd 0%, #f0e68c 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 40px rgba(255,250,205,0.5);
+    }
+
+    /* Player character */
+    .player {
+      position: absolute;
+      bottom: 42%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      transition: left 0.2s ease, bottom 0.3s ease;
+    }
+
+    .player-sprite {
+      width: 48px;
+      height: 64px;
+      position: relative;
+    }
+
+    /* Pixel art player */
+    .player-body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .player-head {
+      width: 24px;
+      height: 24px;
+      background: #FFDAB9;
+      border: 2px solid #000;
+      position: relative;
+    }
+
+    .player-hair {
+      position: absolute;
+      top: -4px;
+      left: -2px;
+      right: -2px;
+      height: 10px;
+      background: #4a3728;
+      border: 2px solid #000;
+    }
+
+    .player-eyes {
+      position: absolute;
+      top: 8px;
+      left: 4px;
+      width: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .eye {
+      width: 4px;
+      height: 4px;
+      background: #000;
+    }
+
+    .player-torso {
+      width: 20px;
+      height: 20px;
+      background: #4169E1;
+      border: 2px solid #000;
+      margin-top: -2px;
+    }
+
+    .player-legs {
+      display: flex;
+      gap: 2px;
+      margin-top: -2px;
+    }
+
+    .leg {
+      width: 8px;
+      height: 16px;
+      background: #333;
+      border: 2px solid #000;
+    }
+
+    /* Wings equipment */
+    .player-wings {
+      position: absolute;
+      top: 20px;
+      left: -20px;
+      right: -20px;
+      height: 30px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .player-wings.visible {
+      opacity: 1;
+    }
+
+    .wing {
+      width: 25px;
+      height: 30px;
+      background: linear-gradient(135deg, #9B59B6 0%, #E91E63 50%, #FF9800 100%);
+      clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
+      animation: wingFlap 0.3s ease-in-out infinite;
+    }
+
+    .wing.left {
+      transform: scaleX(-1);
+    }
+
+    @keyframes wingFlap {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-10deg); }
+    }
+
+    .wing.left {
+      animation-name: wingFlapLeft;
+    }
+
+    @keyframes wingFlapLeft {
+      0%, 100% { transform: scaleX(-1) rotate(0deg); }
+      50% { transform: scaleX(-1) rotate(10deg); }
+    }
+
+    /* Dragon form */
+    .dragon-form {
+      display: none;
+    }
+
+    .player.is-dragon .player-body {
+      display: none;
+    }
+
+    .player.is-dragon .dragon-form {
+      display: block;
+    }
+
+    .dragon-sprite {
+      width: 120px;
+      height: 80px;
+      position: relative;
+    }
+
+    /* Dragon Egg */
+    .dragon-egg {
+      position: absolute;
+      width: 40px;
+      height: 50px;
+      cursor: pointer;
+      animation: eggGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes eggGlow {
+      0%, 100% { filter: drop-shadow(0 0 5px #9B59B6); }
+      50% { filter: drop-shadow(0 0 15px #E91E63); }
+    }
+
+    .egg-body {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #9B59B6 0%, #6B3FA0 50%, #4B2D73 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      border: 3px solid #000;
+      position: relative;
+    }
+
+    .egg-spots {
+      position: absolute;
+      inset: 5px;
+    }
+
+    .egg-spot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #FFD700;
+      border-radius: 50%;
+      border: 1px solid #000;
+    }
+
+    /* Pet Dragon */
+    .pet-dragon {
+      position: absolute;
+      width: 60px;
+      height: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .pet-dragon:hover {
+      transform: scale(1.1);
+    }
+
+    /* Crafting Table */
+    .crafting-area {
+      position: absolute;
+      bottom: 42%;
+      right: 20%;
+      z-index: 5;
+    }
+
+    .crafting-table {
+      width: 64px;
+      height: 64px;
+      background:
+        linear-gradient(90deg, #8B4513 0%, #A0522D 50%, #8B4513 100%);
+      border: 4px solid #000;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .crafting-grid {
+      position: absolute;
+      inset: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .craft-cell {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid #5C4033;
+    }
+
+    /* Potion brewing */
+    .brewing-stand {
+      position: absolute;
+      bottom: 42%;
+      left: 20%;
+      width: 48px;
+      height: 64px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .brewing-base {
+      width: 100%;
+      height: 20px;
+      background: #4a4a4a;
+      border: 3px solid #000;
+      position: absolute;
+      bottom: 0;
+    }
+
+    .brewing-rod {
+      width: 8px;
+      height: 44px;
+      background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%);
+      border: 2px solid #000;
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .brewing-bottles {
+      display: flex;
+      justify-content: space-around;
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+    }
+
+    .potion-bottle {
+      width: 12px;
+      height: 16px;
+      background: linear-gradient(180deg, #87CEEB 0%, #4169E1 100%);
+      border: 2px solid #000;
+      border-radius: 0 0 4px 4px;
+      position: relative;
+    }
+
+    .potion-bottle::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      background: #333;
+      border: 2px solid #000;
+    }
+
+    /* UI Panels */
+    .ui-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+      border: 4px solid #444;
+      padding: 20px;
+      z-index: 100;
+      min-width: 400px;
+      display: none;
+    }
+
+    .ui-panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #444;
+    }
+
+    .panel-title {
+      color: #FFD700;
+      font-size: 20px;
+      text-shadow: 2px 2px #000;
+    }
+
+    .close-btn {
+      width: 30px;
+      height: 30px;
+      background: #ff4444;
+      border: 2px solid #000;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-btn:hover {
+      background: #ff0000;
+    }
+
+    /* Crafting Panel */
+    .craft-grid-large {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      gap: 4px;
+      margin: 0 auto 20px;
+    }
+
+    .craft-slot-large {
+      width: 60px;
+      height: 60px;
+      background: rgba(0,0,0,0.6);
+      border: 3px solid #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .craft-slot-large:hover {
+      border-color: #FFD700;
+    }
+
+    .craft-result {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .craft-arrow {
+      font-size: 30px;
+      color: #888;
+    }
+
+    .result-slot {
+      width: 80px;
+      height: 80px;
+      background: rgba(100,0,100,0.3);
+      border: 3px solid #9B59B6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    .craft-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: linear-gradient(180deg, #4CAF50 0%, #388E3C 100%);
+      border: 3px solid #000;
+      color: white;
+      font-size: 16px;
+      font-family: inherit;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .craft-btn:hover {
+      background: linear-gradient(180deg, #66BB6A 0%, #4CAF50 100%);
+    }
+
+    .craft-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+
+    /* Recipes list */
+    .recipes-list {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 20px;
+      border-top: 2px solid #444;
+      padding-top: 10px;
+    }
+
+    .recipe-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: rgba(0,0,0,0.3);
+      margin-bottom: 5px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .recipe-item:hover {
+      border-color: #FFD700;
+    }
+
+    .recipe-ingredients {
+      display: flex;
+      gap: 5px;
+      font-size: 20px;
+    }
+
+    .recipe-arrow {
+      margin: 0 10px;
+      color: #888;
+    }
+
+    .recipe-result {
+      font-size: 24px;
+    }
+
+    .recipe-name {
+      margin-left: 15px;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    /* Map Selection */
+    .map-selection {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .map-option {
+      padding: 20px;
+      background: rgba(0,0,0,0.5);
+      border: 3px solid #444;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .map-option:hover {
+      border-color: #9B59B6;
+      transform: scale(1.02);
+    }
+
+    .map-option.selected {
+      border-color: #FFD700;
+      box-shadow: 0 0 20px rgba(255,215,0,0.3);
+    }
+
+    .map-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .map-name {
+      color: white;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .map-desc {
+      color: #888;
+      font-size: 10px;
+    }
+
+    /* Transformation buttons */
+    .transform-panel {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 20;
+    }
+
+    .transform-btn {
+      padding: 10px 20px;
+      background: linear-gradient(180deg, #9B59B6 0%, #6B3FA0 100%);
+      border: 3px solid #000;
+      color: white;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .transform-btn:hover {
+      background: linear-gradient(180deg, #BB79D6 0%, #9B59B6 100%);
+    }
+
+    .transform-btn:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+
+    .transform-btn .icon {
+      font-size: 18px;
+    }
+
+    /* Flying mode */
+    .player.flying {
+      animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-20px); }
+    }
+
+    /* Controls hint */
+    .controls-hint {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 10px 20px;
+      border: 2px solid #444;
+      color: #aaa;
+      font-size: 11px;
+      z-index: 15;
+      white-space: nowrap;
+    }
+
+    .key {
+      display: inline-block;
+      padding: 2px 6px;
+      background: #333;
+      border: 1px solid #555;
+      margin: 0 3px;
+      color: white;
+    }
+
+    /* Animal transformations */
+    .animal-form {
+      display: none;
+      width: 48px;
+      height: 32px;
+    }
+
+    .player.is-animal .player-body,
+    .player.is-animal .dragon-form {
+      display: none;
+    }
+
+    .player.is-animal .animal-form {
+      display: block;
+    }
+
+    /* Toast notifications */
+    .game-toast {
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.9);
+      border: 3px solid #FFD700;
+      padding: 15px 30px;
+      color: white;
+      font-size: 14px;
+      z-index: 1000;
+      animation: toastIn 0.3s ease;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* Egg hatching animation */
+    .hatching {
+      animation: hatch 1s ease-in-out;
+    }
+
+    @keyframes hatch {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-10deg); }
+      75% { transform: rotate(10deg); }
+    }
+
+    /* Different world backgrounds */
+    .world-canvas.dragon-realm .sky {
+      background: linear-gradient(180deg,
+        #4a0e4e 0%,
+        #2d0a30 30%,
+        #1a0620 60%,
+        #0d0310 100%
+      );
+    }
+
+    .world-canvas.dragon-realm .grass {
+      background: repeating-linear-gradient(
+        90deg,
+        #4a0e4e 0px,
+        #4a0e4e 32px,
+        #3d0b40 32px,
+        #3d0b40 64px
+      );
+    }
+
+    .world-canvas.sky-islands .sky {
+      background: linear-gradient(180deg,
+        #1e90ff 0%,
+        #87ceeb 50%,
+        #e0f7fa 100%
+      );
+    }
+
+    .world-canvas.sky-islands .ground-layer {
+      display: none;
+    }
+
+    /* Floating islands for sky world */
+    .floating-island {
+      position: absolute;
+      animation: islandFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes islandFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-title">🐉 DRAGON WORLD</div>
+
+      <!-- Stats -->
+      <div class="stats-panel">
+        <div class="stat-row">
+          <div class="stat-icon">❤️</div>
+          <div class="stat-bar">
+            <div class="stat-fill health" id="healthBar" style="width: 100%"></div>
+            <span class="stat-value" id="healthValue">100/100</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-icon">💎</div>
+          <div class="stat-bar">
+            <div class="stat-fill mana" id="manaBar" style="width: 100%"></div>
+            <span class="stat-value" id="manaValue">50/50</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-bar">
+            <div class="stat-fill exp" id="expBar" style="width: 0%"></div>
+            <span class="stat-value" id="expValue">0/100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Equipment -->
+      <div class="inventory-section">
+        <div class="inventory-title">Equipamento</div>
+        <div class="equipment-section">
+          <div class="equip-slot" id="equipHelmet" onclick="openEquipment('helmet')" title="Capacete">
+            <span class="equip-label">Cabeça</span>
+          </div>
+          <div class="equip-slot" id="equipWings" onclick="openEquipment('wings')" title="Asas">
+            <span class="equip-label">Asas</span>
+          </div>
+          <div class="equip-slot" id="equipArmor" onclick="openEquipment('armor')" title="Armadura">
+            <span class="equip-label">Corpo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory -->
+      <div class="inventory-section">
+        <div class="inventory-title">Inventário</div>
+        <div class="inventory-grid" id="inventoryGrid">
+          <!-- Slots generated by JS -->
+        </div>
+      </div>
+
+      <!-- Potions quick access -->
+      <div class="inventory-section">
+        <div class="inventory-title">Poções</div>
+        <div class="inventory-grid" id="potionsGrid">
+          <!-- Potion slots -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Game Area -->
+    <div class="main-area">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <h1 class="game-title">🐉 Dragon World</h1>
+        <div class="currency-display">
+          <div class="currency">
+            <span class="currency-icon">🪙</span>
+            <span class="currency-value" id="goldDisplay">0</span>
+          </div>
+          <div class="currency">
+            <span class="currency-icon">💎</span>
+            <span class="currency-value" id="gemDisplay">0</span>
+          </div>
+          <div class="currency">
+            <span class="currency-icon">📊</span>
+            <span class="currency-value">Nível <span id="levelDisplay">1</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game World -->
+      <div class="game-world">
+        <div class="world-canvas" id="worldCanvas">
+          <!-- Sky -->
+          <div class="sky"></div>
+          <div class="stars"></div>
+          <div class="moon"></div>
+
+          <!-- Ground -->
+          <div class="ground-layer">
+            <div class="dirt"></div>
+            <div class="grass"></div>
+          </div>
+
+          <!-- Interactive Objects -->
+          <div class="brewing-stand" onclick="openBrewing()" title="Fazer Poções">
+            <div class="brewing-rod"></div>
+            <div class="brewing-base"></div>
+            <div class="brewing-bottles">
+              <div class="potion-bottle"></div>
+              <div class="potion-bottle"></div>
+              <div class="potion-bottle"></div>
+            </div>
+          </div>
+
+          <div class="crafting-area">
+            <div class="crafting-table" onclick="openCrafting()" title="Criar Itens">
+              <div class="crafting-grid">
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+                <div class="craft-cell"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dragon Eggs Area -->
+          <div id="eggsArea"></div>
+
+          <!-- Pet Dragons Area -->
+          <div id="petsArea"></div>
+
+          <!-- Player -->
+          <div class="player" id="player">
+            <div class="player-wings" id="playerWings">
+              <div class="wing left"></div>
+              <div class="wing right"></div>
+            </div>
+            <div class="player-sprite">
+              <div class="player-body">
+                <div class="player-head">
+                  <div class="player-hair"></div>
+                  <div class="player-eyes">
+                    <div class="eye"></div>
+                    <div class="eye"></div>
+                  </div>
+                </div>
+                <div class="player-torso"></div>
+                <div class="player-legs">
+                  <div class="leg"></div>
+                  <div class="leg"></div>
+                </div>
+              </div>
+
+              <!-- Dragon Form -->
+              <div class="dragon-form">
+                <svg class="dragon-sprite" viewBox="0 0 120 80">
+                  <!-- Dragon body -->
+                  <ellipse cx="60" cy="50" rx="35" ry="20" fill="#9B59B6"/>
+                  <ellipse cx="60" cy="50" rx="30" ry="15" fill="#8E44AD"/>
+
+                  <!-- Head -->
+                  <ellipse cx="95" cy="40" rx="15" ry="12" fill="#9B59B6"/>
+                  <circle cx="100" cy="36" r="3" fill="#FFD700"/>
+                  <circle cx="100" cy="36" r="1.5" fill="#000"/>
+
+                  <!-- Horns -->
+                  <path d="M 85 30 L 80 15 L 88 28" fill="#FFD700"/>
+                  <path d="M 92 28 L 90 12 L 95 26" fill="#FFD700"/>
+
+                  <!-- Wings -->
+                  <path d="M 45 35 Q 20 10 30 40 Q 35 35 40 45" fill="#E91E63" stroke="#9B59B6" stroke-width="2"/>
+                  <path d="M 55 35 Q 35 15 42 42" fill="#E91E63"/>
+
+                  <!-- Tail -->
+                  <path d="M 25 50 Q 5 55 10 45 Q 15 35 25 45" fill="#9B59B6"/>
+                  <path d="M 10 45 L 5 40 L 15 43" fill="#FFD700"/>
+
+                  <!-- Legs -->
+                  <rect x="45" y="60" width="8" height="15" rx="2" fill="#8E44AD"/>
+                  <rect x="65" y="60" width="8" height="15" rx="2" fill="#8E44AD"/>
+
+                  <!-- Fire breath particles -->
+                  <circle cx="112" cy="42" r="4" fill="#FF6B00" opacity="0.8"/>
+                  <circle cx="118" cy="40" r="3" fill="#FF9800" opacity="0.6"/>
+                </svg>
+              </div>
+
+              <!-- Animal Form -->
+              <div class="animal-form" id="animalForm">
+                <!-- Will be updated based on selected animal -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls Hint -->
+          <div class="controls-hint">
+            <span class="key">←</span><span class="key">→</span> Mover
+            <span class="key">Espaço</span> Pular/Voar
+            <span class="key">E</span> Interagir
+            <span class="key">M</span> Mapa
+          </div>
+
+          <!-- Transform Panel -->
+          <div class="transform-panel">
+            <button class="transform-btn" id="btnDragon" onclick="transformToDragon()" disabled>
+              <span class="icon">🐉</span>
+              <span>Virar Dragão</span>
+            </button>
+            <button class="transform-btn" id="btnFly" onclick="toggleFly()" disabled>
+              <span class="icon">🦋</span>
+              <span>Voar</span>
+            </button>
+            <button class="transform-btn" onclick="openAnimals()">
+              <span class="icon">🦊</span>
+              <span>Animais</span>
+            </button>
+            <button class="transform-btn" onclick="openMaps()">
+              <span class="icon">🗺️</span>
+              <span>Mapas</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crafting Panel -->
+  <div class="ui-panel" id="craftingPanel">
+    <div class="panel-header">
+      <h2 class="panel-title">⚒️ Mesa de Criação</h2>
+      <button class="close-btn" onclick="closePanel('craftingPanel')">×</button>
+    </div>
+
+    <div class="craft-grid-large" id="craftGrid">
+      <div class="craft-slot-large" data-slot="0"></div>
+      <div class="craft-slot-large" data-slot="1"></div>
+      <div class="craft-slot-large" data-slot="2"></div>
+      <div class="craft-slot-large" data-slot="3"></div>
+      <div class="craft-slot-large" data-slot="4"></div>
+      <div class="craft-slot-large" data-slot="5"></div>
+      <div class="craft-slot-large" data-slot="6"></div>
+      <div class="craft-slot-large" data-slot="7"></div>
+      <div class="craft-slot-large" data-slot="8"></div>
+    </div>
+
+    <div class="craft-result">
+      <span class="craft-arrow">➡️</span>
+      <div class="result-slot" id="craftResult"></div>
+    </div>
+
+    <button class="craft-btn" id="craftBtn" onclick="craft()" disabled>Criar Item</button>
+
+    <div class="recipes-list">
+      <div class="inventory-title">Receitas Disponíveis</div>
+      <div id="recipesList"></div>
+    </div>
+  </div>
+
+  <!-- Brewing Panel -->
+  <div class="ui-panel" id="brewingPanel">
+    <div class="panel-header">
+      <h2 class="panel-title">⚗️ Fazer Poções</h2>
+      <button class="close-btn" onclick="closePanel('brewingPanel')">×</button>
+    </div>
+
+    <div class="recipes-list" style="max-height: 400px;">
+      <div id="potionRecipes"></div>
+    </div>
+  </div>
+
+  <!-- Maps Panel -->
+  <div class="ui-panel" id="mapsPanel">
+    <div class="panel-header">
+      <h2 class="panel-title">🗺️ Escolher Mapa</h2>
+      <button class="close-btn" onclick="closePanel('mapsPanel')">×</button>
+    </div>
+
+    <div class="map-selection" id="mapSelection">
+      <!-- Maps generated by JS -->
+    </div>
+  </div>
+
+  <!-- Animals Panel -->
+  <div class="ui-panel" id="animalsPanel">
+    <div class="panel-header">
+      <h2 class="panel-title">🦊 Transformar em Animal</h2>
+      <button class="close-btn" onclick="closePanel('animalsPanel')">×</button>
+    </div>
+
+    <div class="map-selection" id="animalSelection">
+      <!-- Animals generated by JS -->
+    </div>
+  </div>
+
+  <script>
+    // Game State
+    const gameState = {
+      player: {
+        x: 50,
+        y: 42,
+        level: 1,
+        exp: 0,
+        expToLevel: 100,
+        health: 100,
+        maxHealth: 100,
+        mana: 50,
+        maxMana: 50,
+        isFlying: false,
+        isDragon: false,
+        currentAnimal: null,
+        hasWings: false,
+        canBecomeDragon: false
+      },
+      inventory: {
+        items: {},
+        potions: {},
+        equipment: {
+          helmet: null,
+          wings: null,
+          armor: null
+        }
+      },
+      dragons: [],
+      eggs: [],
+      currentMap: 'overworld',
+      gold: 0,
+      gems: 0,
+      unlockedAnimals: ['wolf'],
+      unlockedMaps: ['overworld']
+    };
+
+    // Items Database
+    const ITEMS = {
+      // Materials
+      'dragon_scale': { name: 'Escama de Dragão', emoji: '🔮', type: 'material', rarity: 'rare' },
+      'dragon_heart': { name: 'Coração de Dragão', emoji: '❤️‍🔥', type: 'material', rarity: 'legendary' },
+      'magic_feather': { name: 'Pena Mágica', emoji: '🪶', type: 'material', rarity: 'rare' },
+      'crystal': { name: 'Cristal', emoji: '💎', type: 'material', rarity: 'uncommon' },
+      'iron': { name: 'Ferro', emoji: '🔩', type: 'material', rarity: 'common' },
+      'gold_ingot': { name: 'Barra de Ouro', emoji: '🥇', type: 'material', rarity: 'uncommon' },
+      'ender_pearl': { name: 'Pérola do End', emoji: '🟣', type: 'material', rarity: 'rare' },
+      'blaze_powder': { name: 'Pó de Blaze', emoji: '🔥', type: 'material', rarity: 'rare' },
+      'nether_star': { name: 'Estrela do Nether', emoji: '⭐', type: 'material', rarity: 'legendary' },
+
+      // Equipment
+      'dragon_wings': { name: 'Asas de Dragão', emoji: '🦋', type: 'wings', rarity: 'legendary', effect: 'fly' },
+      'angel_wings': { name: 'Asas de Anjo', emoji: '👼', type: 'wings', rarity: 'epic', effect: 'fly' },
+      'dragon_helmet': { name: 'Elmo de Dragão', emoji: '⛑️', type: 'helmet', rarity: 'legendary' },
+      'dragon_armor': { name: 'Armadura de Dragão', emoji: '🛡️', type: 'armor', rarity: 'legendary' },
+
+      // Dragon Eggs
+      'dragon_egg_purple': { name: 'Ovo de Dragão Roxo', emoji: '🥚', type: 'egg', color: '#9B59B6' },
+      'dragon_egg_red': { name: 'Ovo de Dragão Vermelho', emoji: '🥚', type: 'egg', color: '#E74C3C' },
+      'dragon_egg_blue': { name: 'Ovo de Dragão Azul', emoji: '🥚', type: 'egg', color: '#3498DB' },
+      'dragon_egg_gold': { name: 'Ovo de Dragão Dourado', emoji: '🥚', type: 'egg', color: '#F1C40F' }
+    };
+
+    // Potions Database
+    const POTIONS = {
+      'health_potion': { name: 'Poção de Vida', emoji: '❤️', effect: 'heal', value: 50, color: '#E74C3C' },
+      'mana_potion': { name: 'Poção de Mana', emoji: '💙', effect: 'mana', value: 30, color: '#3498DB' },
+      'strength_potion': { name: 'Poção de Força', emoji: '💪', effect: 'strength', value: 2, duration: 60, color: '#E67E22' },
+      'speed_potion': { name: 'Poção de Velocidade', emoji: '⚡', effect: 'speed', value: 1.5, duration: 60, color: '#F1C40F' },
+      'flight_potion': { name: 'Poção de Voo', emoji: '🦋', effect: 'fly', duration: 30, color: '#9B59B6' },
+      'transformation_potion': { name: 'Poção de Transformação', emoji: '🔮', effect: 'transform', color: '#1ABC9C' },
+      'dragon_potion': { name: 'Elixir do Dragão', emoji: '🐉', effect: 'dragon', duration: 120, color: '#8E44AD' }
+    };
+
+    // Recipes
+    const RECIPES = {
+      'dragon_wings': {
+        ingredients: ['dragon_scale', 'dragon_scale', 'magic_feather', 'magic_feather', 'crystal', 'crystal', 'nether_star'],
+        result: 'dragon_wings',
+        amount: 1
+      },
+      'angel_wings': {
+        ingredients: ['magic_feather', 'magic_feather', 'magic_feather', 'crystal', 'crystal', 'gold_ingot'],
+        result: 'angel_wings',
+        amount: 1
+      },
+      'dragon_helmet': {
+        ingredients: ['dragon_scale', 'dragon_scale', 'dragon_scale', 'iron', 'iron'],
+        result: 'dragon_helmet',
+        amount: 1
+      },
+      'dragon_armor': {
+        ingredients: ['dragon_scale', 'dragon_scale', 'dragon_scale', 'dragon_scale', 'iron', 'iron', 'dragon_heart'],
+        result: 'dragon_armor',
+        amount: 1
+      },
+      'dragon_egg_purple': {
+        ingredients: ['dragon_scale', 'ender_pearl', 'crystal'],
+        result: 'dragon_egg_purple',
+        amount: 1
+      }
+    };
+
+    // Potion Recipes
+    const POTION_RECIPES = {
+      'health_potion': { ingredients: ['crystal'], cost: 10 },
+      'mana_potion': { ingredients: ['crystal'], cost: 10 },
+      'strength_potion': { ingredients: ['blaze_powder', 'iron'], cost: 25 },
+      'speed_potion': { ingredients: ['blaze_powder', 'magic_feather'], cost: 25 },
+      'flight_potion': { ingredients: ['magic_feather', 'magic_feather', 'crystal'], cost: 50 },
+      'dragon_potion': { ingredients: ['dragon_scale', 'dragon_heart', 'nether_star'], cost: 200 }
+    };
+
+    // Maps
+    const MAPS = {
+      'overworld': { name: 'Mundo Normal', emoji: '🌍', desc: 'O mundo principal', unlocked: true },
+      'dragon_realm': { name: 'Reino dos Dragões', emoji: '🐉', desc: 'Lar dos dragões', unlocked: false, cost: 100 },
+      'sky_islands': { name: 'Ilhas Celestiais', emoji: '☁️', desc: 'Ilhas flutuantes no céu', unlocked: false, cost: 150 },
+      'nether': { name: 'Nether', emoji: '🔥', desc: 'Dimensão flamejante', unlocked: false, cost: 200 }
+    };
+
+    // Animals
+    const ANIMALS = {
+      'wolf': { name: 'Lobo', emoji: '🐺', unlocked: true },
+      'fox': { name: 'Raposa', emoji: '🦊', unlocked: false, cost: 50 },
+      'eagle': { name: 'Águia', emoji: '🦅', unlocked: false, cost: 75, canFly: true },
+      'bear': { name: 'Urso', emoji: '🐻', unlocked: false, cost: 100 },
+      'phoenix': { name: 'Fênix', emoji: '🔥', unlocked: false, cost: 200, canFly: true }
+    };
+
+    // Initialize game
+    function init() {
+      loadGame();
+      renderInventory();
+      renderPotions();
+      renderRecipes();
+      renderPotionRecipes();
+      renderMaps();
+      renderAnimals();
+      spawnStarterItems();
+      spawnEggs();
+      updateUI();
+      setupControls();
+
+      // Update coins display
+      if (typeof EAI !== 'undefined') {
+        document.getElementById('goldDisplay').textContent = EAI.getWallet().coins;
+      }
+    }
+
+    // Load saved game
+    function loadGame() {
+      const saved = localStorage.getItem('dragonWorld');
+      if (saved) {
+        const data = JSON.parse(saved);
+        Object.assign(gameState, data);
+      }
+    }
+
+    // Save game
+    function saveGame() {
+      localStorage.setItem('dragonWorld', JSON.stringify(gameState));
+    }
+
+    // Spawn starter items
+    function spawnStarterItems() {
+      if (!localStorage.getItem('dragonWorld')) {
+        // Give starter items
+        addItem('iron', 5);
+        addItem('crystal', 3);
+        addItem('magic_feather', 2);
+        addPotion('health_potion', 3);
+        addPotion('mana_potion', 2);
+        gameState.gold = 50;
+        gameState.gems = 5;
+
+        showToast('🎁 Itens iniciais recebidos!');
+      }
+    }
+
+    // Spawn dragon eggs
+    function spawnEggs() {
+      const eggsArea = document.getElementById('eggsArea');
+      eggsArea.innerHTML = '';
+
+      // Always have some eggs in the world
+      if (gameState.eggs.length === 0) {
+        gameState.eggs = [
+          { id: 1, color: '#9B59B6', x: 70, hatching: false, hatchProgress: 0 },
+          { id: 2, color: '#E74C3C', x: 30, hatching: false, hatchProgress: 0 }
+        ];
+      }
+
+      gameState.eggs.forEach(egg => {
+        const eggEl = document.createElement('div');
+        eggEl.className = 'dragon-egg';
+        eggEl.style.left = `${egg.x}%`;
+        eggEl.style.bottom = '42%';
+        eggEl.innerHTML = `
+          <div class="egg-body" style="background: linear-gradient(135deg, ${egg.color} 0%, ${shadeColor(egg.color, -30)} 100%)">
+            <div class="egg-spots">
+              <div class="egg-spot" style="top: 20%; left: 20%"></div>
+              <div class="egg-spot" style="top: 40%; right: 15%"></div>
+              <div class="egg-spot" style="bottom: 25%; left: 30%"></div>
+            </div>
+          </div>
+        `;
+        eggEl.onclick = () => interactWithEgg(egg.id);
+        eggsArea.appendChild(eggEl);
+      });
+
+      renderPetDragons();
+    }
+
+    // Interact with egg
+    function interactWithEgg(eggId) {
+      const egg = gameState.eggs.find(e => e.id === eggId);
+      if (!egg) return;
+
+      if (!egg.hatching) {
+        egg.hatching = true;
+        showToast('🥚 Chocando ovo de dragão...');
+      }
+
+      egg.hatchProgress += 25;
+
+      if (egg.hatchProgress >= 100) {
+        // Hatch the egg!
+        const dragon = {
+          id: Date.now(),
+          color: egg.color,
+          name: `Dragão ${gameState.dragons.length + 1}`,
+          level: 1
+        };
+
+        gameState.dragons.push(dragon);
+        gameState.eggs = gameState.eggs.filter(e => e.id !== eggId);
+
+        // Enable dragon transformation
+        gameState.player.canBecomeDragon = true;
+        document.getElementById('btnDragon').disabled = false;
+
+        showToast('🐉 Um dragão nasceu!');
+        gainExp(50);
+
+        if (typeof EAI !== 'undefined') {
+          EAI.giveGameReward({
+            gameType: 'achievement',
+            baseReward: 30,
+            accuracy: 100
+          });
+        }
+
+        spawnEggs();
+      } else {
+        // Show progress
+        const eggsArea = document.getElementById('eggsArea');
+        const eggEls = eggsArea.querySelectorAll('.dragon-egg');
+        eggEls.forEach(el => {
+          if (el.style.left === `${egg.x}%`) {
+            el.classList.add('hatching');
+            setTimeout(() => el.classList.remove('hatching'), 1000);
+          }
+        });
+      }
+
+      saveGame();
+    }
+
+    // Render pet dragons
+    function renderPetDragons() {
+      const petsArea = document.getElementById('petsArea');
+      petsArea.innerHTML = '';
+
+      gameState.dragons.forEach((dragon, index) => {
+        const petEl = document.createElement('div');
+        petEl.className = 'pet-dragon';
+        petEl.style.left = `${40 + index * 10}%`;
+        petEl.style.bottom = '43%';
+        petEl.innerHTML = `
+          <svg viewBox="0 0 60 50">
+            <ellipse cx="30" cy="30" rx="18" ry="12" fill="${dragon.color}"/>
+            <ellipse cx="45" cy="25" rx="8" ry="6" fill="${dragon.color}"/>
+            <circle cx="48" cy="23" r="2" fill="#FFD700"/>
+            <path d="M 38 18 L 35 8 L 40 16" fill="#FFD700"/>
+            <path d="M 12 30 Q 5 35 8 28" fill="${dragon.color}"/>
+            <rect x="22" y="38" width="5" height="8" rx="1" fill="${shadeColor(dragon.color, -20)}"/>
+            <rect x="33" y="38" width="5" height="8" rx="1" fill="${shadeColor(dragon.color, -20)}"/>
+          </svg>
+        `;
+        petEl.title = dragon.name;
+        petsArea.appendChild(petEl);
+      });
+    }
+
+    // Add item to inventory
+    function addItem(itemId, amount = 1) {
+      if (!gameState.inventory.items[itemId]) {
+        gameState.inventory.items[itemId] = 0;
+      }
+      gameState.inventory.items[itemId] += amount;
+      renderInventory();
+      saveGame();
+    }
+
+    // Remove item from inventory
+    function removeItem(itemId, amount = 1) {
+      if (gameState.inventory.items[itemId]) {
+        gameState.inventory.items[itemId] -= amount;
+        if (gameState.inventory.items[itemId] <= 0) {
+          delete gameState.inventory.items[itemId];
+        }
+      }
+      renderInventory();
+      saveGame();
+    }
+
+    // Add potion
+    function addPotion(potionId, amount = 1) {
+      if (!gameState.inventory.potions[potionId]) {
+        gameState.inventory.potions[potionId] = 0;
+      }
+      gameState.inventory.potions[potionId] += amount;
+      renderPotions();
+      saveGame();
+    }
+
+    // Render inventory
+    function renderInventory() {
+      const grid = document.getElementById('inventoryGrid');
+      grid.innerHTML = '';
+
+      const items = Object.entries(gameState.inventory.items);
+
+      for (let i = 0; i < 16; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'inv-slot';
+
+        if (items[i]) {
+          const [itemId, count] = items[i];
+          const item = ITEMS[itemId];
+          if (item) {
+            slot.innerHTML = `
+              <span>${item.emoji}</span>
+              <span class="item-count">${count}</span>
+            `;
+            slot.title = item.name;
+            slot.onclick = () => useItem(itemId);
+          }
+        } else {
+          slot.classList.add('empty');
+        }
+
+        grid.appendChild(slot);
+      }
+
+      // Update equipment slots
+      updateEquipmentSlots();
+    }
+
+    // Update equipment slots
+    function updateEquipmentSlots() {
+      const { equipment } = gameState.inventory;
+
+      ['helmet', 'wings', 'armor'].forEach(slot => {
+        const el = document.getElementById(`equip${slot.charAt(0).toUpperCase() + slot.slice(1)}`);
+        if (equipment[slot]) {
+          const item = ITEMS[equipment[slot]];
+          el.innerHTML = `<span>${item.emoji}</span><span class="equip-label">${slot === 'helmet' ? 'Cabeça' : slot === 'wings' ? 'Asas' : 'Corpo'}</span>`;
+        } else {
+          el.innerHTML = `<span class="equip-label">${slot === 'helmet' ? 'Cabeça' : slot === 'wings' ? 'Asas' : 'Corpo'}</span>`;
+        }
+      });
+
+      // Update wings visibility
+      const playerWings = document.getElementById('playerWings');
+      if (equipment.wings) {
+        playerWings.classList.add('visible');
+        gameState.player.hasWings = true;
+        document.getElementById('btnFly').disabled = false;
+      } else {
+        playerWings.classList.remove('visible');
+        gameState.player.hasWings = false;
+        document.getElementById('btnFly').disabled = true;
+      }
+    }
+
+    // Use item
+    function useItem(itemId) {
+      const item = ITEMS[itemId];
+      if (!item) return;
+
+      // Equip if it's equipment
+      if (['helmet', 'wings', 'armor'].includes(item.type)) {
+        const oldItem = gameState.inventory.equipment[item.type];
+        if (oldItem) {
+          addItem(oldItem, 1);
+        }
+        gameState.inventory.equipment[item.type] = itemId;
+        removeItem(itemId, 1);
+        showToast(`Equipou ${item.name}!`);
+        updateEquipmentSlots();
+      }
+
+      // Handle eggs
+      if (item.type === 'egg') {
+        // Place egg in world
+        gameState.eggs.push({
+          id: Date.now(),
+          color: item.color,
+          x: Math.random() * 60 + 20,
+          hatching: false,
+          hatchProgress: 0
+        });
+        removeItem(itemId, 1);
+        spawnEggs();
+        showToast('Ovo colocado no ninho!');
+      }
+    }
+
+    // Render potions
+    function renderPotions() {
+      const grid = document.getElementById('potionsGrid');
+      grid.innerHTML = '';
+
+      const potions = Object.entries(gameState.inventory.potions);
+
+      for (let i = 0; i < 8; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'inv-slot';
+
+        if (potions[i]) {
+          const [potionId, count] = potions[i];
+          const potion = POTIONS[potionId];
+          if (potion) {
+            slot.innerHTML = `
+              <span>${potion.emoji}</span>
+              <span class="item-count">${count}</span>
+            `;
+            slot.style.background = `rgba(${hexToRgb(potion.color)}, 0.3)`;
+            slot.title = potion.name;
+            slot.onclick = () => usePotion(potionId);
+          }
+        } else {
+          slot.classList.add('empty');
+        }
+
+        grid.appendChild(slot);
+      }
+    }
+
+    // Use potion
+    function usePotion(potionId) {
+      if (!gameState.inventory.potions[potionId] || gameState.inventory.potions[potionId] <= 0) {
+        showToast('Você não tem essa poção!');
+        return;
+      }
+
+      const potion = POTIONS[potionId];
+
+      switch (potion.effect) {
+        case 'heal':
+          gameState.player.health = Math.min(gameState.player.maxHealth, gameState.player.health + potion.value);
+          showToast(`❤️ +${potion.value} vida!`);
+          break;
+        case 'mana':
+          gameState.player.mana = Math.min(gameState.player.maxMana, gameState.player.mana + potion.value);
+          showToast(`💙 +${potion.value} mana!`);
+          break;
+        case 'fly':
+          gameState.player.isFlying = true;
+          document.getElementById('player').classList.add('flying');
+          showToast(`🦋 Você pode voar por ${potion.duration}s!`);
+          setTimeout(() => {
+            gameState.player.isFlying = false;
+            document.getElementById('player').classList.remove('flying');
+            showToast('O efeito de voo acabou!');
+          }, potion.duration * 1000);
+          break;
+        case 'dragon':
+          gameState.player.canBecomeDragon = true;
+          document.getElementById('btnDragon').disabled = false;
+          showToast('🐉 Você pode se transformar em dragão!');
+          break;
+      }
+
+      // Remove potion
+      gameState.inventory.potions[potionId]--;
+      if (gameState.inventory.potions[potionId] <= 0) {
+        delete gameState.inventory.potions[potionId];
+      }
+
+      renderPotions();
+      updateUI();
+      saveGame();
+    }
+
+    // Render crafting recipes
+    function renderRecipes() {
+      const list = document.getElementById('recipesList');
+      list.innerHTML = '';
+
+      Object.entries(RECIPES).forEach(([key, recipe]) => {
+        const resultItem = ITEMS[recipe.result];
+        const div = document.createElement('div');
+        div.className = 'recipe-item';
+        div.innerHTML = `
+          <div class="recipe-ingredients">
+            ${[...new Set(recipe.ingredients)].map(ing => ITEMS[ing]?.emoji || '?').join(' ')}
+          </div>
+          <span class="recipe-arrow">➡️</span>
+          <span class="recipe-result">${resultItem?.emoji || '?'}</span>
+          <span class="recipe-name">${resultItem?.name || key}</span>
+        `;
+        div.onclick = () => showRecipeDetail(key);
+        list.appendChild(div);
+      });
+    }
+
+    // Render potion recipes
+    function renderPotionRecipes() {
+      const list = document.getElementById('potionRecipes');
+      list.innerHTML = '';
+
+      Object.entries(POTION_RECIPES).forEach(([potionId, recipe]) => {
+        const potion = POTIONS[potionId];
+        const div = document.createElement('div');
+        div.className = 'recipe-item';
+        div.innerHTML = `
+          <div class="recipe-ingredients">
+            ${recipe.ingredients.map(ing => ITEMS[ing]?.emoji || '?').join(' ')} + 🪙${recipe.cost}
+          </div>
+          <span class="recipe-arrow">➡️</span>
+          <span class="recipe-result">${potion.emoji}</span>
+          <span class="recipe-name">${potion.name}</span>
+        `;
+        div.onclick = () => brewPotion(potionId);
+        list.appendChild(div);
+      });
+    }
+
+    // Brew potion
+    function brewPotion(potionId) {
+      const recipe = POTION_RECIPES[potionId];
+      const potion = POTIONS[potionId];
+
+      // Check gold
+      if (gameState.gold < recipe.cost) {
+        showToast('Ouro insuficiente!');
+        return;
+      }
+
+      // Check ingredients
+      const hasIngredients = recipe.ingredients.every(ing =>
+        gameState.inventory.items[ing] && gameState.inventory.items[ing] > 0
+      );
+
+      if (!hasIngredients) {
+        showToast('Ingredientes insuficientes!');
+        return;
+      }
+
+      // Consume ingredients and gold
+      recipe.ingredients.forEach(ing => removeItem(ing, 1));
+      gameState.gold -= recipe.cost;
+
+      // Add potion
+      addPotion(potionId, 1);
+
+      showToast(`⚗️ Criou ${potion.name}!`);
+      gainExp(15);
+      updateUI();
+      saveGame();
+
+      if (typeof EAI !== 'undefined') {
+        EAI.giveGameReward({
+          gameType: 'crafting',
+          baseReward: 5,
+          accuracy: 100
+        });
+      }
+    }
+
+    // Open crafting panel
+    function openCrafting() {
+      document.getElementById('craftingPanel').classList.add('active');
+    }
+
+    // Open brewing panel
+    function openBrewing() {
+      document.getElementById('brewingPanel').classList.add('active');
+    }
+
+    // Close panel
+    function closePanel(panelId) {
+      document.getElementById(panelId).classList.remove('active');
+    }
+
+    // Craft item (simplified - auto-craft from recipe list)
+    function showRecipeDetail(recipeKey) {
+      const recipe = RECIPES[recipeKey];
+      const resultItem = ITEMS[recipe.result];
+
+      // Check if we have all ingredients
+      const ingredientCounts = {};
+      recipe.ingredients.forEach(ing => {
+        ingredientCounts[ing] = (ingredientCounts[ing] || 0) + 1;
+      });
+
+      const hasAll = Object.entries(ingredientCounts).every(([ing, count]) =>
+        gameState.inventory.items[ing] && gameState.inventory.items[ing] >= count
+      );
+
+      if (!hasAll) {
+        showToast('Ingredientes insuficientes!');
+        return;
+      }
+
+      // Consume ingredients
+      Object.entries(ingredientCounts).forEach(([ing, count]) => {
+        removeItem(ing, count);
+      });
+
+      // Add result
+      addItem(recipe.result, recipe.amount);
+
+      showToast(`⚒️ Criou ${resultItem.name}!`);
+      gainExp(25);
+
+      if (typeof EAI !== 'undefined') {
+        EAI.giveGameReward({
+          gameType: 'crafting',
+          baseReward: 10,
+          accuracy: 100
+        });
+      }
+
+      saveGame();
+    }
+
+    // Render maps
+    function renderMaps() {
+      const container = document.getElementById('mapSelection');
+      container.innerHTML = '';
+
+      Object.entries(MAPS).forEach(([mapId, map]) => {
+        const isUnlocked = gameState.unlockedMaps.includes(mapId);
+        const div = document.createElement('div');
+        div.className = `map-option ${gameState.currentMap === mapId ? 'selected' : ''}`;
+        div.innerHTML = `
+          <div class="map-icon">${map.emoji}</div>
+          <div class="map-name">${map.name}</div>
+          <div class="map-desc">${isUnlocked ? map.desc : `🔒 Custo: ${map.cost} 💎`}</div>
+        `;
+        div.onclick = () => selectMap(mapId);
+        container.appendChild(div);
+      });
+    }
+
+    // Select map
+    function selectMap(mapId) {
+      const map = MAPS[mapId];
+
+      if (!gameState.unlockedMaps.includes(mapId)) {
+        if (gameState.gems >= map.cost) {
+          gameState.gems -= map.cost;
+          gameState.unlockedMaps.push(mapId);
+          showToast(`🗺️ Desbloqueou ${map.name}!`);
+        } else {
+          showToast('Gemas insuficientes!');
+          return;
+        }
+      }
+
+      gameState.currentMap = mapId;
+      document.getElementById('worldCanvas').className = `world-canvas ${mapId.replace('_', '-')}`;
+      closePanel('mapsPanel');
+      renderMaps();
+      updateUI();
+      saveGame();
+    }
+
+    // Open maps panel
+    function openMaps() {
+      document.getElementById('mapsPanel').classList.add('active');
+    }
+
+    // Render animals
+    function renderAnimals() {
+      const container = document.getElementById('animalSelection');
+      container.innerHTML = '';
+
+      Object.entries(ANIMALS).forEach(([animalId, animal]) => {
+        const isUnlocked = gameState.unlockedAnimals.includes(animalId);
+        const div = document.createElement('div');
+        div.className = 'map-option';
+        div.innerHTML = `
+          <div class="map-icon">${animal.emoji}</div>
+          <div class="map-name">${animal.name}</div>
+          <div class="map-desc">${isUnlocked ? (animal.canFly ? '✨ Pode voar!' : 'Desbloqueado') : `🔒 Custo: ${animal.cost} 🪙`}</div>
+        `;
+        div.onclick = () => transformToAnimal(animalId);
+        container.appendChild(div);
+      });
+    }
+
+    // Open animals panel
+    function openAnimals() {
+      document.getElementById('animalsPanel').classList.add('active');
+    }
+
+    // Transform to animal
+    function transformToAnimal(animalId) {
+      const animal = ANIMALS[animalId];
+
+      if (!gameState.unlockedAnimals.includes(animalId)) {
+        if (gameState.gold >= animal.cost) {
+          gameState.gold -= animal.cost;
+          gameState.unlockedAnimals.push(animalId);
+          showToast(`🦊 Desbloqueou ${animal.name}!`);
+        } else {
+          showToast('Ouro insuficiente!');
+          return;
+        }
+      }
+
+      const player = document.getElementById('player');
+      const animalForm = document.getElementById('animalForm');
+
+      if (gameState.player.currentAnimal === animalId) {
+        // Transform back
+        player.classList.remove('is-animal');
+        gameState.player.currentAnimal = null;
+        showToast('Voltou ao normal!');
+      } else {
+        // Transform
+        player.classList.remove('is-dragon');
+        player.classList.add('is-animal');
+        gameState.player.currentAnimal = animalId;
+        gameState.player.isDragon = false;
+
+        animalForm.innerHTML = `<span style="font-size: 48px;">${animal.emoji}</span>`;
+
+        if (animal.canFly) {
+          player.classList.add('flying');
+          gameState.player.isFlying = true;
+        }
+
+        showToast(`Transformou em ${animal.name}!`);
+        gainExp(10);
+      }
+
+      closePanel('animalsPanel');
+      renderAnimals();
+      updateUI();
+      saveGame();
+    }
+
+    // Transform to dragon
+    function transformToDragon() {
+      const player = document.getElementById('player');
+
+      if (gameState.player.isDragon) {
+        player.classList.remove('is-dragon', 'flying');
+        gameState.player.isDragon = false;
+        gameState.player.isFlying = false;
+        showToast('Voltou ao normal!');
+      } else {
+        player.classList.remove('is-animal');
+        player.classList.add('is-dragon', 'flying');
+        gameState.player.isDragon = true;
+        gameState.player.isFlying = true;
+        gameState.player.currentAnimal = null;
+        showToast('🐉 Transformou em Dragão!');
+        gainExp(20);
+      }
+
+      updateUI();
+      saveGame();
+    }
+
+    // Toggle fly
+    function toggleFly() {
+      if (!gameState.player.hasWings && !gameState.player.isDragon) {
+        showToast('Você precisa de asas para voar!');
+        return;
+      }
+
+      const player = document.getElementById('player');
+      gameState.player.isFlying = !gameState.player.isFlying;
+
+      if (gameState.player.isFlying) {
+        player.classList.add('flying');
+        showToast('🦋 Voando!');
+      } else {
+        player.classList.remove('flying');
+        showToast('Parou de voar');
+      }
+
+      saveGame();
+    }
+
+    // Gain experience
+    function gainExp(amount) {
+      gameState.player.exp += amount;
+
+      while (gameState.player.exp >= gameState.player.expToLevel) {
+        gameState.player.exp -= gameState.player.expToLevel;
+        gameState.player.level++;
+        gameState.player.expToLevel = Math.floor(gameState.player.expToLevel * 1.5);
+        gameState.player.maxHealth += 10;
+        gameState.player.maxMana += 5;
+        gameState.player.health = gameState.player.maxHealth;
+        gameState.player.mana = gameState.player.maxMana;
+
+        showToast(`⬆️ Nível ${gameState.player.level}!`);
+
+        // Bonus items on level up
+        addItem('crystal', 2);
+        gameState.gold += 25;
+        gameState.gems += 1;
+
+        if (typeof EAI !== 'undefined') {
+          EAI.giveGameReward({
+            gameType: 'achievement',
+            baseReward: 20,
+            accuracy: 100
+          });
+        }
+      }
+
+      updateUI();
+      saveGame();
+    }
+
+    // Update UI
+    function updateUI() {
+      // Health bar
+      const healthPercent = (gameState.player.health / gameState.player.maxHealth) * 100;
+      document.getElementById('healthBar').style.width = `${healthPercent}%`;
+      document.getElementById('healthValue').textContent = `${gameState.player.health}/${gameState.player.maxHealth}`;
+
+      // Mana bar
+      const manaPercent = (gameState.player.mana / gameState.player.maxMana) * 100;
+      document.getElementById('manaBar').style.width = `${manaPercent}%`;
+      document.getElementById('manaValue').textContent = `${gameState.player.mana}/${gameState.player.maxMana}`;
+
+      // Exp bar
+      const expPercent = (gameState.player.exp / gameState.player.expToLevel) * 100;
+      document.getElementById('expBar').style.width = `${expPercent}%`;
+      document.getElementById('expValue').textContent = `${gameState.player.exp}/${gameState.player.expToLevel}`;
+
+      // Currency
+      document.getElementById('goldDisplay').textContent = gameState.gold;
+      document.getElementById('gemDisplay').textContent = gameState.gems;
+      document.getElementById('levelDisplay').textContent = gameState.player.level;
+
+      // Dragon button
+      document.getElementById('btnDragon').disabled = !gameState.player.canBecomeDragon;
+    }
+
+    // Setup keyboard controls
+    function setupControls() {
+      const player = document.getElementById('player');
+      let playerX = 50;
+
+      document.addEventListener('keydown', (e) => {
+        switch (e.key) {
+          case 'ArrowLeft':
+          case 'a':
+            playerX = Math.max(10, playerX - 5);
+            player.style.left = `${playerX}%`;
+            break;
+          case 'ArrowRight':
+          case 'd':
+            playerX = Math.min(90, playerX + 5);
+            player.style.left = `${playerX}%`;
+            break;
+          case ' ':
+            if (gameState.player.isFlying || gameState.player.hasWings || gameState.player.isDragon) {
+              // Jump/fly up
+              const currentBottom = parseFloat(player.style.bottom) || 42;
+              player.style.bottom = `${Math.min(80, currentBottom + 10)}%`;
+              setTimeout(() => {
+                if (!gameState.player.isFlying) {
+                  player.style.bottom = '42%';
+                }
+              }, 500);
+            }
+            break;
+          case 'e':
+            // Interact
+            checkInteraction(playerX);
+            break;
+          case 'm':
+            openMaps();
+            break;
+          case 'Escape':
+            closePanel('craftingPanel');
+            closePanel('brewingPanel');
+            closePanel('mapsPanel');
+            closePanel('animalsPanel');
+            break;
+        }
+      });
+    }
+
+    // Check for interactions
+    function checkInteraction(playerX) {
+      // Check brewing stand (left side ~20%)
+      if (playerX < 30) {
+        openBrewing();
+      }
+      // Check crafting table (right side ~80%)
+      else if (playerX > 70) {
+        openCrafting();
+      }
+    }
+
+    // Show toast
+    function showToast(message) {
+      const existing = document.querySelector('.game-toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'game-toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Helper functions
+    function shadeColor(color, percent) {
+      const num = parseInt(color.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return '#' + (0x1000000 +
+        (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+        (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+        (B < 255 ? B < 1 ? 0 : B : 255)
+      ).toString(16).slice(1);
+    }
+
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ?
+        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '0,0,0';
+    }
+
+    // Periodic rewards
+    setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        // Give some gold over time
+        gameState.gold += 1;
+
+        // Small exp gain
+        if (Math.random() < 0.3) {
+          gainExp(1);
+        }
+
+        // Occasionally spawn materials
+        if (Math.random() < 0.1) {
+          const materials = ['crystal', 'iron', 'magic_feather'];
+          const mat = materials[Math.floor(Math.random() * materials.length)];
+          addItem(mat, 1);
+          showToast(`Encontrou ${ITEMS[mat].emoji} ${ITEMS[mat].name}!`);
+        }
+
+        updateUI();
+        saveGame();
+      }
+    }, 30000); // Every 30 seconds
+
+    // Initialize
+    window.onload = init;
+  </script>
+</body>
+</html>
