@@ -331,6 +331,20 @@
       }
     });
 
+    // Cleanup when page is unloaded (prevents memory leaks in iframe)
+    window.addEventListener('beforeunload', () => {
+      clearInterval(gameLoop);
+    });
+
+    // Pause game when tab/window is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearInterval(gameLoop);
+      } else if (dx !== 0 || dy !== 0) {
+        gameLoop = setInterval(update, gameSpeed);
+      }
+    });
+
     // Start
     drawGame();
     gameLoop = setInterval(update, gameSpeed);

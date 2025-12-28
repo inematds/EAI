@@ -192,7 +192,7 @@
                 <span style="font-size: 1.1rem;">🌊</span>
                 <span class="text">INEMA.CLUB</span>
             </a>
-            <a href="/" class="eai-link eai-link-home">
+            <a href="/EAI/" class="eai-link eai-link-home">
                 <span style="font-size: 1.1rem;">🎮</span>
                 <span class="text">EAI Games</span>
             </a>
