@@ -1167,7 +1167,9 @@
                         { word: 'Examination', translation: 'Exame', image: '🔬' },
                         { word: 'Symptom', translation: 'Sintoma', image: '🤧' },
                         { word: 'Treatment', translation: 'Tratamento', image: '🏨' },
-                        { word: 'Diagnosis', translation: 'Diagnóstico', image: '📊' }
+                        { word: 'Diagnosis', translation: 'Diagnóstico', image: '📊' },
+                        { word: 'Nurse', translation: 'Enfermeira', image: '👩‍⚕️' },
+                        { word: 'Surgery', translation: 'Cirurgia', image: '🔪' }
                     ],
                     es: [
                         { word: 'Paciente', translation: 'Paciente', image: '🤒' },
@@ -1187,11 +1189,36 @@
                         { word: 'Hôpital', translation: 'Hospital', image: '🏥' },
                         { word: 'Stéthoscope', translation: 'Estetoscópio', image: '🩺' },
                         { word: 'Ordonnance', translation: 'Receita', image: '📋' },
-                        { word: 'Injection', translation: 'Injeção', image: '💉' },
-                        { word: 'Examen', translation: 'Exame', image: '🔬' },
-                        { word: 'Symptôme', translation: 'Sintoma', image: '🤧' },
-                        { word: 'Traitement', translation: 'Tratamento', image: '🏨' },
-                        { word: 'Diagnostic', translation: 'Diagnóstico', image: '📊' }
+                        { word: 'Injection', translation: 'Injeção', image: '💉' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "The patient needs medicine.", translation: "O paciente precisa de remédio.", image: '💊' },
+                        { phrase: "Please take a deep breath.", translation: "Por favor, respire fundo.", image: '🌬️' },
+                        { phrase: "Where does it hurt?", translation: "Onde dói?", image: '🤕' },
+                        { phrase: "I will check your temperature.", translation: "Vou verificar sua temperatura.", image: '🌡️' },
+                        { phrase: "Take this medicine twice a day.", translation: "Tome este remédio duas vezes ao dia.", image: '💊' },
+                        { phrase: "You need to rest.", translation: "Você precisa descansar.", image: '🛏️' }
+                    ],
+                    es: [
+                        { phrase: "El paciente necesita medicina.", translation: "O paciente precisa de remédio.", image: '💊' },
+                        { phrase: "Por favor, respire profundo.", translation: "Por favor, respire fundo.", image: '🌬️' },
+                        { phrase: "¿Dónde le duele?", translation: "Onde dói?", image: '🤕' },
+                        { phrase: "Voy a revisar su temperatura.", translation: "Vou verificar sua temperatura.", image: '🌡️' }
+                    ]
+                },
+                dialogues: {
+                    en: [
+                        {
+                            context: "Consulta médica",
+                            lines: [
+                                { speaker: 'patient', text: "Good morning, I have an appointment.", translation: "Bom dia, tenho uma consulta." },
+                                { speaker: 'doctor', text: "Good morning! Please, have a seat.", translation: "Bom dia! Por favor, sente-se.", isQuestion: true, options: ["Good morning! Please, have a seat.", "Go away!", "I'm busy now."]},
+                                { speaker: 'patient', text: "I've been having headaches.", translation: "Tenho tido dores de cabeça." },
+                                { speaker: 'doctor', text: "How long have you had this symptom?", translation: "Há quanto tempo você tem esse sintoma?", isQuestion: true, options: ["How long have you had this symptom?", "That's not serious.", "Take this pill."]}
+                            ]
+                        }
                     ]
                 },
                 conversations: {
@@ -1205,14 +1232,449 @@
                         { speaker: 'patient', text: "I have a headache and fever.", translation: "Estou com dor de cabeça e febre." },
                         { speaker: 'doctor', text: "Let me examine you.", translation: "Deixe-me examiná-lo.", options: [
                             { text: "Let me examine you.", translation: "Deixe-me examiná-lo." },
-                            { text: "Go home and rest.", translation: "Vá para casa e descanse." },
-                            { text: "It's nothing serious.", translation: "Não é nada sério." }
+                            { text: "Go home.", translation: "Vá para casa." },
+                            { text: "It's nothing.", translation: "Não é nada." }
+                        ]}
+                    ],
+                    es: [
+                        { speaker: 'patient', text: "Hola, Doctor. No me siento bien.", translation: "Olá, Doutor. Não estou me sentindo bem." },
+                        { speaker: 'doctor', text: "¿Qué síntomas tiene?", translation: "Quais sintomas você tem?", options: [
+                            { text: "¿Qué síntomas tiene?", translation: "Quais sintomas você tem?" },
+                            { text: "Tome esta medicina.", translation: "Tome este remédio." },
+                            { text: "Necesita cirugía.", translation: "Você precisa de cirurgia." }
+                        ]}
+                    ]
+                }
+            },
+            police: {
+                name: { pt: 'Policial', en: 'Police Officer', es: 'Policía', fr: 'Policier', de: 'Polizist', it: 'Poliziotto', jp: '警察官' },
+                icon: '👮',
+                words: {
+                    en: [
+                        { word: 'Badge', translation: 'Distintivo', image: '🪪' },
+                        { word: 'Patrol', translation: 'Patrulha', image: '🚔' },
+                        { word: 'Criminal', translation: 'Criminoso', image: '🦹' },
+                        { word: 'Arrest', translation: 'Prisão', image: '⛓️' },
+                        { word: 'Station', translation: 'Delegacia', image: '🏢' },
+                        { word: 'Evidence', translation: 'Evidência', image: '🔍' },
+                        { word: 'Handcuffs', translation: 'Algemas', image: '⛓️' },
+                        { word: 'Report', translation: 'Relatório', image: '📝' },
+                        { word: 'Witness', translation: 'Testemunha', image: '👁️' },
+                        { word: 'Investigation', translation: 'Investigação', image: '🔬' },
+                        { word: 'Law', translation: 'Lei', image: '⚖️' },
+                        { word: 'Safety', translation: 'Segurança', image: '🛡️' }
+                    ],
+                    es: [
+                        { word: 'Placa', translation: 'Distintivo', image: '🪪' },
+                        { word: 'Patrulla', translation: 'Patrulha', image: '🚔' },
+                        { word: 'Criminal', translation: 'Criminoso', image: '🦹' },
+                        { word: 'Arresto', translation: 'Prisão', image: '⛓️' },
+                        { word: 'Comisaría', translation: 'Delegacia', image: '🏢' },
+                        { word: 'Evidencia', translation: 'Evidência', image: '🔍' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Please show your ID.", translation: "Por favor, mostre sua identidade.", image: '🪪' },
+                        { phrase: "You are under arrest.", translation: "Você está preso.", image: '⛓️' },
+                        { phrase: "Can I see your license?", translation: "Posso ver sua carteira?", image: '📄' },
+                        { phrase: "Please stay calm.", translation: "Por favor, fique calmo.", image: '✋' },
+                        { phrase: "We are investigating the case.", translation: "Estamos investigando o caso.", image: '🔍' },
+                        { phrase: "Please come to the station.", translation: "Por favor, venha à delegacia.", image: '🏢' }
+                    ]
+                },
+                dialogues: {
+                    en: [
+                        {
+                            context: "Abordagem de trânsito",
+                            lines: [
+                                { speaker: 'citizen', text: "Is there a problem, officer?", translation: "Há algum problema, oficial?" },
+                                { speaker: 'police', text: "Good evening. License and registration, please.", translation: "Boa noite. Carteira e documentos, por favor.", isQuestion: true, options: ["Good evening. License and registration, please.", "Get out of the car!", "You're going to jail!"]},
+                                { speaker: 'citizen', text: "Here you go, officer.", translation: "Aqui está, oficial." },
+                                { speaker: 'police', text: "Do you know why I stopped you?", translation: "Você sabe por que eu te parei?", isQuestion: true, options: ["Do you know why I stopped you?", "You're a criminal!", "Pay me now!"]}
+                            ]
+                        }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'citizen', text: "Officer, I need help!", translation: "Oficial, preciso de ajuda!" },
+                        { speaker: 'police', text: "What happened? Are you okay?", translation: "O que aconteceu? Você está bem?", options: [
+                            { text: "What happened? Are you okay?", translation: "O que aconteceu? Você está bem?" },
+                            { text: "I don't care.", translation: "Não me importo." },
+                            { text: "Go away.", translation: "Vá embora." }
                         ]},
-                        { speaker: 'patient', text: "Thank you, Doctor.", translation: "Obrigado, Doutor." },
-                        { speaker: 'doctor', text: "Take this prescription to the pharmacy.", translation: "Leve esta receita à farmácia.", options: [
-                            { text: "Take this prescription to the pharmacy.", translation: "Leve esta receita à farmácia." },
-                            { text: "You're completely healthy.", translation: "Você está completamente saudável." },
-                            { text: "Come back tomorrow.", translation: "Volte amanhã." }
+                        { speaker: 'citizen', text: "Someone stole my bag!", translation: "Alguém roubou minha bolsa!" },
+                        { speaker: 'police', text: "Can you describe the suspect?", translation: "Pode descrever o suspeito?", options: [
+                            { text: "Can you describe the suspect?", translation: "Pode descrever o suspeito?" },
+                            { text: "Buy a new one.", translation: "Compre uma nova." },
+                            { text: "That's your problem.", translation: "Problema seu." }
+                        ]}
+                    ]
+                }
+            },
+            garbagecollector: {
+                name: { pt: 'Gari', en: 'Garbage Collector', es: 'Recolector', fr: 'Éboueur', de: 'Müllmann', it: 'Netturbino', jp: '清掃員' },
+                icon: '🧹',
+                words: {
+                    en: [
+                        { word: 'Trash', translation: 'Lixo', image: '🗑️' },
+                        { word: 'Truck', translation: 'Caminhão', image: '🚛' },
+                        { word: 'Recycle', translation: 'Reciclar', image: '♻️' },
+                        { word: 'Clean', translation: 'Limpar', image: '🧹' },
+                        { word: 'Bag', translation: 'Saco', image: '🛍️' },
+                        { word: 'Street', translation: 'Rua', image: '🛣️' },
+                        { word: 'Environment', translation: 'Meio ambiente', image: '🌍' },
+                        { word: 'Waste', translation: 'Resíduo', image: '🗑️' },
+                        { word: 'Collect', translation: 'Coletar', image: '📦' },
+                        { word: 'Gloves', translation: 'Luvas', image: '🧤' },
+                        { word: 'Uniform', translation: 'Uniforme', image: '👕' },
+                        { word: 'Schedule', translation: 'Horário', image: '🕐' }
+                    ],
+                    es: [
+                        { word: 'Basura', translation: 'Lixo', image: '🗑️' },
+                        { word: 'Camión', translation: 'Caminhão', image: '🚛' },
+                        { word: 'Reciclar', translation: 'Reciclar', image: '♻️' },
+                        { word: 'Limpiar', translation: 'Limpar', image: '🧹' },
+                        { word: 'Bolsa', translation: 'Saco', image: '🛍️' },
+                        { word: 'Calle', translation: 'Rua', image: '🛣️' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Please separate the recyclables.", translation: "Por favor, separe os recicláveis.", image: '♻️' },
+                        { phrase: "The truck comes on Monday.", translation: "O caminhão vem na segunda.", image: '🚛' },
+                        { phrase: "Keep the city clean!", translation: "Mantenha a cidade limpa!", image: '🏙️' },
+                        { phrase: "This goes in the recycling bin.", translation: "Isso vai na lixeira de reciclagem.", image: '♻️' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'resident', text: "Good morning! What time do you collect trash?", translation: "Bom dia! Que horas vocês coletam o lixo?" },
+                        { speaker: 'collector', text: "We come every Tuesday and Friday.", translation: "Viemos toda terça e sexta.", options: [
+                            { text: "We come every Tuesday and Friday.", translation: "Viemos toda terça e sexta." },
+                            { text: "I don't know.", translation: "Não sei." },
+                            { text: "Never.", translation: "Nunca." }
+                        ]},
+                        { speaker: 'resident', text: "Should I separate recyclables?", translation: "Devo separar os recicláveis?" },
+                        { speaker: 'collector', text: "Yes, please! It helps the environment.", translation: "Sim, por favor! Ajuda o meio ambiente.", options: [
+                            { text: "Yes, please! It helps the environment.", translation: "Sim, por favor! Ajuda o meio ambiente." },
+                            { text: "It doesn't matter.", translation: "Não importa." },
+                            { text: "Throw everything together.", translation: "Jogue tudo junto." }
+                        ]}
+                    ]
+                }
+            },
+            guide: {
+                name: { pt: 'Guia Turístico', en: 'Tour Guide', es: 'Guía Turístico', fr: 'Guide', de: 'Reiseleiter', it: 'Guida', jp: 'ツアーガイド' },
+                icon: '🧭',
+                words: {
+                    en: [
+                        { word: 'Tourist', translation: 'Turista', image: '🧳' },
+                        { word: 'Monument', translation: 'Monumento', image: '🗽' },
+                        { word: 'Museum', translation: 'Museu', image: '🏛️' },
+                        { word: 'History', translation: 'História', image: '📜' },
+                        { word: 'Map', translation: 'Mapa', image: '🗺️' },
+                        { word: 'Camera', translation: 'Câmera', image: '📷' },
+                        { word: 'Bus', translation: 'Ônibus', image: '🚌' },
+                        { word: 'Ticket', translation: 'Ingresso', image: '🎫' },
+                        { word: 'Attraction', translation: 'Atração', image: '🎡' },
+                        { word: 'Beach', translation: 'Praia', image: '🏖️' },
+                        { word: 'Restaurant', translation: 'Restaurante', image: '🍽️' },
+                        { word: 'Hotel', translation: 'Hotel', image: '🏨' }
+                    ],
+                    es: [
+                        { word: 'Turista', translation: 'Turista', image: '🧳' },
+                        { word: 'Monumento', translation: 'Monumento', image: '🗽' },
+                        { word: 'Museo', translation: 'Museu', image: '🏛️' },
+                        { word: 'Historia', translation: 'História', image: '📜' },
+                        { word: 'Mapa', translation: 'Mapa', image: '🗺️' },
+                        { word: 'Cámara', translation: 'Câmera', image: '📷' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Welcome to our city!", translation: "Bem-vindos à nossa cidade!", image: '🏙️' },
+                        { phrase: "This monument is 200 years old.", translation: "Este monumento tem 200 anos.", image: '🗽' },
+                        { phrase: "Please stay with the group.", translation: "Por favor, fiquem com o grupo.", image: '👥' },
+                        { phrase: "You can take photos here.", translation: "Vocês podem tirar fotos aqui.", image: '📷' },
+                        { phrase: "The museum closes at 6 PM.", translation: "O museu fecha às 18h.", image: '🏛️' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'tourist', text: "What's the most famous place here?", translation: "Qual é o lugar mais famoso aqui?" },
+                        { speaker: 'guide', text: "The old cathedral is our main attraction.", translation: "A catedral antiga é nossa principal atração.", options: [
+                            { text: "The old cathedral is our main attraction.", translation: "A catedral antiga é nossa principal atração." },
+                            { text: "Nothing interesting here.", translation: "Nada interessante aqui." },
+                            { text: "I don't know this city.", translation: "Não conheço esta cidade." }
+                        ]},
+                        { speaker: 'tourist', text: "How old is it?", translation: "Quantos anos ela tem?" },
+                        { speaker: 'guide', text: "It was built in 1500.", translation: "Foi construída em 1500.", options: [
+                            { text: "It was built in 1500.", translation: "Foi construída em 1500." },
+                            { text: "Last year.", translation: "Ano passado." },
+                            { text: "I forgot.", translation: "Esqueci." }
+                        ]}
+                    ]
+                }
+            },
+            artisan: {
+                name: { pt: 'Artesão', en: 'Artisan', es: 'Artesano', fr: 'Artisan', de: 'Handwerker', it: 'Artigiano', jp: '職人' },
+                icon: '🎨',
+                words: {
+                    en: [
+                        { word: 'Craft', translation: 'Artesanato', image: '🎨' },
+                        { word: 'Handmade', translation: 'Feito à mão', image: '✋' },
+                        { word: 'Clay', translation: 'Argila', image: '🏺' },
+                        { word: 'Wood', translation: 'Madeira', image: '🪵' },
+                        { word: 'Fabric', translation: 'Tecido', image: '🧵' },
+                        { word: 'Paint', translation: 'Tinta', image: '🎨' },
+                        { word: 'Pottery', translation: 'Cerâmica', image: '🏺' },
+                        { word: 'Jewelry', translation: 'Joias', image: '💎' },
+                        { word: 'Tool', translation: 'Ferramenta', image: '🔧' },
+                        { word: 'Design', translation: 'Design', image: '✏️' },
+                        { word: 'Pattern', translation: 'Padrão', image: '🔲' },
+                        { word: 'Create', translation: 'Criar', image: '✨' }
+                    ],
+                    es: [
+                        { word: 'Artesanía', translation: 'Artesanato', image: '🎨' },
+                        { word: 'Hecho a mano', translation: 'Feito à mão', image: '✋' },
+                        { word: 'Arcilla', translation: 'Argila', image: '🏺' },
+                        { word: 'Madera', translation: 'Madeira', image: '🪵' },
+                        { word: 'Tela', translation: 'Tecido', image: '🧵' },
+                        { word: 'Pintura', translation: 'Tinta', image: '🎨' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "This is handmade with love.", translation: "Isso é feito à mão com amor.", image: '❤️' },
+                        { phrase: "Each piece is unique.", translation: "Cada peça é única.", image: '✨' },
+                        { phrase: "I use natural materials.", translation: "Uso materiais naturais.", image: '🌿' },
+                        { phrase: "It takes three days to make.", translation: "Leva três dias para fazer.", image: '📅' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'customer', text: "How do you make this?", translation: "Como você faz isso?" },
+                        { speaker: 'artisan', text: "I shape the clay by hand.", translation: "Modelo a argila com as mãos.", options: [
+                            { text: "I shape the clay by hand.", translation: "Modelo a argila com as mãos." },
+                            { text: "A machine does it.", translation: "Uma máquina faz." },
+                            { text: "I buy it ready.", translation: "Compro pronto." }
+                        ]},
+                        { speaker: 'customer', text: "It's beautiful! How much?", translation: "É lindo! Quanto custa?" },
+                        { speaker: 'artisan', text: "This piece is 50 dollars.", translation: "Esta peça custa 50 dólares.", options: [
+                            { text: "This piece is 50 dollars.", translation: "Esta peça custa 50 dólares." },
+                            { text: "One million dollars.", translation: "Um milhão de dólares." },
+                            { text: "It's free.", translation: "É de graça." }
+                        ]}
+                    ]
+                }
+            },
+            engineer: {
+                name: { pt: 'Engenheiro', en: 'Engineer', es: 'Ingeniero', fr: 'Ingénieur', de: 'Ingenieur', it: 'Ingegnere', jp: 'エンジニア' },
+                icon: '👷',
+                words: {
+                    en: [
+                        { word: 'Project', translation: 'Projeto', image: '📐' },
+                        { word: 'Blueprint', translation: 'Planta', image: '📋' },
+                        { word: 'Structure', translation: 'Estrutura', image: '🏗️' },
+                        { word: 'Calculate', translation: 'Calcular', image: '🔢' },
+                        { word: 'Material', translation: 'Material', image: '🧱' },
+                        { word: 'Safety', translation: 'Segurança', image: '⛑️' },
+                        { word: 'Machine', translation: 'Máquina', image: '⚙️' },
+                        { word: 'Bridge', translation: 'Ponte', image: '🌉' },
+                        { word: 'Building', translation: 'Edifício', image: '🏢' },
+                        { word: 'System', translation: 'Sistema', image: '🔧' },
+                        { word: 'Technology', translation: 'Tecnologia', image: '💻' },
+                        { word: 'Measure', translation: 'Medir', image: '📏' }
+                    ],
+                    es: [
+                        { word: 'Proyecto', translation: 'Projeto', image: '📐' },
+                        { word: 'Plano', translation: 'Planta', image: '📋' },
+                        { word: 'Estructura', translation: 'Estrutura', image: '🏗️' },
+                        { word: 'Calcular', translation: 'Calcular', image: '🔢' },
+                        { word: 'Material', translation: 'Material', image: '🧱' },
+                        { word: 'Seguridad', translation: 'Segurança', image: '⛑️' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "We need to review the calculations.", translation: "Precisamos revisar os cálculos.", image: '🔢' },
+                        { phrase: "The structure is safe.", translation: "A estrutura é segura.", image: '✅' },
+                        { phrase: "Check the blueprints.", translation: "Verifique as plantas.", image: '📋' },
+                        { phrase: "This project will take 6 months.", translation: "Este projeto levará 6 meses.", image: '📅' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'client', text: "Can you build a bridge here?", translation: "Você pode construir uma ponte aqui?" },
+                        { speaker: 'engineer', text: "Yes, but we need to study the soil first.", translation: "Sim, mas precisamos estudar o solo primeiro.", options: [
+                            { text: "Yes, but we need to study the soil first.", translation: "Sim, mas precisamos estudar o solo primeiro." },
+                            { text: "Yes, we can start today!", translation: "Sim, podemos começar hoje!" },
+                            { text: "No, it's impossible.", translation: "Não, é impossível." }
+                        ]},
+                        { speaker: 'client', text: "How long will it take?", translation: "Quanto tempo vai levar?" },
+                        { speaker: 'engineer', text: "About two years for a project this size.", translation: "Cerca de dois anos para um projeto deste tamanho.", options: [
+                            { text: "About two years for a project this size.", translation: "Cerca de dois anos para um projeto deste tamanho." },
+                            { text: "One week.", translation: "Uma semana." },
+                            { text: "Forever.", translation: "Para sempre." }
+                        ]}
+                    ]
+                }
+            },
+            architect: {
+                name: { pt: 'Arquiteto', en: 'Architect', es: 'Arquitecto', fr: 'Architecte', de: 'Architekt', it: 'Architetto', jp: '建築家' },
+                icon: '🏛️',
+                words: {
+                    en: [
+                        { word: 'Design', translation: 'Design', image: '✏️' },
+                        { word: 'Floor plan', translation: 'Planta baixa', image: '📐' },
+                        { word: 'Model', translation: 'Maquete', image: '🏠' },
+                        { word: 'Space', translation: 'Espaço', image: '📏' },
+                        { word: 'Light', translation: 'Luz', image: '💡' },
+                        { word: 'Window', translation: 'Janela', image: '🪟' },
+                        { word: 'Roof', translation: 'Telhado', image: '🏠' },
+                        { word: 'Wall', translation: 'Parede', image: '🧱' },
+                        { word: 'Garden', translation: 'Jardim', image: '🌳' },
+                        { word: 'Modern', translation: 'Moderno', image: '🏙️' },
+                        { word: 'Classic', translation: 'Clássico', image: '🏛️' },
+                        { word: 'Sustainable', translation: 'Sustentável', image: '🌱' }
+                    ],
+                    es: [
+                        { word: 'Diseño', translation: 'Design', image: '✏️' },
+                        { word: 'Plano', translation: 'Planta', image: '📐' },
+                        { word: 'Maqueta', translation: 'Maquete', image: '🏠' },
+                        { word: 'Espacio', translation: 'Espaço', image: '📏' },
+                        { word: 'Luz', translation: 'Luz', image: '💡' },
+                        { word: 'Ventana', translation: 'Janela', image: '🪟' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Let me show you the model.", translation: "Deixe-me mostrar a maquete.", image: '🏠' },
+                        { phrase: "Natural light is important.", translation: "Luz natural é importante.", image: '☀️' },
+                        { phrase: "This design is sustainable.", translation: "Este design é sustentável.", image: '🌱' },
+                        { phrase: "The living room faces south.", translation: "A sala de estar fica virada para o sul.", image: '🧭' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'client', text: "I want a modern house.", translation: "Quero uma casa moderna." },
+                        { speaker: 'architect', text: "Great! How many bedrooms do you need?", translation: "Ótimo! Quantos quartos você precisa?", options: [
+                            { text: "Great! How many bedrooms do you need?", translation: "Ótimo! Quantos quartos você precisa?" },
+                            { text: "I only design castles.", translation: "Só projeto castelos." },
+                            { text: "Modern is ugly.", translation: "Moderno é feio." }
+                        ]},
+                        { speaker: 'client', text: "Three bedrooms and a big garden.", translation: "Três quartos e um jardim grande." },
+                        { speaker: 'architect', text: "I have some ideas. Let me draw them.", translation: "Tenho algumas ideias. Deixe-me desenhá-las.", options: [
+                            { text: "I have some ideas. Let me draw them.", translation: "Tenho algumas ideias. Deixe-me desenhá-las." },
+                            { text: "That's impossible.", translation: "Isso é impossível." },
+                            { text: "Gardens are too expensive.", translation: "Jardins são muito caros." }
+                        ]}
+                    ]
+                }
+            },
+            farmer: {
+                name: { pt: 'Agricultor', en: 'Farmer', es: 'Agricultor', fr: 'Agriculteur', de: 'Bauer', it: 'Agricoltore', jp: '農家' },
+                icon: '👨‍🌾',
+                words: {
+                    en: [
+                        { word: 'Farm', translation: 'Fazenda', image: '🏡' },
+                        { word: 'Tractor', translation: 'Trator', image: '🚜' },
+                        { word: 'Harvest', translation: 'Colheita', image: '🌾' },
+                        { word: 'Seed', translation: 'Semente', image: '🌱' },
+                        { word: 'Soil', translation: 'Solo', image: '🟫' },
+                        { word: 'Crop', translation: 'Plantação', image: '🌽' },
+                        { word: 'Water', translation: 'Água', image: '💧' },
+                        { word: 'Sun', translation: 'Sol', image: '☀️' },
+                        { word: 'Cow', translation: 'Vaca', image: '🐄' },
+                        { word: 'Chicken', translation: 'Galinha', image: '🐔' },
+                        { word: 'Vegetable', translation: 'Vegetal', image: '🥬' },
+                        { word: 'Fruit', translation: 'Fruta', image: '🍎' }
+                    ],
+                    es: [
+                        { word: 'Granja', translation: 'Fazenda', image: '🏡' },
+                        { word: 'Tractor', translation: 'Trator', image: '🚜' },
+                        { word: 'Cosecha', translation: 'Colheita', image: '🌾' },
+                        { word: 'Semilla', translation: 'Semente', image: '🌱' },
+                        { word: 'Tierra', translation: 'Solo', image: '🟫' },
+                        { word: 'Cultivo', translation: 'Plantação', image: '🌽' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "The harvest is ready.", translation: "A colheita está pronta.", image: '🌾' },
+                        { phrase: "We plant in spring.", translation: "Plantamos na primavera.", image: '🌱' },
+                        { phrase: "The cows need feeding.", translation: "As vacas precisam comer.", image: '🐄' },
+                        { phrase: "Rain is good for the crops.", translation: "Chuva é boa para as plantações.", image: '🌧️' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'visitor', text: "What do you grow here?", translation: "O que você cultiva aqui?" },
+                        { speaker: 'farmer', text: "We grow corn, tomatoes, and beans.", translation: "Cultivamos milho, tomates e feijão.", options: [
+                            { text: "We grow corn, tomatoes, and beans.", translation: "Cultivamos milho, tomates e feijão." },
+                            { text: "Nothing, the land is dead.", translation: "Nada, a terra está morta." },
+                            { text: "Only weeds.", translation: "Só ervas daninhas." }
+                        ]},
+                        { speaker: 'visitor', text: "Can I buy some fresh vegetables?", translation: "Posso comprar vegetais frescos?" },
+                        { speaker: 'farmer', text: "Of course! Everything here is organic.", translation: "Claro! Tudo aqui é orgânico.", options: [
+                            { text: "Of course! Everything here is organic.", translation: "Claro! Tudo aqui é orgânico." },
+                            { text: "No, we don't sell anything.", translation: "Não, não vendemos nada." },
+                            { text: "We use lots of chemicals.", translation: "Usamos muitos químicos." }
+                        ]}
+                    ]
+                }
+            },
+            seller: {
+                name: { pt: 'Vendedor', en: 'Salesperson', es: 'Vendedor', fr: 'Vendeur', de: 'Verkäufer', it: 'Venditore', jp: '販売員' },
+                icon: '🛒',
+                words: {
+                    en: [
+                        { word: 'Store', translation: 'Loja', image: '🏪' },
+                        { word: 'Customer', translation: 'Cliente', image: '🧑' },
+                        { word: 'Price', translation: 'Preço', image: '💰' },
+                        { word: 'Discount', translation: 'Desconto', image: '🏷️' },
+                        { word: 'Payment', translation: 'Pagamento', image: '💳' },
+                        { word: 'Receipt', translation: 'Recibo', image: '🧾' },
+                        { word: 'Product', translation: 'Produto', image: '📦' },
+                        { word: 'Sale', translation: 'Promoção', image: '🎉' },
+                        { word: 'Cash', translation: 'Dinheiro', image: '💵' },
+                        { word: 'Credit card', translation: 'Cartão de crédito', image: '💳' },
+                        { word: 'Size', translation: 'Tamanho', image: '📏' },
+                        { word: 'Color', translation: 'Cor', image: '🎨' }
+                    ],
+                    es: [
+                        { word: 'Tienda', translation: 'Loja', image: '🏪' },
+                        { word: 'Cliente', translation: 'Cliente', image: '🧑' },
+                        { word: 'Precio', translation: 'Preço', image: '💰' },
+                        { word: 'Descuento', translation: 'Desconto', image: '🏷️' },
+                        { word: 'Pago', translation: 'Pagamento', image: '💳' },
+                        { word: 'Recibo', translation: 'Recibo', image: '🧾' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "How can I help you?", translation: "Como posso ajudá-lo?", image: '🤝' },
+                        { phrase: "This is on sale today.", translation: "Isso está em promoção hoje.", image: '🏷️' },
+                        { phrase: "We accept credit cards.", translation: "Aceitamos cartões de crédito.", image: '💳' },
+                        { phrase: "Would you like a bag?", translation: "Gostaria de uma sacola?", image: '🛍️' },
+                        { phrase: "The fitting room is over there.", translation: "O provador fica ali.", image: '🚪' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'customer', text: "Do you have this in blue?", translation: "Vocês têm isso em azul?" },
+                        { speaker: 'seller', text: "Let me check for you.", translation: "Deixe-me verificar para você.", options: [
+                            { text: "Let me check for you.", translation: "Deixe-me verificar para você." },
+                            { text: "No, we only have ugly colors.", translation: "Não, só temos cores feias." },
+                            { text: "Find it yourself.", translation: "Procure você mesmo." }
+                        ]},
+                        { speaker: 'customer', text: "How much is this?", translation: "Quanto custa isso?" },
+                        { speaker: 'seller', text: "It's $29.99, but we have a 20% discount.", translation: "Custa $29.99, mas temos 20% de desconto.", options: [
+                            { text: "It's $29.99, but we have a 20% discount.", translation: "Custa $29.99, mas temos 20% de desconto." },
+                            { text: "I don't know the prices.", translation: "Não sei os preços." },
+                            { text: "It's very expensive, sorry.", translation: "É muito caro, desculpe." }
                         ]}
                     ]
                 }
@@ -1239,26 +1701,30 @@
                         { word: 'Ingredientes', translation: 'Ingredientes', image: '🥗' },
                         { word: 'Cuchillo', translation: 'Faca', image: '🔪' },
                         { word: 'Sartén', translation: 'Panela', image: '🍲' },
-                        { word: 'Horno', translation: 'Forno', image: '🔥' },
-                        { word: 'Especia', translation: 'Tempero', image: '🧂' },
-                        { word: 'Menú', translation: 'Cardápio', image: '📋' },
-                        { word: 'Plato', translation: 'Prato', image: '🍽️' },
-                        { word: 'Sabor', translation: 'Sabor', image: '👅' }
+                        { word: 'Horno', translation: 'Forno', image: '🔥' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Today's special is pasta.", translation: "O especial de hoje é macarrão.", image: '🍝' },
+                        { phrase: "The sauce needs more salt.", translation: "O molho precisa de mais sal.", image: '🧂' },
+                        { phrase: "Dinner is served!", translation: "O jantar está servido!", image: '🍽️' },
+                        { phrase: "I use fresh ingredients.", translation: "Uso ingredientes frescos.", image: '🥗' }
                     ]
                 },
                 conversations: {
                     en: [
-                        { speaker: 'customer', text: "Good evening! Do you have a table for two?", translation: "Boa noite! Vocês têm mesa para dois?" },
-                        { speaker: 'chef', text: "Yes, right this way. Here's the menu.", translation: "Sim, por aqui. Aqui está o cardápio.", options: [
-                            { text: "Yes, right this way. Here's the menu.", translation: "Sim, por aqui. Aqui está o cardápio." },
-                            { text: "Sorry, we're closed.", translation: "Desculpe, estamos fechados." },
-                            { text: "Only for one person.", translation: "Apenas para uma pessoa." }
-                        ]},
                         { speaker: 'customer', text: "What do you recommend?", translation: "O que você recomenda?" },
                         { speaker: 'chef', text: "Our special today is grilled salmon.", translation: "Nosso especial de hoje é salmão grelhado.", options: [
                             { text: "Our special today is grilled salmon.", translation: "Nosso especial de hoje é salmão grelhado." },
                             { text: "Everything is bad today.", translation: "Tudo está ruim hoje." },
                             { text: "I don't know.", translation: "Não sei." }
+                        ]},
+                        { speaker: 'customer', text: "Is it spicy?", translation: "É apimentado?" },
+                        { speaker: 'chef', text: "No, but I can add some spice if you want.", translation: "Não, mas posso adicionar tempero se quiser.", options: [
+                            { text: "No, but I can add some spice if you want.", translation: "Não, mas posso adicionar tempero se quiser." },
+                            { text: "Yes, extremely spicy!", translation: "Sim, extremamente apimentado!" },
+                            { text: "I don't care about your preferences.", translation: "Não me importo com suas preferências." }
                         ]}
                     ]
                 }
@@ -1280,6 +1746,14 @@
                         { word: 'Knowledge', translation: 'Conhecimento', image: '🧠' }
                     ]
                 },
+                phrases: {
+                    en: [
+                        { phrase: "Please open your books.", translation: "Por favor, abram seus livros.", image: '📖' },
+                        { phrase: "The homework is due tomorrow.", translation: "O dever é para amanhã.", image: '📝' },
+                        { phrase: "Any questions?", translation: "Alguma pergunta?", image: '❓' },
+                        { phrase: "Very good answer!", translation: "Resposta muito boa!", image: '✅' }
+                    ]
+                },
                 conversations: {
                     en: [
                         { speaker: 'student', text: "Good morning, teacher!", translation: "Bom dia, professor!" },
@@ -1287,6 +1761,12 @@
                             { text: "Good morning! Please open your books.", translation: "Bom dia! Por favor abram seus livros." },
                             { text: "Go home now.", translation: "Vão para casa agora." },
                             { text: "Class is cancelled.", translation: "A aula está cancelada." }
+                        ]},
+                        { speaker: 'student', text: "I have a question.", translation: "Tenho uma pergunta." },
+                        { speaker: 'teacher', text: "Of course, what would you like to know?", translation: "Claro, o que gostaria de saber?", options: [
+                            { text: "Of course, what would you like to know?", translation: "Claro, o que gostaria de saber?" },
+                            { text: "No questions allowed.", translation: "Não são permitidas perguntas." },
+                            { text: "Figure it out yourself.", translation: "Descubra sozinho." }
                         ]}
                     ]
                 }
@@ -1307,6 +1787,30 @@
                         { word: 'Alarm', translation: 'Alarme', image: '🔔' },
                         { word: 'Smoke', translation: 'Fumaça', image: '💨' }
                     ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Everyone stay calm!", translation: "Todos fiquem calmos!", image: '✋' },
+                        { phrase: "Exit the building now!", translation: "Saiam do prédio agora!", image: '🚪' },
+                        { phrase: "The fire is under control.", translation: "O fogo está sob controle.", image: '✅' },
+                        { phrase: "Is anyone still inside?", translation: "Ainda tem alguém lá dentro?", image: '❓' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'citizen', text: "Help! There's a fire!", translation: "Socorro! Há um incêndio!" },
+                        { speaker: 'firefighter', text: "Stay calm. Is anyone inside?", translation: "Fique calmo. Tem alguém lá dentro?", options: [
+                            { text: "Stay calm. Is anyone inside?", translation: "Fique calmo. Tem alguém lá dentro?" },
+                            { text: "I'm on my lunch break.", translation: "Estou no meu intervalo." },
+                            { text: "That's not my problem.", translation: "Isso não é problema meu." }
+                        ]},
+                        { speaker: 'citizen', text: "My cat is on the second floor!", translation: "Meu gato está no segundo andar!" },
+                        { speaker: 'firefighter', text: "We'll get your cat. Please stay back.", translation: "Vamos buscar seu gato. Por favor, afaste-se.", options: [
+                            { text: "We'll get your cat. Please stay back.", translation: "Vamos buscar seu gato. Por favor, afaste-se." },
+                            { text: "We only save humans.", translation: "Só salvamos humanos." },
+                            { text: "Too dangerous, sorry.", translation: "Muito perigoso, desculpe." }
+                        ]}
+                    ]
                 }
             },
             pilot: {
@@ -1325,11 +1829,35 @@
                         { word: 'Turbulence', translation: 'Turbulência', image: '🌪️' },
                         { word: 'Control', translation: 'Controle', image: '🎮' }
                     ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Prepare for takeoff.", translation: "Preparem-se para decolar.", image: '🛫' },
+                        { phrase: "We're cruising at 35,000 feet.", translation: "Estamos voando a 35.000 pés.", image: '✈️' },
+                        { phrase: "Please fasten your seatbelts.", translation: "Por favor, apertem os cintos.", image: '💺' },
+                        { phrase: "We'll be landing in 30 minutes.", translation: "Pousar em 30 minutos.", image: '🛬' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'copilot', text: "Tower, this is flight 247.", translation: "Torre, aqui é o voo 247." },
+                        { speaker: 'pilot', text: "Requesting permission to land.", translation: "Solicitando permissão para pousar.", options: [
+                            { text: "Requesting permission to land.", translation: "Solicitando permissão para pousar." },
+                            { text: "I'll land wherever I want.", translation: "Vou pousar onde eu quiser." },
+                            { text: "I'm lost.", translation: "Estou perdido." }
+                        ]},
+                        { speaker: 'copilot', text: "Tower confirmed runway 24.", translation: "Torre confirmou pista 24." },
+                        { speaker: 'pilot', text: "Roger. Preparing for approach.", translation: "Entendido. Preparando para aproximação.", options: [
+                            { text: "Roger. Preparing for approach.", translation: "Entendido. Preparando para aproximação." },
+                            { text: "I don't know how to land.", translation: "Não sei pousar." },
+                            { text: "Let's try runway 50.", translation: "Vamos tentar pista 50." }
+                        ]}
+                    ]
                 }
             },
             veterinarian: {
                 name: { pt: 'Veterinário', en: 'Veterinarian', es: 'Veterinario', fr: 'Vétérinaire', de: 'Tierarzt', it: 'Veterinario', jp: '獣医' },
-                icon: '👨‍⚕️',
+                icon: '🐕‍🦺',
                 words: {
                     en: [
                         { word: 'Pet', translation: 'Animal de estimação', image: '🐕' },
@@ -1342,6 +1870,30 @@
                         { word: 'Check-up', translation: 'Consulta', image: '📋' },
                         { word: 'Animal', translation: 'Animal', image: '🐾' },
                         { word: 'Treatment', translation: 'Tratamento', image: '🩺' }
+                    ]
+                },
+                phrases: {
+                    en: [
+                        { phrase: "Your pet is healthy.", translation: "Seu pet está saudável.", image: '✅' },
+                        { phrase: "Time for the vaccine.", translation: "Hora da vacina.", image: '💉' },
+                        { phrase: "Give this medicine twice a day.", translation: "Dê este remédio duas vezes ao dia.", image: '💊' },
+                        { phrase: "Bring him back in a week.", translation: "Traga-o de volta em uma semana.", image: '📅' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'owner', text: "My dog isn't eating.", translation: "Meu cachorro não está comendo." },
+                        { speaker: 'vet', text: "Let me examine him.", translation: "Deixe-me examiná-lo.", options: [
+                            { text: "Let me examine him.", translation: "Deixe-me examiná-lo." },
+                            { text: "Dogs don't need to eat.", translation: "Cachorros não precisam comer." },
+                            { text: "I only treat cats.", translation: "Só trato gatos." }
+                        ]},
+                        { speaker: 'owner', text: "Is it serious?", translation: "É sério?" },
+                        { speaker: 'vet', text: "Don't worry, it's just a minor infection.", translation: "Não se preocupe, é apenas uma infecção leve.", options: [
+                            { text: "Don't worry, it's just a minor infection.", translation: "Não se preocupe, é apenas uma infecção leve." },
+                            { text: "Yes, very serious.", translation: "Sim, muito sério." },
+                            { text: "I have no idea.", translation: "Não tenho ideia." }
+                        ]}
                     ]
                 }
             }
@@ -1572,6 +2124,7 @@
                 gameState.style = id;
                 applyStyle();
                 renderCustomization();
+                updatePreview();
             }
         }
 
@@ -1739,6 +2292,8 @@
             gameState.lives = 3;
             gameState.wordIndex = 0;
             gameState.conversationIndex = 0;
+            gameState.dialogueIndex = 0;
+            gameState.dialogueLineIndex = 0;
 
             hideAll();
             document.getElementById('game-screen').style.display = 'block';
@@ -1749,6 +2304,10 @@
 
             if (phase.type === 'conversation') {
                 renderConversation();
+            } else if (phase.type === 'dialogue') {
+                renderDialogue();
+            } else if (phase.type === 'phrases') {
+                renderPhraseLearning();
             } else {
                 renderWordLearning();
             }
@@ -1867,6 +2426,239 @@
             updateGameHUD();
         }
 
+        // ===== FRASES - Fases 4-6 =====
+        function renderPhraseLearning() {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const phrases = prof.phrases?.[gameState.currentLanguage] || prof.phrases?.en || [];
+
+            if (phrases.length === 0) {
+                // Fallback para palavras se não houver frases
+                renderWordLearning();
+                return;
+            }
+
+            if (gameState.wordIndex >= phrases.length) {
+                endPhase(true);
+                return;
+            }
+
+            const phrase = phrases[gameState.wordIndex];
+            const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
+
+            const content = document.getElementById('game-content');
+            content.innerHTML = `
+                <div class="teacher-area">
+                    <div class="teacher-avatar">${prof.icon}</div>
+                    <div class="teacher-speech">
+                        <div class="speech-bubble">
+                            <span class="word-highlight" style="font-size: 20px;">${phrase.phrase}</span>
+                            <br>
+                            <small style="color: #666;">"${phrase.translation}"</small>
+                        </div>
+                        <button class="speak-btn" onclick="speakWord('${phrase.phrase.replace(/'/g, "\\'")}')">
+                            🔊 Ouvir em ${lang.name}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="image-area">
+                    <div class="word-image">${phrase.image}</div>
+                    <div class="word-translation" style="font-size: 18px;">${phrase.phrase}</div>
+                    <div class="word-pronunciation">${phrase.translation}</div>
+                </div>
+
+                <div class="quiz-area">
+                    <div class="quiz-question">Complete a frase correta em ${lang.name}:</div>
+                    <div class="options-container" id="options-container"></div>
+                </div>
+            `;
+
+            generatePhraseOptions(phrase, phrases);
+        }
+
+        function generatePhraseOptions(correctPhrase, allPhrases) {
+            const options = [correctPhrase];
+
+            const wrongOptions = allPhrases.filter(p => p.phrase !== correctPhrase.phrase);
+            while (options.length < 4 && wrongOptions.length > 0) {
+                const randomIndex = Math.floor(Math.random() * wrongOptions.length);
+                options.push(wrongOptions.splice(randomIndex, 1)[0]);
+            }
+
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            options.forEach(opt => {
+                const escapedPhrase = opt.phrase.replace(/'/g, "\\'");
+                container.innerHTML += `
+                    <button class="option-btn" style="font-size: 14px; text-align: left;" onclick="checkPhraseAnswer('${escapedPhrase}', '${correctPhrase.phrase.replace(/'/g, "\\'")}', this)">
+                        ${opt.image} ${opt.phrase}
+                    </button>
+                `;
+            });
+        }
+
+        function checkPhraseAnswer(selected, correct, button) {
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selected === correct) {
+                button.classList.add('correct');
+                gameState.score += 150;
+                speakWord(correct);
+
+                setTimeout(() => {
+                    gameState.wordIndex++;
+                    renderPhraseLearning();
+                }, 1500);
+            } else {
+                button.classList.add('wrong');
+                gameState.lives--;
+
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes(correct.substring(0, 20))) {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                if (gameState.lives <= 0) {
+                    setTimeout(() => endPhase(false), 1500);
+                } else {
+                    setTimeout(() => {
+                        gameState.wordIndex++;
+                        renderPhraseLearning();
+                    }, 2000);
+                }
+            }
+
+            updateGameHUD();
+        }
+
+        // ===== DIÁLOGOS - Fases 7-8 =====
+        function renderDialogue() {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const dialogues = prof.dialogues?.[gameState.currentLanguage] || prof.dialogues?.en;
+
+            if (!dialogues || dialogues.length === 0) {
+                // Fallback para conversa se não houver diálogos
+                renderConversation();
+                return;
+            }
+
+            const dialogue = dialogues[0]; // Usar primeiro diálogo
+
+            const content = document.getElementById('game-content');
+            content.innerHTML = `
+                <div class="conversation-area">
+                    <h2 class="conversation-title">🎭 Diálogo: ${dialogue.context}</h2>
+                    <div class="chat-container" id="chat-container"></div>
+                    <div class="response-options" id="response-options"></div>
+                </div>
+            `;
+
+            gameState.dialogueLineIndex = 0;
+            showNextDialogueLine(dialogue);
+        }
+
+        function showNextDialogueLine(dialogue) {
+            if (gameState.dialogueLineIndex >= dialogue.lines.length) {
+                endPhase(true);
+                return;
+            }
+
+            const line = dialogue.lines[gameState.dialogueLineIndex];
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const chatContainer = document.getElementById('chat-container');
+            const responseOptions = document.getElementById('response-options');
+
+            const isProfessional = line.speaker === 'doctor' || line.speaker === 'police' ||
+                                   line.speaker === 'chef' || line.speaker === 'teacher' ||
+                                   line.speaker === 'firefighter' || line.speaker === 'pilot' ||
+                                   line.speaker === 'vet' || line.speaker === 'engineer' ||
+                                   line.speaker === 'architect' || line.speaker === 'farmer' ||
+                                   line.speaker === 'seller' || line.speaker === 'guide' ||
+                                   line.speaker === 'artisan' || line.speaker === 'collector';
+            const avatar = isProfessional ? prof.icon : '🧑';
+
+            if (line.isQuestion && line.options) {
+                // Pergunta com opções
+                responseOptions.innerHTML = '<p style="margin-bottom: 10px; opacity: 0.8;">Escolha a resposta correta:</p>';
+
+                const shuffledOptions = [...line.options].sort(() => Math.random() - 0.5);
+                shuffledOptions.forEach((opt, index) => {
+                    const isCorrect = opt === line.options[0];
+                    responseOptions.innerHTML += `
+                        <button class="response-btn" onclick="selectDialogueResponse('${opt.replace(/'/g, "\\'")}', ${isCorrect}, this)">
+                            <div class="response-text">${opt}</div>
+                        </button>
+                    `;
+                });
+            } else {
+                // Mensagem automática
+                chatContainer.innerHTML += `
+                    <div class="chat-message ${isProfessional ? 'right' : 'left'}">
+                        <div class="chat-avatar">${avatar}</div>
+                        <div class="chat-bubble">
+                            ${line.text}
+                            <div class="chat-translation">${line.translation}</div>
+                        </div>
+                    </div>
+                `;
+
+                speakWord(line.text);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                gameState.dialogueLineIndex++;
+                setTimeout(() => {
+                    const prof = PROFESSIONS[gameState.currentProfession];
+                    const dialogues = prof.dialogues?.[gameState.currentLanguage] || prof.dialogues?.en;
+                    showNextDialogueLine(dialogues[0]);
+                }, 2000);
+            }
+        }
+
+        function selectDialogueResponse(response, isCorrect, button) {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const chatContainer = document.getElementById('chat-container');
+            const responseOptions = document.getElementById('response-options');
+
+            // Desabilitar todos os botões
+            document.querySelectorAll('.response-btn').forEach(btn => btn.disabled = true);
+
+            chatContainer.innerHTML += `
+                <div class="chat-message right">
+                    <div class="chat-avatar">${prof.icon}</div>
+                    <div class="chat-bubble" style="${isCorrect ? '' : 'background: #e74c3c;'}">
+                        ${response}
+                    </div>
+                </div>
+            `;
+
+            if (isCorrect) {
+                gameState.score += 200;
+                speakWord(response);
+                button.style.background = 'rgba(76, 175, 80, 0.5)';
+            } else {
+                gameState.lives--;
+                button.style.background = 'rgba(244, 67, 54, 0.5)';
+                if (gameState.lives <= 0) {
+                    setTimeout(() => endPhase(false), 1500);
+                    return;
+                }
+            }
+
+            updateGameHUD();
+            responseOptions.innerHTML = '';
+
+            gameState.dialogueLineIndex++;
+            setTimeout(() => {
+                const dialogues = prof.dialogues?.[gameState.currentLanguage] || prof.dialogues?.en;
+                showNextDialogueLine(dialogues[0]);
+            }, 1500);
+        }
+
         function renderConversation() {
             const prof = PROFESSIONS[gameState.currentProfession];
             const conv = prof.conversations?.[gameState.currentLanguage] || prof.conversations?.en;
@@ -1902,11 +2694,12 @@
             const chatContainer = document.getElementById('chat-container');
             const responseOptions = document.getElementById('response-options');
 
-            const isDoctor = msg.speaker === 'doctor' || msg.speaker === 'chef' || msg.speaker === 'teacher';
-            const avatar = isDoctor ? prof.icon : '🧑';
+            const professionalSpeakers = ['doctor', 'chef', 'teacher', 'police', 'collector', 'guide', 'artisan', 'engineer', 'architect', 'farmer', 'seller', 'firefighter', 'pilot', 'vet'];
+            const isProfessional = professionalSpeakers.includes(msg.speaker);
+            const avatar = isProfessional ? prof.icon : '🧑';
 
             // Se é mensagem do profissional com opções
-            if (isDoctor && msg.options) {
+            if (isProfessional && msg.options) {
                 responseOptions.innerHTML = '';
                 msg.options.forEach((opt, index) => {
                     responseOptions.innerHTML += `
