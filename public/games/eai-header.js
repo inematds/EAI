@@ -70,6 +70,28 @@
             height: 20px;
         }
 
+        .eai-play-count {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .eai-play-count .count {
+            font-size: 0.95rem;
+        }
+
+        .eai-right-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .eai-share-btn {
             display: flex;
             align-items: center;
@@ -197,12 +219,17 @@
                 <span class="text">EAI Games</span>
             </a>
         </div>
-        <div style="position: relative;">
-            <button class="eai-share-btn" onclick="toggleShareMenu()">
-                <span style="font-size: 1.1rem;">📤</span>
-                <span class="text">Compartilhar</span>
-            </button>
-            <div class="eai-share-menu" id="eai-share-menu">
+        <div class="eai-right-section">
+            <div class="eai-play-count" id="eai-header-count">
+                <span style="font-size: 1rem;">🎮</span>
+                <span class="count" id="eai-header-count-value">--</span>
+            </div>
+            <div style="position: relative;">
+                <button class="eai-share-btn" onclick="toggleShareMenu()">
+                    <span style="font-size: 1.1rem;">📤</span>
+                    <span class="text">Compartilhar</span>
+                </button>
+                <div class="eai-share-menu" id="eai-share-menu">
                 <div class="eai-share-option" onclick="shareWhatsApp()">
                     <span class="icon">💬</span>
                     <span>WhatsApp</span>
@@ -222,6 +249,7 @@
                 <div class="eai-share-option" onclick="copyLink()">
                     <span class="icon">🔗</span>
                     <span>Copiar Link</span>
+                </div>
                 </div>
             </div>
         </div>

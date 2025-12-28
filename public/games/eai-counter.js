@@ -88,53 +88,14 @@ function displayPlayCount() {
 
 // Atualizar display do contador na UI
 function updateCounterDisplay(count) {
-  // Procurar elemento existente ou criar novo
-  let counterEl = document.getElementById('eai-play-counter');
-
-  if (!counterEl) {
-    // Criar elemento do contador
-    const style = document.createElement('style');
-    style.textContent = `
-      .eai-counter-badge {
-        position: fixed;
-        bottom: 100px;
-        right: 20px;
-        background: linear-gradient(135deg, #6366F1, #8B5CF6);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        font-size: 0.85rem;
-        font-weight: bold;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-        z-index: 9998;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        animation: eai-counter-fade-in 0.5s ease;
-      }
-      @keyframes eai-counter-fade-in {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .eai-counter-badge .icon {
-        font-size: 1rem;
-      }
-      .eai-counter-badge .count {
-        font-size: 1.1rem;
-      }
-    `;
-    document.head.appendChild(style);
-
-    counterEl = document.createElement('div');
-    counterEl.id = 'eai-play-counter';
-    counterEl.className = 'eai-counter-badge';
-    document.body.appendChild(counterEl);
-  }
-
   // Formatar número
   const formattedCount = formatNumber(count);
-  counterEl.innerHTML = `<span class="icon">🎮</span> <span class="count">${formattedCount}</span> jogadas`;
+
+  // Atualizar contador no header (se existir)
+  const headerCount = document.getElementById('eai-header-count-value');
+  if (headerCount) {
+    headerCount.textContent = formattedCount;
+  }
 }
 
 // Formatar número grande (1500 -> 1.5k, 1500000 -> 1.5M)
