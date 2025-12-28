@@ -1,21 +1,37 @@
 'use client';
 
 import Link from 'next/link';
-import { Gamepad2, BookOpen, Briefcase, Wrench, TrendingUp, Star, ChevronRight, Sparkles, Zap, Shield, Play } from 'lucide-react';
+import { Gamepad2, BookOpen, Briefcase, Wrench, TrendingUp, Star, ChevronRight, Sparkles, Zap, Shield, Play, Swords } from 'lucide-react';
 import { GameCard } from '@/components/games';
 import { arcadeGames } from '@/data/arcade-games';
 import { educationalGames } from '@/data/educational-games';
 
+// Contagem de jogos EAI
+const eaiArcadeGames = arcadeGames.filter((g) => g.embedUrl.startsWith('/'));
+const eaiEducationalGames = educationalGames.filter((g) => g.embedUrl.startsWith('/'));
+const allEaiGames = [...eaiArcadeGames, ...eaiEducationalGames];
+
 const areas = [
   {
+    name: 'Jogos EAI',
+    description: 'Jogue direto na plataforma',
+    icon: Sparkles,
+    href: '/jogos',
+    gradient: 'from-purple-600 via-pink-500 to-cyan-500',
+    glowColor: 'rgba(168, 85, 247, 0.4)',
+    available: true,
+    count: allEaiGames.length,
+    highlight: true,
+  },
+  {
     name: 'Arcade',
-    description: 'Jogos casuais para se divertir',
-    icon: Gamepad2,
+    description: 'Jogos externos para se divertir',
+    icon: Swords,
     href: '/arcade',
     gradient: 'from-purple-600 to-pink-600',
     glowColor: 'rgba(168, 85, 247, 0.4)',
     available: true,
-    count: arcadeGames.length,
+    count: arcadeGames.filter((g) => !g.embedUrl.startsWith('/')).length,
   },
   {
     name: 'Educacional',
@@ -25,7 +41,7 @@ const areas = [
     gradient: 'from-cyan-500 to-blue-600',
     glowColor: 'rgba(6, 182, 212, 0.4)',
     available: true,
-    count: educationalGames.length,
+    count: eaiEducationalGames.length,
   },
   {
     name: 'Profissional',
@@ -47,10 +63,9 @@ const areas = [
   },
 ];
 
-// Get featured and popular games
-const featuredArcade = arcadeGames.filter((g) => g.featured).slice(0, 3);
-const featuredEducational = educationalGames.filter((g) => g.featured).slice(0, 3);
-const popularGames = [...arcadeGames, ...educationalGames]
+// Get featured and popular games (apenas EAI)
+const featuredEaiGames = allEaiGames.filter((g) => g.featured).slice(0, 6);
+const popularGames = allEaiGames
   .sort((a, b) => b.playCount - a.playCount)
   .slice(0, 8);
 
@@ -95,7 +110,7 @@ export default function HomePage() {
             {/* CTA Buttons */}
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <Link
-                href="/arcade"
+                href="/jogos"
                 className="group flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-lg transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] hover:scale-105"
               >
                 <Play className="h-5 w-5 fill-current" />
@@ -147,23 +162,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Arcade Featured */}
+      {/* Featured EAI Games */}
       <section className="py-16 lg:py-24 relative">
-        <div className="container-main">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent" />
+        <div className="container-main relative">
           <div className="flex items-center justify-between mb-10">
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 shadow-lg shadow-purple-500/25">
-                <Gamepad2 className="h-6 w-6 text-white" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 shadow-lg shadow-purple-500/25">
+                <Sparkles className="h-6 w-6 text-white" />
               </div>
               <div>
                 <h2 className="font-display text-2xl font-bold text-white">
-                  Destaques Arcade
+                  Destaques EAI
                 </h2>
-                <p className="text-sm text-white/50">Jogos casuais para se divertir</p>
+                <p className="text-sm text-white/50">Jogos desenvolvidos para a plataforma - Jogue aqui mesmo!</p>
               </div>
             </div>
             <Link
-              href="/arcade"
+              href="/jogos"
               className="flex items-center gap-2 text-sm font-medium text-purple-400 hover:text-purple-300 transition-colors"
             >
               Ver todos
@@ -171,45 +187,8 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {featuredArcade.map((game, index) => (
-              <GameCard
-                key={game.id}
-                game={game}
-                variant={index === 0 ? 'featured' : 'default'}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Educational Featured */}
-      <section className="py-16 lg:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/5 to-transparent" />
-        <div className="container-main relative">
-          <div className="flex items-center justify-between mb-10">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25">
-                <BookOpen className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h2 className="font-display text-2xl font-bold text-white">
-                  Destaques Educacionais
-                </h2>
-                <p className="text-sm text-white/50">Aprenda brincando</p>
-              </div>
-            </div>
-            <Link
-              href="/educacional"
-              className="flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              Ver todos
-              <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {featuredEducational.map((game, index) => (
+          <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-3">
+            {featuredEaiGames.map((game, index) => (
               <GameCard
                 key={game.id}
                 game={game}

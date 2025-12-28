@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, Search, Gamepad2, BookOpen, Briefcase, Wrench, Heart, Sparkles } from 'lucide-react';
+import { Menu, X, Search, Gamepad2, BookOpen, Briefcase, Wrench, Heart, Sparkles, Swords } from 'lucide-react';
 
 const navigation = [
-  { name: 'Arcade', href: '/arcade', icon: Gamepad2, color: 'from-purple-500 to-pink-500' },
+  { name: 'Jogos', href: '/jogos', icon: Sparkles, color: 'from-purple-500 to-pink-500', highlight: true },
+  { name: 'Arcade', href: '/arcade', icon: Swords, color: 'from-pink-500 to-purple-500' },
   { name: 'Educacional', href: '/educacional', icon: BookOpen, color: 'from-cyan-500 to-blue-500' },
   { name: 'Profissional', href: '/profissional', icon: Briefcase, soon: true },
   { name: 'Estudio', href: '/estudio', icon: Wrench, soon: true },
@@ -93,7 +94,7 @@ export function Header() {
 
           {/* Play Now Button - Desktop */}
           <Link
-            href="/arcade"
+            href="/jogos"
             className="hidden sm:flex items-center gap-2 ml-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:scale-105"
           >
             <Sparkles className="h-4 w-4" />
@@ -143,7 +144,7 @@ export function Header() {
             {/* Mobile Play Button */}
             <div className="pt-4 border-t border-white/10 mt-4">
               <Link
-                href="/arcade"
+                href="/jogos"
                 className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold"
                 onClick={() => setMobileMenuOpen(false)}
               >
