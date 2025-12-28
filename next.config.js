@@ -14,8 +14,8 @@ const nextConfig = {
       },
     ],
   },
-  // Descomente a linha abaixo se o repositório NÃO for username.github.io
-  // basePath: '/nome-do-repositorio',
+  // basePath para GitHub Pages (repositório EAI)
+  basePath: '/EAI',
 };
 
 module.exports = nextConfig;
