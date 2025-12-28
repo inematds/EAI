@@ -2307,6 +2307,7 @@
         // ===== JOGO =====
 
         // Calcula quantas palavras/itens para cada fase
+        // Cada fase tem palavras DIFERENTES (não repetidas)
         function getPhaseItems(phaseId) {
             const prof = PROFESSIONS[gameState.currentProfession];
             const phase = PHASES.find(p => p.id === phaseId);
@@ -2314,15 +2315,32 @@
 
             if (phase.type === 'words') {
                 const words = prof.words[lang] || prof.words.en || [];
-                // Fase 1: 4 palavras, Fase 2: 6 palavras, Fase 3: todas
-                if (phaseId === 1) return words.slice(0, Math.min(4, words.length));
-                if (phaseId === 2) return words.slice(0, Math.min(7, words.length));
-                return words; // Fase 3: todas
+                // Fase 1: primeiras 4 palavras (índices 0-3)
+                // Fase 2: próximas 4 palavras (índices 4-7)
+                // Fase 3: últimas palavras restantes (índices 8+)
+                if (phaseId === 1) {
+                    return words.slice(0, Math.min(4, words.length));
+                }
+                if (phaseId === 2) {
+                    return words.slice(4, Math.min(8, words.length));
+                }
+                // Fase 3: palavras restantes ou todas se houver poucas
+                const remaining = words.slice(8);
+                return remaining.length > 0 ? remaining : words.slice(4); // fallback
             } else if (phase.type === 'phrases') {
                 const phrases = prof.phrases?.[lang] || prof.phrases?.en || [];
-                if (phaseId === 4) return phrases.slice(0, Math.min(3, phrases.length));
-                if (phaseId === 5) return phrases.slice(0, Math.min(5, phrases.length));
-                return phrases;
+                // Fase 4: primeiras 2 frases
+                // Fase 5: próximas 2 frases
+                // Fase 6: frases restantes
+                if (phaseId === 4) {
+                    return phrases.slice(0, Math.min(2, phrases.length));
+                }
+                if (phaseId === 5) {
+                    return phrases.slice(2, Math.min(4, phrases.length));
+                }
+                // Fase 6: frases restantes
+                const remaining = phrases.slice(4);
+                return remaining.length > 0 ? remaining : phrases.slice(2);
             } else if (phase.type === 'dialogue') {
                 return prof.dialogues?.[lang] || prof.dialogues?.en || [];
             } else {
