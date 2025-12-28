@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profissões em Idiomas - EAI Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* ===== VARIÁVEIS DE ESTILO ===== */
+        :root {
+            --style-primary: #667eea;
+            --style-secondary: #764ba2;
+            --style-accent: #f093fb;
+        }
+
+        .style-pixar { --style-primary: #FF6B6B; --style-secondary: #4ECDC4; --style-accent: #FFE66D; }
+        .style-disney { --style-primary: #1E88E5; --style-secondary: #7B1FA2; --style-accent: #FFD54F; }
+        .style-anime { --style-primary: #E91E63; --style-secondary: #9C27B0; --style-accent: #00BCD4; }
+        .style-cartoon { --style-primary: #FF9800; --style-secondary: #4CAF50; --style-accent: #2196F3; }
+        .style-realista { --style-primary: #455A64; --style-secondary: #37474F; --style-accent: #78909C; }
+
+        /* ===== TELA INICIAL ===== */
+        #start-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--style-primary), var(--style-secondary));
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 80px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .game-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .game-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .start-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .start-btn {
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-play:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-customize {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
+        }
+
+        .btn-shop {
+            background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+            color: white;
+        }
+
+        .btn-how {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        /* ===== CUSTOMIZAÇÃO ===== */
+        #customize-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 900;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .customize-title {
+            font-size: 28px;
+            color: var(--style-accent);
+            margin-bottom: 20px;
+        }
+
+        .customize-section {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .option-card {
+            background: rgba(255,255,255,0.1);
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-card:hover {
+            border-color: var(--style-accent);
+            transform: translateY(-3px);
+        }
+
+        .option-card.selected {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        .option-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .option-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .option-name {
+            font-size: 12px;
+            color: white;
+        }
+
+        .option-price {
+            font-size: 10px;
+            color: #FFD700;
+            margin-top: 5px;
+        }
+
+        .character-preview {
+            width: 200px;
+            height: 250px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            border: 3px solid var(--style-accent);
+        }
+
+        .preview-character {
+            font-size: 100px;
+        }
+
+        .preview-name {
+            font-size: 16px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        /* ===== LOJA ===== */
+        #shop-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #2c1810, #4a2c17);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 900;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 20px;
+        }
+
+        .shop-title {
+            font-size: 28px;
+            color: #FFD700;
+        }
+
+        .coins-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .coins-amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .shop-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .shop-category {
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .shop-category.active {
+            background: var(--style-accent);
+            color: #1a1a2e;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .shop-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .shop-item:hover {
+            border-color: #FFD700;
+        }
+
+        .shop-item.owned {
+            border-color: #4CAF50;
+        }
+
+        .item-preview {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            font-size: 12px;
+            color: #FFD700;
+        }
+
+        .item-owned {
+            color: #4CAF50;
+            font-size: 11px;
+        }
+
+        /* ===== SELEÇÃO DE IDIOMA ===== */
+        #language-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 800;
+            padding: 20px;
+        }
+
+        .language-title {
+            font-size: 28px;
+            color: var(--style-accent);
+            margin-bottom: 30px;
+        }
+
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 600px;
+        }
+
+        .language-card {
+            background: rgba(255,255,255,0.1);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .language-card:hover {
+            border-color: var(--style-accent);
+            transform: scale(1.05);
+        }
+
+        .language-flag {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .language-name {
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* ===== SELEÇÃO DE PROFISSÃO ===== */
+        #profession-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 700;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .profession-title {
+            font-size: 28px;
+            color: var(--style-accent);
+            margin-bottom: 10px;
+        }
+
+        .profession-subtitle {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 25px;
+        }
+
+        .professions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .profession-card {
+            background: rgba(255,255,255,0.1);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profession-card:hover {
+            border-color: var(--style-accent);
+            transform: translateY(-5px);
+        }
+
+        .profession-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .profession-name {
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profession-words {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 5px;
+        }
+
+        /* ===== SELEÇÃO DE FASE ===== */
+        #phase-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 600;
+            padding: 20px;
+        }
+
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 700px;
+        }
+
+        .phase-card {
+            background: rgba(255,255,255,0.1);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .phase-card:hover:not(.locked) {
+            border-color: var(--style-accent);
+            transform: scale(1.05);
+        }
+
+        .phase-card.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .phase-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--style-accent);
+        }
+
+        .phase-name {
+            font-size: 13px;
+            color: white;
+            margin: 8px 0;
+        }
+
+        .phase-stars {
+            font-size: 16px;
+        }
+
+        /* ===== JOGO PRINCIPAL ===== */
+        #game-screen {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--style-primary), var(--style-secondary));
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .game-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .info-box {
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .game-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Área do Professor */
+        .teacher-area {
+            background: rgba(255,255,255,0.15);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .teacher-avatar {
+            font-size: 80px;
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .teacher-speech {
+            flex: 1;
+        }
+
+        .speech-bubble {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 15px solid transparent;
+            border-right-color: white;
+        }
+
+        .word-highlight {
+            background: linear-gradient(135deg, var(--style-accent), var(--style-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .speak-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .speak-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Área de Imagem */
+        .image-area {
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .word-image {
+            font-size: 120px;
+            margin-bottom: 15px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .word-translation {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .word-pronunciation {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        /* Área de Quiz */
+        .quiz-area {
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 25px;
+        }
+
+        .quiz-question {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: rgba(255,255,255,0.2);
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .option-btn:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .option-btn.correct {
+            background: rgba(76, 175, 80, 0.5);
+            border-color: #4CAF50;
+        }
+
+        .option-btn.wrong {
+            background: rgba(244, 67, 54, 0.5);
+            border-color: #F44336;
+        }
+
+        /* ===== FASE 9 - CONVERSA ===== */
+        .conversation-area {
+            background: rgba(0,0,0,0.3);
+            border-radius: 25px;
+            padding: 25px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .conversation-title {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--style-accent);
+        }
+
+        .chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .chat-message {
+            display: flex;
+            margin-bottom: 15px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .chat-message.right {
+            flex-direction: row-reverse;
+        }
+
+        .chat-avatar {
+            font-size: 40px;
+            margin: 0 10px;
+        }
+
+        .chat-bubble {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .chat-message.left .chat-bubble {
+            background: rgba(255,255,255,0.2);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-message.right .chat-bubble {
+            background: var(--style-accent);
+            color: #1a1a2e;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-translation {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .response-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .response-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            padding: 15px;
+            color: white;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .response-btn:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: var(--style-accent);
+        }
+
+        .response-text {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .response-translation {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* ===== TELA DE RESULTADO ===== */
+        #result-screen {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+        }
+
+        .result-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            border: 3px solid var(--style-accent);
+        }
+
+        .result-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .result-stars {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 40px;
+            color: var(--style-accent);
+            margin-bottom: 10px;
+        }
+
+        .result-coins {
+            font-size: 20px;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .result-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-next-phase {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
+        }
+
+        .btn-menu {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 3px solid var(--style-accent);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: var(--style-accent);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-section h3 {
+            color: white;
+            margin: 15px 0 10px;
+        }
+
+        .modal-section p, .modal-section li {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+
+        .close-modal {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 40px;
+            background: var(--style-accent);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ===== BACK BUTTON ===== */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.3);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(0,0,0,0.5);
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .languages-grid, .phases-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .teacher-area {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .speech-bubble::before {
+                display: none;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TELA INICIAL -->
+    <div id="start-screen">
+        <div class="logo-container">
+            <div class="logo-icon">👨‍🏫</div>
+            <h1 class="game-title">Profissões em Idiomas</h1>
+            <p class="game-subtitle">Aprenda vocabulário profissional em várias línguas!</p>
+        </div>
+        <div class="start-buttons">
+            <button class="start-btn btn-play" onclick="showLanguageSelect()">▶ Jogar</button>
+            <button class="start-btn btn-customize" onclick="showCustomize()">🎨 Personalizar</button>
+            <button class="start-btn btn-shop" onclick="showShop()">🛒 Loja</button>
+            <button class="start-btn btn-how" onclick="showInstructions()">📖 Como Jogar</button>
+        </div>
+        <div class="coins-display" style="margin-top: 30px;">
+            <span style="font-size: 24px;">🪙</span>
+            <span class="coins-amount" id="start-coins">0</span>
+        </div>
+    </div>
+
+    <!-- CUSTOMIZAÇÃO -->
+    <div id="customize-screen">
+        <button class="back-btn" onclick="showStart()">← Voltar</button>
+        <h1 class="customize-title">🎨 Personalização</h1>
+
+        <div class="character-preview">
+            <div class="preview-character" id="preview-char">👤</div>
+            <div class="preview-name" id="preview-name">Seu Personagem</div>
+        </div>
+
+        <div class="customize-section">
+            <h3 class="section-title">🎭 Estilo Visual</h3>
+            <div class="options-grid" id="style-options"></div>
+        </div>
+
+        <div class="customize-section">
+            <h3 class="section-title">👤 Personagem</h3>
+            <div class="options-grid" id="character-options"></div>
+        </div>
+
+        <div class="customize-section">
+            <h3 class="section-title">👕 Roupa</h3>
+            <div class="options-grid" id="outfit-options"></div>
+        </div>
+
+        <div class="customize-section">
+            <h3 class="section-title">🎒 Acessório</h3>
+            <div class="options-grid" id="accessory-options"></div>
+        </div>
+
+        <button class="start-btn btn-play" onclick="saveCustomization()" style="margin-top: 20px;">✓ Salvar</button>
+    </div>
+
+    <!-- LOJA -->
+    <div id="shop-screen">
+        <button class="back-btn" onclick="showStart()">← Voltar</button>
+
+        <div class="shop-header">
+            <h1 class="shop-title">🛒 Loja</h1>
+            <div class="coins-display">
+                <span style="font-size: 24px;">🪙</span>
+                <span class="coins-amount" id="shop-coins">0</span>
+            </div>
+        </div>
+
+        <div class="shop-categories">
+            <button class="shop-category active" onclick="showShopCategory('characters')">👤 Personagens</button>
+            <button class="shop-category" onclick="showShopCategory('outfits')">👕 Roupas</button>
+            <button class="shop-category" onclick="showShopCategory('accessories')">🎒 Acessórios</button>
+            <button class="shop-category" onclick="showShopCategory('styles')">🎨 Estilos</button>
+        </div>
+
+        <div class="shop-grid" id="shop-items"></div>
+    </div>
+
+    <!-- SELEÇÃO DE IDIOMA -->
+    <div id="language-screen">
+        <button class="back-btn" onclick="showStart()">← Voltar</button>
+        <h1 class="language-title">🌍 Escolha o Idioma</h1>
+        <div class="languages-grid" id="languages-container"></div>
+    </div>
+
+    <!-- SELEÇÃO DE PROFISSÃO -->
+    <div id="profession-screen">
+        <button class="back-btn" onclick="showLanguageSelect()">← Voltar</button>
+        <h1 class="profession-title">💼 Escolha a Profissão</h1>
+        <p class="profession-subtitle" id="profession-lang-label">Aprendendo em Inglês</p>
+        <div class="professions-grid" id="professions-container"></div>
+    </div>
+
+    <!-- SELEÇÃO DE FASE -->
+    <div id="phase-screen">
+        <button class="back-btn" onclick="showProfessionSelect()">← Voltar</button>
+        <h1 class="profession-title">📊 Escolha a Fase</h1>
+        <p class="profession-subtitle" id="phase-profession-label">Médico - Inglês</p>
+        <div class="phases-grid" id="phases-container"></div>
+    </div>
+
+    <!-- JOGO -->
+    <div id="game-screen">
+        <button class="back-btn" onclick="showPhaseSelect()">← Sair</button>
+
+        <div class="game-header">
+            <div class="game-info">
+                <div class="info-box">
+                    <span>📍</span>
+                    <span>Fase <span id="game-phase">1</span></span>
+                </div>
+                <div class="info-box">
+                    <span>⭐</span>
+                    <span id="game-score">0</span>
+                </div>
+                <div class="info-box">
+                    <span>❤️</span>
+                    <span id="game-lives">3</span>
+                </div>
+            </div>
+            <div class="coins-display">
+                <span>🪙</span>
+                <span id="game-coins">0</span>
+            </div>
+        </div>
+
+        <div class="game-content" id="game-content">
+            <!-- Conteúdo dinâmico -->
+        </div>
+    </div>
+
+    <!-- RESULTADO -->
+    <div id="result-screen">
+        <div class="result-content">
+            <h2 class="result-title" id="result-title">🎉 Parabéns!</h2>
+            <div class="result-stars" id="result-stars">⭐⭐⭐</div>
+            <div class="result-score">Pontos: <span id="result-score">0</span></div>
+            <div class="result-coins">+<span id="result-coins">0</span> 🪙</div>
+            <div class="result-buttons">
+                <button class="result-btn btn-retry" onclick="retryPhase()">🔄 Repetir</button>
+                <button class="result-btn btn-next-phase" id="btn-next-phase" onclick="nextPhase()">➡️ Próxima</button>
+                <button class="result-btn btn-menu" onclick="showStart()">🏠 Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE INSTRUÇÕES -->
+    <div class="modal-overlay" id="instructions-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">📖 Como Jogar</h2>
+
+            <div class="modal-section">
+                <h3>🎯 Objetivo</h3>
+                <p>Aprenda vocabulário de diversas profissões em outros idiomas! Cada profissão tem 9 fases progressivas.</p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📊 As 9 Fases</h3>
+                <ul>
+                    <li><strong>Fases 1-3:</strong> Palavras básicas da profissão</li>
+                    <li><strong>Fases 4-6:</strong> Frases e expressões</li>
+                    <li><strong>Fases 7-8:</strong> Diálogos simples</li>
+                    <li><strong>Fase 9:</strong> Conversa fluente com clientes!</li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>🎨 Personalização</h3>
+                <p>Escolha seu estilo visual (Pixar, Disney, Anime...), personagem, roupa e acessórios! Compre mais itens na loja com as moedas que ganhar.</p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🪙 Moedas</h3>
+                <p>Ganhe moedas completando fases! Use para comprar personagens, roupas e estilos exclusivos.</p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🔊 Áudio</h3>
+                <p>Clique no botão de áudio para ouvir a pronúncia correta em cada idioma!</p>
+            </div>
+
+            <button class="close-modal" onclick="hideInstructions()">Entendi!</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== DADOS DO JOGO =====
+        const LANGUAGES = [
+            { id: 'en', name: 'Inglês', flag: '🇬🇧', voice: 'en-US' },
+            { id: 'es', name: 'Espanhol', flag: '🇪🇸', voice: 'es-ES' },
+            { id: 'fr', name: 'Francês', flag: '🇫🇷', voice: 'fr-FR' },
+            { id: 'de', name: 'Alemão', flag: '🇩🇪', voice: 'de-DE' },
+            { id: 'it', name: 'Italiano', flag: '🇮🇹', voice: 'it-IT' },
+            { id: 'jp', name: 'Japonês', flag: '🇯🇵', voice: 'ja-JP' }
+        ];
+
+        const PROFESSIONS = {
+            doctor: {
+                name: { pt: 'Médico', en: 'Doctor', es: 'Médico', fr: 'Médecin', de: 'Arzt', it: 'Medico', jp: '医者' },
+                icon: '👨‍⚕️',
+                words: {
+                    en: [
+                        { word: 'Patient', translation: 'Paciente', image: '🤒' },
+                        { word: 'Medicine', translation: 'Remédio', image: '💊' },
+                        { word: 'Hospital', translation: 'Hospital', image: '🏥' },
+                        { word: 'Stethoscope', translation: 'Estetoscópio', image: '🩺' },
+                        { word: 'Prescription', translation: 'Receita', image: '📋' },
+                        { word: 'Injection', translation: 'Injeção', image: '💉' },
+                        { word: 'Examination', translation: 'Exame', image: '🔬' },
+                        { word: 'Symptom', translation: 'Sintoma', image: '🤧' },
+                        { word: 'Treatment', translation: 'Tratamento', image: '🏨' },
+                        { word: 'Diagnosis', translation: 'Diagnóstico', image: '📊' }
+                    ],
+                    es: [
+                        { word: 'Paciente', translation: 'Paciente', image: '🤒' },
+                        { word: 'Medicina', translation: 'Remédio', image: '💊' },
+                        { word: 'Hospital', translation: 'Hospital', image: '🏥' },
+                        { word: 'Estetoscopio', translation: 'Estetoscópio', image: '🩺' },
+                        { word: 'Receta', translation: 'Receita', image: '📋' },
+                        { word: 'Inyección', translation: 'Injeção', image: '💉' },
+                        { word: 'Examen', translation: 'Exame', image: '🔬' },
+                        { word: 'Síntoma', translation: 'Sintoma', image: '🤧' },
+                        { word: 'Tratamiento', translation: 'Tratamento', image: '🏨' },
+                        { word: 'Diagnóstico', translation: 'Diagnóstico', image: '📊' }
+                    ],
+                    fr: [
+                        { word: 'Patient', translation: 'Paciente', image: '🤒' },
+                        { word: 'Médicament', translation: 'Remédio', image: '💊' },
+                        { word: 'Hôpital', translation: 'Hospital', image: '🏥' },
+                        { word: 'Stéthoscope', translation: 'Estetoscópio', image: '🩺' },
+                        { word: 'Ordonnance', translation: 'Receita', image: '📋' },
+                        { word: 'Injection', translation: 'Injeção', image: '💉' },
+                        { word: 'Examen', translation: 'Exame', image: '🔬' },
+                        { word: 'Symptôme', translation: 'Sintoma', image: '🤧' },
+                        { word: 'Traitement', translation: 'Tratamento', image: '🏨' },
+                        { word: 'Diagnostic', translation: 'Diagnóstico', image: '📊' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'patient', text: "Hello, Doctor. I'm not feeling well.", translation: "Olá, Doutor. Não estou me sentindo bem." },
+                        { speaker: 'doctor', text: "What symptoms do you have?", translation: "Quais sintomas você tem?", options: [
+                            { text: "What symptoms do you have?", translation: "Quais sintomas você tem?" },
+                            { text: "Take this medicine.", translation: "Tome este remédio." },
+                            { text: "You need surgery.", translation: "Você precisa de cirurgia." }
+                        ]},
+                        { speaker: 'patient', text: "I have a headache and fever.", translation: "Estou com dor de cabeça e febre." },
+                        { speaker: 'doctor', text: "Let me examine you.", translation: "Deixe-me examiná-lo.", options: [
+                            { text: "Let me examine you.", translation: "Deixe-me examiná-lo." },
+                            { text: "Go home and rest.", translation: "Vá para casa e descanse." },
+                            { text: "It's nothing serious.", translation: "Não é nada sério." }
+                        ]},
+                        { speaker: 'patient', text: "Thank you, Doctor.", translation: "Obrigado, Doutor." },
+                        { speaker: 'doctor', text: "Take this prescription to the pharmacy.", translation: "Leve esta receita à farmácia.", options: [
+                            { text: "Take this prescription to the pharmacy.", translation: "Leve esta receita à farmácia." },
+                            { text: "You're completely healthy.", translation: "Você está completamente saudável." },
+                            { text: "Come back tomorrow.", translation: "Volte amanhã." }
+                        ]}
+                    ]
+                }
+            },
+            chef: {
+                name: { pt: 'Chef', en: 'Chef', es: 'Chef', fr: 'Chef', de: 'Koch', it: 'Chef', jp: 'シェフ' },
+                icon: '👨‍🍳',
+                words: {
+                    en: [
+                        { word: 'Kitchen', translation: 'Cozinha', image: '🍳' },
+                        { word: 'Recipe', translation: 'Receita', image: '📖' },
+                        { word: 'Ingredients', translation: 'Ingredientes', image: '🥗' },
+                        { word: 'Knife', translation: 'Faca', image: '🔪' },
+                        { word: 'Pan', translation: 'Panela', image: '🍲' },
+                        { word: 'Oven', translation: 'Forno', image: '🔥' },
+                        { word: 'Spice', translation: 'Tempero', image: '🧂' },
+                        { word: 'Menu', translation: 'Cardápio', image: '📋' },
+                        { word: 'Dish', translation: 'Prato', image: '🍽️' },
+                        { word: 'Taste', translation: 'Sabor', image: '👅' }
+                    ],
+                    es: [
+                        { word: 'Cocina', translation: 'Cozinha', image: '🍳' },
+                        { word: 'Receta', translation: 'Receita', image: '📖' },
+                        { word: 'Ingredientes', translation: 'Ingredientes', image: '🥗' },
+                        { word: 'Cuchillo', translation: 'Faca', image: '🔪' },
+                        { word: 'Sartén', translation: 'Panela', image: '🍲' },
+                        { word: 'Horno', translation: 'Forno', image: '🔥' },
+                        { word: 'Especia', translation: 'Tempero', image: '🧂' },
+                        { word: 'Menú', translation: 'Cardápio', image: '📋' },
+                        { word: 'Plato', translation: 'Prato', image: '🍽️' },
+                        { word: 'Sabor', translation: 'Sabor', image: '👅' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'customer', text: "Good evening! Do you have a table for two?", translation: "Boa noite! Vocês têm mesa para dois?" },
+                        { speaker: 'chef', text: "Yes, right this way. Here's the menu.", translation: "Sim, por aqui. Aqui está o cardápio.", options: [
+                            { text: "Yes, right this way. Here's the menu.", translation: "Sim, por aqui. Aqui está o cardápio." },
+                            { text: "Sorry, we're closed.", translation: "Desculpe, estamos fechados." },
+                            { text: "Only for one person.", translation: "Apenas para uma pessoa." }
+                        ]},
+                        { speaker: 'customer', text: "What do you recommend?", translation: "O que você recomenda?" },
+                        { speaker: 'chef', text: "Our special today is grilled salmon.", translation: "Nosso especial de hoje é salmão grelhado.", options: [
+                            { text: "Our special today is grilled salmon.", translation: "Nosso especial de hoje é salmão grelhado." },
+                            { text: "Everything is bad today.", translation: "Tudo está ruim hoje." },
+                            { text: "I don't know.", translation: "Não sei." }
+                        ]}
+                    ]
+                }
+            },
+            teacher: {
+                name: { pt: 'Professor', en: 'Teacher', es: 'Profesor', fr: 'Professeur', de: 'Lehrer', it: 'Insegnante', jp: '先生' },
+                icon: '👨‍🏫',
+                words: {
+                    en: [
+                        { word: 'Classroom', translation: 'Sala de aula', image: '🏫' },
+                        { word: 'Student', translation: 'Aluno', image: '👨‍🎓' },
+                        { word: 'Lesson', translation: 'Aula', image: '📚' },
+                        { word: 'Homework', translation: 'Dever de casa', image: '📝' },
+                        { word: 'Exam', translation: 'Prova', image: '📋' },
+                        { word: 'Blackboard', translation: 'Quadro negro', image: '📐' },
+                        { word: 'Grade', translation: 'Nota', image: '💯' },
+                        { word: 'Subject', translation: 'Matéria', image: '📖' },
+                        { word: 'Schedule', translation: 'Horário', image: '🕐' },
+                        { word: 'Knowledge', translation: 'Conhecimento', image: '🧠' }
+                    ]
+                },
+                conversations: {
+                    en: [
+                        { speaker: 'student', text: "Good morning, teacher!", translation: "Bom dia, professor!" },
+                        { speaker: 'teacher', text: "Good morning! Please open your books.", translation: "Bom dia! Por favor abram seus livros.", options: [
+                            { text: "Good morning! Please open your books.", translation: "Bom dia! Por favor abram seus livros." },
+                            { text: "Go home now.", translation: "Vão para casa agora." },
+                            { text: "Class is cancelled.", translation: "A aula está cancelada." }
+                        ]}
+                    ]
+                }
+            },
+            firefighter: {
+                name: { pt: 'Bombeiro', en: 'Firefighter', es: 'Bombero', fr: 'Pompier', de: 'Feuerwehrmann', it: 'Pompiere', jp: '消防士' },
+                icon: '👨‍🚒',
+                words: {
+                    en: [
+                        { word: 'Fire', translation: 'Fogo', image: '🔥' },
+                        { word: 'Hose', translation: 'Mangueira', image: '🚿' },
+                        { word: 'Truck', translation: 'Caminhão', image: '🚒' },
+                        { word: 'Rescue', translation: 'Resgate', image: '🆘' },
+                        { word: 'Ladder', translation: 'Escada', image: '🪜' },
+                        { word: 'Helmet', translation: 'Capacete', image: '⛑️' },
+                        { word: 'Emergency', translation: 'Emergência', image: '🚨' },
+                        { word: 'Safety', translation: 'Segurança', image: '🛡️' },
+                        { word: 'Alarm', translation: 'Alarme', image: '🔔' },
+                        { word: 'Smoke', translation: 'Fumaça', image: '💨' }
+                    ]
+                }
+            },
+            pilot: {
+                name: { pt: 'Piloto', en: 'Pilot', es: 'Piloto', fr: 'Pilote', de: 'Pilot', it: 'Pilota', jp: 'パイロット' },
+                icon: '👨‍✈️',
+                words: {
+                    en: [
+                        { word: 'Airplane', translation: 'Avião', image: '✈️' },
+                        { word: 'Cockpit', translation: 'Cabine', image: '🎛️' },
+                        { word: 'Runway', translation: 'Pista', image: '🛫' },
+                        { word: 'Passenger', translation: 'Passageiro', image: '🧳' },
+                        { word: 'Flight', translation: 'Voo', image: '🛩️' },
+                        { word: 'Airport', translation: 'Aeroporto', image: '🏢' },
+                        { word: 'Altitude', translation: 'Altitude', image: '📏' },
+                        { word: 'Landing', translation: 'Aterrissagem', image: '🛬' },
+                        { word: 'Turbulence', translation: 'Turbulência', image: '🌪️' },
+                        { word: 'Control', translation: 'Controle', image: '🎮' }
+                    ]
+                }
+            },
+            veterinarian: {
+                name: { pt: 'Veterinário', en: 'Veterinarian', es: 'Veterinario', fr: 'Vétérinaire', de: 'Tierarzt', it: 'Veterinario', jp: '獣医' },
+                icon: '👨‍⚕️',
+                words: {
+                    en: [
+                        { word: 'Pet', translation: 'Animal de estimação', image: '🐕' },
+                        { word: 'Clinic', translation: 'Clínica', image: '🏥' },
+                        { word: 'Vaccine', translation: 'Vacina', image: '💉' },
+                        { word: 'Health', translation: 'Saúde', image: '❤️' },
+                        { word: 'Care', translation: 'Cuidado', image: '🤲' },
+                        { word: 'Surgery', translation: 'Cirurgia', image: '🔬' },
+                        { word: 'Medicine', translation: 'Remédio', image: '💊' },
+                        { word: 'Check-up', translation: 'Consulta', image: '📋' },
+                        { word: 'Animal', translation: 'Animal', image: '🐾' },
+                        { word: 'Treatment', translation: 'Tratamento', image: '🩺' }
+                    ]
+                }
+            }
+        };
+
+        const VISUAL_STYLES = [
+            { id: 'pixar', name: 'Pixar', icon: '🎬', price: 0 },
+            { id: 'disney', name: 'Disney', icon: '🏰', price: 0 },
+            { id: 'anime', name: 'Anime', icon: '⭐', price: 200 },
+            { id: 'cartoon', name: 'Cartoon', icon: '📺', price: 200 },
+            { id: 'realista', name: 'Realista', icon: '📷', price: 300 }
+        ];
+
+        const CHARACTERS = [
+            { id: 'boy1', name: 'Menino', icon: '👦', price: 0 },
+            { id: 'girl1', name: 'Menina', icon: '👧', price: 0 },
+            { id: 'boy2', name: 'Menino 2', icon: '👨', price: 100 },
+            { id: 'girl2', name: 'Menina 2', icon: '👩', price: 100 },
+            { id: 'robot', name: 'Robô', icon: '🤖', price: 300 },
+            { id: 'alien', name: 'Alien', icon: '👽', price: 400 },
+            { id: 'cat', name: 'Gato', icon: '🐱', price: 250 },
+            { id: 'dog', name: 'Cachorro', icon: '🐶', price: 250 }
+        ];
+
+        const OUTFITS = [
+            { id: 'casual', name: 'Casual', icon: '👕', price: 0 },
+            { id: 'formal', name: 'Formal', icon: '👔', price: 100 },
+            { id: 'sport', name: 'Esporte', icon: '🎽', price: 150 },
+            { id: 'super', name: 'Super-herói', icon: '🦸', price: 300 },
+            { id: 'space', name: 'Espacial', icon: '🚀', price: 400 }
+        ];
+
+        const ACCESSORIES = [
+            { id: 'none', name: 'Nenhum', icon: '❌', price: 0 },
+            { id: 'glasses', name: 'Óculos', icon: '👓', price: 50 },
+            { id: 'hat', name: 'Chapéu', icon: '🎩', price: 100 },
+            { id: 'crown', name: 'Coroa', icon: '👑', price: 300 },
+            { id: 'wings', name: 'Asas', icon: '🦋', price: 400 }
+        ];
+
+        const PHASES = [
+            { id: 1, name: 'Palavras Básicas I', type: 'words' },
+            { id: 2, name: 'Palavras Básicas II', type: 'words' },
+            { id: 3, name: 'Palavras Avançadas', type: 'words' },
+            { id: 4, name: 'Frases Simples I', type: 'phrases' },
+            { id: 5, name: 'Frases Simples II', type: 'phrases' },
+            { id: 6, name: 'Expressões', type: 'phrases' },
+            { id: 7, name: 'Diálogo Básico', type: 'dialogue' },
+            { id: 8, name: 'Diálogo Avançado', type: 'dialogue' },
+            { id: 9, name: 'Conversa Fluente', type: 'conversation' }
+        ];
+
+        // Estado do jogo
+        const gameState = {
+            coins: 500,
+            style: 'pixar',
+            character: 'boy1',
+            outfit: 'casual',
+            accessory: 'none',
+            ownedItems: {
+                styles: ['pixar', 'disney'],
+                characters: ['boy1', 'girl1'],
+                outfits: ['casual'],
+                accessories: ['none']
+            },
+            currentLanguage: null,
+            currentProfession: null,
+            currentPhase: 1,
+            phaseProgress: {},
+            score: 0,
+            lives: 3,
+            wordIndex: 0,
+            conversationIndex: 0
+        };
+
+        // ===== INICIALIZAÇÃO =====
+        function init() {
+            loadProgress();
+            updateCoinsDisplay();
+            applyStyle();
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('profissoesIdiomas');
+            if (saved) {
+                Object.assign(gameState, JSON.parse(saved));
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('profissoesIdiomas', JSON.stringify(gameState));
+        }
+
+        function updateCoinsDisplay() {
+            document.querySelectorAll('.coins-amount, #start-coins, #shop-coins, #game-coins').forEach(el => {
+                if (el) el.textContent = gameState.coins;
+            });
+        }
+
+        function applyStyle() {
+            document.body.className = `style-${gameState.style}`;
+        }
+
+        // ===== NAVEGAÇÃO =====
+        function hideAll() {
+            ['start-screen', 'customize-screen', 'shop-screen', 'language-screen',
+             'profession-screen', 'phase-screen', 'game-screen', 'result-screen'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+        }
+
+        function showStart() {
+            hideAll();
+            document.getElementById('start-screen').style.display = 'flex';
+            updateCoinsDisplay();
+        }
+
+        function showCustomize() {
+            hideAll();
+            document.getElementById('customize-screen').style.display = 'flex';
+            renderCustomization();
+        }
+
+        function showShop() {
+            hideAll();
+            document.getElementById('shop-screen').style.display = 'flex';
+            updateCoinsDisplay();
+            showShopCategory('characters');
+        }
+
+        function showLanguageSelect() {
+            hideAll();
+            document.getElementById('language-screen').style.display = 'flex';
+            renderLanguages();
+        }
+
+        function showProfessionSelect() {
+            hideAll();
+            document.getElementById('profession-screen').style.display = 'flex';
+            renderProfessions();
+        }
+
+        function showPhaseSelect() {
+            hideAll();
+            document.getElementById('phase-screen').style.display = 'flex';
+            renderPhases();
+        }
+
+        function showInstructions() {
+            document.getElementById('instructions-modal').style.display = 'flex';
+        }
+
+        function hideInstructions() {
+            document.getElementById('instructions-modal').style.display = 'none';
+        }
+
+        // ===== CUSTOMIZAÇÃO =====
+        function renderCustomization() {
+            // Estilos
+            const stylesContainer = document.getElementById('style-options');
+            stylesContainer.innerHTML = '';
+            VISUAL_STYLES.forEach(style => {
+                const owned = gameState.ownedItems.styles.includes(style.id);
+                const selected = gameState.style === style.id;
+                stylesContainer.innerHTML += `
+                    <div class="option-card ${selected ? 'selected' : ''} ${!owned ? 'locked' : ''}"
+                         onclick="selectStyle('${style.id}')">
+                        <div class="option-icon">${style.icon}</div>
+                        <div class="option-name">${style.name}</div>
+                        ${!owned ? `<div class="option-price">🪙 ${style.price}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            // Personagens
+            const charsContainer = document.getElementById('character-options');
+            charsContainer.innerHTML = '';
+            CHARACTERS.forEach(char => {
+                const owned = gameState.ownedItems.characters.includes(char.id);
+                const selected = gameState.character === char.id;
+                charsContainer.innerHTML += `
+                    <div class="option-card ${selected ? 'selected' : ''} ${!owned ? 'locked' : ''}"
+                         onclick="selectCharacter('${char.id}')">
+                        <div class="option-icon">${char.icon}</div>
+                        <div class="option-name">${char.name}</div>
+                        ${!owned ? `<div class="option-price">🪙 ${char.price}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            // Roupas
+            const outfitsContainer = document.getElementById('outfit-options');
+            outfitsContainer.innerHTML = '';
+            OUTFITS.forEach(outfit => {
+                const owned = gameState.ownedItems.outfits.includes(outfit.id);
+                const selected = gameState.outfit === outfit.id;
+                outfitsContainer.innerHTML += `
+                    <div class="option-card ${selected ? 'selected' : ''} ${!owned ? 'locked' : ''}"
+                         onclick="selectOutfit('${outfit.id}')">
+                        <div class="option-icon">${outfit.icon}</div>
+                        <div class="option-name">${outfit.name}</div>
+                        ${!owned ? `<div class="option-price">🪙 ${outfit.price}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            // Acessórios
+            const accContainer = document.getElementById('accessory-options');
+            accContainer.innerHTML = '';
+            ACCESSORIES.forEach(acc => {
+                const owned = gameState.ownedItems.accessories.includes(acc.id);
+                const selected = gameState.accessory === acc.id;
+                accContainer.innerHTML += `
+                    <div class="option-card ${selected ? 'selected' : ''} ${!owned ? 'locked' : ''}"
+                         onclick="selectAccessory('${acc.id}')">
+                        <div class="option-icon">${acc.icon}</div>
+                        <div class="option-name">${acc.name}</div>
+                        ${!owned ? `<div class="option-price">🪙 ${acc.price}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            updatePreview();
+        }
+
+        function selectStyle(id) {
+            if (gameState.ownedItems.styles.includes(id)) {
+                gameState.style = id;
+                applyStyle();
+                renderCustomization();
+            }
+        }
+
+        function selectCharacter(id) {
+            if (gameState.ownedItems.characters.includes(id)) {
+                gameState.character = id;
+                renderCustomization();
+            }
+        }
+
+        function selectOutfit(id) {
+            if (gameState.ownedItems.outfits.includes(id)) {
+                gameState.outfit = id;
+                renderCustomization();
+            }
+        }
+
+        function selectAccessory(id) {
+            if (gameState.ownedItems.accessories.includes(id)) {
+                gameState.accessory = id;
+                renderCustomization();
+            }
+        }
+
+        function updatePreview() {
+            const char = CHARACTERS.find(c => c.id === gameState.character);
+            document.getElementById('preview-char').textContent = char ? char.icon : '👤';
+            document.getElementById('preview-name').textContent = char ? char.name : 'Personagem';
+        }
+
+        function saveCustomization() {
+            saveProgress();
+            showStart();
+        }
+
+        // ===== LOJA =====
+        function showShopCategory(category) {
+            document.querySelectorAll('.shop-category').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const container = document.getElementById('shop-items');
+            container.innerHTML = '';
+
+            let items = [];
+            let ownedList = [];
+
+            switch(category) {
+                case 'characters': items = CHARACTERS; ownedList = gameState.ownedItems.characters; break;
+                case 'outfits': items = OUTFITS; ownedList = gameState.ownedItems.outfits; break;
+                case 'accessories': items = ACCESSORIES; ownedList = gameState.ownedItems.accessories; break;
+                case 'styles': items = VISUAL_STYLES; ownedList = gameState.ownedItems.styles; break;
+            }
+
+            items.forEach(item => {
+                const owned = ownedList.includes(item.id);
+                container.innerHTML += `
+                    <div class="shop-item ${owned ? 'owned' : ''}" onclick="buyItem('${category}', '${item.id}', ${item.price})">
+                        <div class="item-preview">${item.icon}</div>
+                        <div class="item-name">${item.name}</div>
+                        ${owned
+                            ? '<div class="item-owned">✓ Possuído</div>'
+                            : `<div class="item-price">🪙 ${item.price}</div>`
+                        }
+                    </div>
+                `;
+            });
+        }
+
+        function buyItem(category, id, price) {
+            const listKey = category === 'styles' ? 'styles' :
+                            category === 'characters' ? 'characters' :
+                            category === 'outfits' ? 'outfits' : 'accessories';
+
+            if (gameState.ownedItems[listKey].includes(id)) {
+                alert('Você já possui este item!');
+                return;
+            }
+
+            if (gameState.coins < price) {
+                alert('Moedas insuficientes!');
+                return;
+            }
+
+            gameState.coins -= price;
+            gameState.ownedItems[listKey].push(id);
+            saveProgress();
+            updateCoinsDisplay();
+            showShopCategory(category);
+        }
+
+        // ===== IDIOMAS =====
+        function renderLanguages() {
+            const container = document.getElementById('languages-container');
+            container.innerHTML = '';
+            LANGUAGES.forEach(lang => {
+                container.innerHTML += `
+                    <div class="language-card" onclick="selectLanguage('${lang.id}')">
+                        <div class="language-flag">${lang.flag}</div>
+                        <div class="language-name">${lang.name}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function selectLanguage(langId) {
+            gameState.currentLanguage = langId;
+            showProfessionSelect();
+        }
+
+        // ===== PROFISSÕES =====
+        function renderProfessions() {
+            const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
+            document.getElementById('profession-lang-label').textContent = `Aprendendo em ${lang.name}`;
+
+            const container = document.getElementById('professions-container');
+            container.innerHTML = '';
+
+            Object.entries(PROFESSIONS).forEach(([id, prof]) => {
+                const wordCount = prof.words[gameState.currentLanguage]?.length || 0;
+                container.innerHTML += `
+                    <div class="profession-card" onclick="selectProfession('${id}')">
+                        <div class="profession-icon">${prof.icon}</div>
+                        <div class="profession-name">${prof.name.pt}</div>
+                        <div class="profession-words">${wordCount} palavras</div>
+                    </div>
+                `;
+            });
+        }
+
+        function selectProfession(profId) {
+            gameState.currentProfession = profId;
+            showPhaseSelect();
+        }
+
+        // ===== FASES =====
+        function renderPhases() {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
+            document.getElementById('phase-profession-label').textContent = `${prof.name.pt} - ${lang.name}`;
+
+            const container = document.getElementById('phases-container');
+            container.innerHTML = '';
+
+            const progressKey = `${gameState.currentProfession}_${gameState.currentLanguage}`;
+            const progress = gameState.phaseProgress[progressKey] || { unlockedPhase: 1, stars: {} };
+
+            PHASES.forEach((phase, index) => {
+                const unlocked = index < progress.unlockedPhase;
+                const stars = progress.stars[phase.id] || 0;
+
+                container.innerHTML += `
+                    <div class="phase-card ${unlocked ? '' : 'locked'}" onclick="${unlocked ? `startPhase(${phase.id})` : ''}">
+                        <div class="phase-number">${unlocked ? phase.id : '🔒'}</div>
+                        <div class="phase-name">${phase.name}</div>
+                        <div class="phase-stars">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+                    </div>
+                `;
+            });
+        }
+
+        // ===== JOGO =====
+        function startPhase(phaseId) {
+            gameState.currentPhase = phaseId;
+            gameState.score = 0;
+            gameState.lives = 3;
+            gameState.wordIndex = 0;
+            gameState.conversationIndex = 0;
+
+            hideAll();
+            document.getElementById('game-screen').style.display = 'block';
+            document.getElementById('game-phase').textContent = phaseId;
+            updateGameHUD();
+
+            const phase = PHASES.find(p => p.id === phaseId);
+
+            if (phase.type === 'conversation') {
+                renderConversation();
+            } else {
+                renderWordLearning();
+            }
+        }
+
+        function updateGameHUD() {
+            document.getElementById('game-score').textContent = gameState.score;
+            document.getElementById('game-lives').textContent = gameState.lives;
+            document.getElementById('game-coins').textContent = gameState.coins;
+        }
+
+        function renderWordLearning() {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const words = prof.words[gameState.currentLanguage] || prof.words.en;
+
+            if (gameState.wordIndex >= words.length) {
+                endPhase(true);
+                return;
+            }
+
+            const word = words[gameState.wordIndex];
+            const char = CHARACTERS.find(c => c.id === gameState.character);
+
+            const content = document.getElementById('game-content');
+            content.innerHTML = `
+                <div class="teacher-area">
+                    <div class="teacher-avatar">${prof.icon}</div>
+                    <div class="teacher-speech">
+                        <div class="speech-bubble">
+                            <span class="word-highlight">${word.word}</span>
+                            <br>
+                            <small style="color: #666;">significa "${word.translation}" em português</small>
+                        </div>
+                        <button class="speak-btn" onclick="speakWord('${word.word}')">
+                            🔊 Ouvir pronúncia
+                        </button>
+                    </div>
+                </div>
+
+                <div class="image-area">
+                    <div class="word-image">${word.image}</div>
+                    <div class="word-translation">${word.word}</div>
+                    <div class="word-pronunciation">Clique em "Ouvir" para a pronúncia</div>
+                </div>
+
+                <div class="quiz-area">
+                    <div class="quiz-question">Como se diz "${word.translation}" em ${LANGUAGES.find(l => l.id === gameState.currentLanguage).name}?</div>
+                    <div class="options-container" id="options-container">
+                        <!-- Opções geradas dinamicamente -->
+                    </div>
+                </div>
+            `;
+
+            generateOptions(word, words);
+        }
+
+        function generateOptions(correctWord, allWords) {
+            const options = [correctWord];
+
+            // Adicionar opções erradas
+            const wrongOptions = allWords.filter(w => w.word !== correctWord.word);
+            while (options.length < 4 && wrongOptions.length > 0) {
+                const randomIndex = Math.floor(Math.random() * wrongOptions.length);
+                options.push(wrongOptions.splice(randomIndex, 1)[0]);
+            }
+
+            // Embaralhar
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            options.forEach(opt => {
+                container.innerHTML += `
+                    <button class="option-btn" onclick="checkAnswer('${opt.word}', '${correctWord.word}', this)">
+                        ${opt.image} ${opt.word}
+                    </button>
+                `;
+            });
+        }
+
+        function checkAnswer(selected, correct, button) {
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selected === correct) {
+                button.classList.add('correct');
+                gameState.score += 100;
+                speakWord(correct);
+
+                setTimeout(() => {
+                    gameState.wordIndex++;
+                    renderWordLearning();
+                }, 1500);
+            } else {
+                button.classList.add('wrong');
+                gameState.lives--;
+
+                // Mostrar resposta correta
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes(correct)) {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                if (gameState.lives <= 0) {
+                    setTimeout(() => endPhase(false), 1500);
+                } else {
+                    setTimeout(() => {
+                        gameState.wordIndex++;
+                        renderWordLearning();
+                    }, 2000);
+                }
+            }
+
+            updateGameHUD();
+        }
+
+        function renderConversation() {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const conv = prof.conversations?.[gameState.currentLanguage] || prof.conversations?.en;
+
+            if (!conv) {
+                endPhase(true);
+                return;
+            }
+
+            const content = document.getElementById('game-content');
+            content.innerHTML = `
+                <div class="conversation-area">
+                    <h2 class="conversation-title">💬 Conversa: ${prof.name.pt} e Cliente</h2>
+                    <div class="chat-container" id="chat-container"></div>
+                    <div class="response-options" id="response-options"></div>
+                </div>
+            `;
+
+            gameState.conversationIndex = 0;
+            showNextMessage();
+        }
+
+        function showNextMessage() {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const conv = prof.conversations?.[gameState.currentLanguage] || prof.conversations?.en;
+
+            if (gameState.conversationIndex >= conv.length) {
+                endPhase(true);
+                return;
+            }
+
+            const msg = conv[gameState.conversationIndex];
+            const chatContainer = document.getElementById('chat-container');
+            const responseOptions = document.getElementById('response-options');
+
+            const isDoctor = msg.speaker === 'doctor' || msg.speaker === 'chef' || msg.speaker === 'teacher';
+            const avatar = isDoctor ? prof.icon : '🧑';
+
+            // Se é mensagem do profissional com opções
+            if (isDoctor && msg.options) {
+                responseOptions.innerHTML = '';
+                msg.options.forEach((opt, index) => {
+                    responseOptions.innerHTML += `
+                        <button class="response-btn" onclick="selectResponse(${index})">
+                            <div class="response-text">${opt.text}</div>
+                            <div class="response-translation">${opt.translation}</div>
+                        </button>
+                    `;
+                });
+            } else {
+                // Mensagem automática
+                chatContainer.innerHTML += `
+                    <div class="chat-message ${isDoctor ? 'right' : 'left'}">
+                        <div class="chat-avatar">${avatar}</div>
+                        <div class="chat-bubble">
+                            ${msg.text}
+                            <div class="chat-translation">${msg.translation}</div>
+                        </div>
+                    </div>
+                `;
+
+                speakWord(msg.text);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                gameState.conversationIndex++;
+                setTimeout(showNextMessage, 2000);
+            }
+        }
+
+        function selectResponse(index) {
+            const prof = PROFESSIONS[gameState.currentProfession];
+            const conv = prof.conversations?.[gameState.currentLanguage] || prof.conversations?.en;
+            const msg = conv[gameState.conversationIndex];
+
+            const selectedOption = msg.options[index];
+            const isCorrect = index === 0; // Primeira opção é sempre a correta
+
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.innerHTML += `
+                <div class="chat-message right">
+                    <div class="chat-avatar">${prof.icon}</div>
+                    <div class="chat-bubble" style="${isCorrect ? '' : 'background: #e74c3c;'}">
+                        ${selectedOption.text}
+                        <div class="chat-translation">${selectedOption.translation}</div>
+                    </div>
+                </div>
+            `;
+
+            if (isCorrect) {
+                gameState.score += 150;
+                speakWord(selectedOption.text);
+            } else {
+                gameState.lives--;
+                if (gameState.lives <= 0) {
+                    setTimeout(() => endPhase(false), 1500);
+                    return;
+                }
+            }
+
+            updateGameHUD();
+            document.getElementById('response-options').innerHTML = '';
+
+            gameState.conversationIndex++;
+            setTimeout(showNextMessage, 1500);
+        }
+
+        function speakWord(text) {
+            if ('speechSynthesis' in window) {
+                const lang = LANGUAGES.find(l => l.id === gameState.currentLanguage);
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang?.voice || 'en-US';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function endPhase(won) {
+            const stars = won ? (gameState.lives === 3 ? 3 : gameState.lives === 2 ? 2 : 1) : 0;
+            const coinsEarned = won ? (stars * 50 + gameState.currentPhase * 20) : 0;
+
+            if (won) {
+                gameState.coins += coinsEarned;
+
+                const progressKey = `${gameState.currentProfession}_${gameState.currentLanguage}`;
+                if (!gameState.phaseProgress[progressKey]) {
+                    gameState.phaseProgress[progressKey] = { unlockedPhase: 1, stars: {} };
+                }
+
+                const progress = gameState.phaseProgress[progressKey];
+                if (!progress.stars[gameState.currentPhase] || progress.stars[gameState.currentPhase] < stars) {
+                    progress.stars[gameState.currentPhase] = stars;
+                }
+
+                if (gameState.currentPhase >= progress.unlockedPhase && gameState.currentPhase < 9) {
+                    progress.unlockedPhase = gameState.currentPhase + 1;
+                }
+
+                saveProgress();
+            }
+
+            document.getElementById('result-title').textContent = won ? '🎉 Parabéns!' : '😢 Tente novamente!';
+            document.getElementById('result-stars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+            document.getElementById('result-score').textContent = gameState.score;
+            document.getElementById('result-coins').textContent = coinsEarned;
+
+            document.getElementById('btn-next-phase').style.display = (won && gameState.currentPhase < 9) ? 'block' : 'none';
+
+            hideAll();
+            document.getElementById('result-screen').style.display = 'flex';
+        }
+
+        function retryPhase() {
+            startPhase(gameState.currentPhase);
+        }
+
+        function nextPhase() {
+            if (gameState.currentPhase < 9) {
+                startPhase(gameState.currentPhase + 1);
+            }
+        }
+
+        // Inicializar
+        window.onload = init;
+    </script>
+</body>
+</html>

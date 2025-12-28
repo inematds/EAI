@@ -298,6 +298,22 @@ export const arcadeGames: Game[] = [
     createdAt: new Date('2024-12-28'),
     updatedAt: new Date('2024-12-28'),
   },
+  {
+    id: 'eai-capivara-evolution',
+    slug: 'capivara-evolution',
+    title: 'Capivara Evolution',
+    description: 'Seja uma capivara e evolua! Colete frutas, ganhe poderes, batalhe contra animais, descubra filhotes, compre skins e explore 5 mundos mágicos. Chegue ao nível 9 para desbloquear os portais!',
+    thumbnailUrl: 'https://placehold.co/400x300/228B22/white?text=🦫+Capivara+Evolution',
+    embedUrl: '/games/capivara-evolution.html',
+    area: 'ARCADE',
+    category: 'Aventura',
+    tags: ['aventura', 'capivara', 'evolucao', 'rpg', 'acao', 'batalha', 'coleta', 'eai'],
+    playCount: 0,
+    featured: true,
+    active: true,
+    createdAt: new Date('2024-12-28'),
+    updatedAt: new Date('2024-12-28'),
+  },
 ];
 
 export function getGameBySlug(slug: string): Game | undefined {
