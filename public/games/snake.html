@@ -127,8 +127,15 @@
     <button class="btn" onclick="resetGame()">Novo Jogo</button>
   </div>
 
-  <!-- EAI Wallet System -->
+  <!-- EAI Systems -->
   <script src="eai-wallet.js"></script>
+  <script src="eai-counter.js"></script>
+  <script>
+    // Inicializar contador para este jogo
+    document.addEventListener('DOMContentLoaded', () => {
+      initEaiCounter('snake');
+    });
+  </script>
 
   <script>
     const canvas = document.getElementById('game');
@@ -252,12 +259,22 @@
       } while (snake.some(segment => segment.x === food.x && segment.y === food.y));
     }
 
+    let hasStartedPlaying = false;
+
     function changeDirection(e) {
       const key = e.key;
+      const moved = dx !== 0 || dy !== 0;
+
       if ((key === 'ArrowUp' || key === 'w' || key === 'W') && dy !== 1) { dx = 0; dy = -1; }
       else if ((key === 'ArrowDown' || key === 's' || key === 'S') && dy !== -1) { dx = 0; dy = 1; }
       else if ((key === 'ArrowLeft' || key === 'a' || key === 'A') && dx !== 1) { dx = -1; dy = 0; }
       else if ((key === 'ArrowRight' || key === 'd' || key === 'D') && dx !== -1) { dx = 1; dy = 0; }
+
+      // Contar jogada quando começar a jogar
+      if (!hasStartedPlaying && (dx !== 0 || dy !== 0)) {
+        hasStartedPlaying = true;
+        if (typeof incrementPlayCount === 'function') incrementPlayCount();
+      }
     }
 
     function gameOver() {
@@ -302,6 +319,7 @@
       dy = 0;
       score = 0;
       gameSpeed = 100;
+      hasStartedPlaying = false;
       document.getElementById('score').textContent = '0';
       placeFood();
       clearInterval(gameLoop);
