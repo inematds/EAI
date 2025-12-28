@@ -474,6 +474,8 @@
       streak = 0;
       updateStreakDisplay();
       showMessage(`❌ Errado! Era ${currentAnswer}`, 'error');
+      // Penalidade por erro
+      EAI.applyPenalty(1);
 
       setTimeout(generateQuestion, 1500);
     }
@@ -483,6 +485,8 @@
       streak = 0;
       updateStreakDisplay();
       showMessage(`⏱️ Tempo! Era ${currentAnswer}`, 'error');
+      // Penalidade por timeout
+      EAI.applyPenalty(1);
 
       setTimeout(generateQuestion, 1500);
     }
@@ -548,10 +552,16 @@
         showMessage(`🏆 VOCÊ VENCEU! Pontos: ${score}`, 'winner');
       }
 
-      // Rewards
-      giveReward('coins', Math.round(score / 2));
+      // Sistema de Recompensas EAI v2.0
+      setTimeout(() => {
+        EAI.giveGameReward({
+          correct: correctCount,
+          total: Math.max(correctCount, 10),
+          gameType: 'quiz'
+        });
+      }, 500);
       if (correctCount >= 10) {
-        setTimeout(() => giveReward('diamonds', 1), 1000);
+        setTimeout(() => EAI.giveReward('diamonds', 1), 1300);
       }
 
       document.getElementById('trackLines').style.animationPlayState = 'paused';

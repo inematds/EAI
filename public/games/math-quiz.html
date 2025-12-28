@@ -374,6 +374,8 @@
         document.getElementById('streak').style.display = 'none';
         document.getElementById('message').textContent = value === null ? `⏱ Tempo esgotado! Resposta: ${correctAnswer}` : `✗ Errado! Resposta: ${correctAnswer}`;
         document.getElementById('message').style.color = '#EF4444';
+        // Penalidade por erro
+        EAI.applyPenalty(1);
       }
 
       document.getElementById('score').textContent = score;
@@ -442,28 +444,23 @@
         localStorage.setItem(key, score.toString());
       }
 
-      // Recompensas baseadas na performance
-      // Moedas: 5 por acerto + bônus por dificuldade
-      const difficultyMultiplier = level === 'easy' ? 1 : level === 'medium' ? 1.5 : 2;
-      const coinsEarned = Math.round(correctCount * 5 * difficultyMultiplier);
-      if (coinsEarned > 0) {
-        setTimeout(() => giveReward('coins', coinsEarned), 500);
-      }
+      // Sistema de Recompensas EAI v2.0
+      // Usa as regras do documento: 90%=2x, 100%=3x, penalidade já aplicada nos erros
+      setTimeout(() => {
+        const result = EAI.giveGameReward({
+          correct: correctCount,
+          total: totalQuestions,
+          gameType: 'quiz'  // Quiz = 2 moedas base + 10 bônus conclusão
+        });
 
-      // Diamante: se acertou 70% ou mais
-      if (percent >= 70) {
-        setTimeout(() => giveReward('diamonds', 1), 1500);
-      }
-
-      // Diamante extra: se acertou 90% ou mais
-      if (percent >= 90) {
-        setTimeout(() => giveReward('diamonds', 1), 2500);
-      }
-
-      // Ouro: se fez 100% no modo difícil ou bateu recorde no difícil
-      if (level === 'hard' && (percent === 100 || isNewRecord)) {
-        setTimeout(() => giveReward('gold', 1), 3500);
-      }
+        // Bônus extra por dificuldade
+        if (level === 'hard' && correctCount >= 7) {
+          setTimeout(() => EAI.giveReward('diamonds', 1), 800);
+        }
+        if (level === 'hard' && percent === 100) {
+          setTimeout(() => EAI.giveReward('gold', 1), 1600);
+        }
+      }, 500);
     }
 
     // Answer buttons

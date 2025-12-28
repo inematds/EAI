@@ -17,6 +17,19 @@ export const ageRanges = [
   { id: '4', slug: '13+', name: '13+ anos', min: 13, max: 99 },
 ];
 
+// Níveis Escolares (Ensino Fundamental)
+export const schoolGrades = [
+  { id: '1', slug: '1ano', name: '1º Ano', grade: 1, description: 'Alfabetização e números até 100' },
+  { id: '2', slug: '2ano', name: '2º Ano', grade: 2, description: 'Leitura, escrita e operações básicas' },
+  { id: '3', slug: '3ano', name: '3º Ano', grade: 3, description: 'Interpretação e multiplicação' },
+  { id: '4', slug: '4ano', name: '4º Ano', grade: 4, description: 'Produção textual e divisão' },
+  { id: '5', slug: '5ano', name: '5º Ano', grade: 5, description: 'Frações e História do Brasil' },
+  { id: '6', slug: '6ano', name: '6º Ano', grade: 6, description: 'Gramática e ecossistemas' },
+  { id: '7', slug: '7ano', name: '7º Ano', grade: 7, description: 'Frações, decimais e corpo humano' },
+  { id: '8', slug: '8ano', name: '8º Ano', grade: 8, description: 'Equações e física básica' },
+  { id: '9', slug: '9ano', name: '9º Ano', grade: 9, description: 'Funções e química básica' },
+];
+
 export const educationalGames: Game[] = [
   {
     id: 'eai-math-quiz',
@@ -29,6 +42,7 @@ export const educationalGames: Game[] = [
     category: 'Matemática',
     subject: 'Matemática',
     ageRange: '7-9',
+    schoolGrade: [2, 3, 4, 5],
     educationalGoal: 'Praticar operações matemáticas básicas',
     tags: ['matematica', 'quiz', 'operacoes', 'eai'],
     playCount: 15200,
@@ -315,6 +329,7 @@ export const educationalGames: Game[] = [
     category: 'Matemática',
     subject: 'Matemática',
     ageRange: '7-9',
+    schoolGrade: [3, 4, 5],
     educationalGoal: 'Memorizar tabuadas de 2 a 10',
     tags: ['matematica', 'tabuada', 'multiplicacao', 'eai'],
     playCount: 0,
@@ -467,6 +482,7 @@ export const educationalGames: Game[] = [
     category: 'Inglês',
     subject: 'Idiomas',
     ageRange: '7-9',
+    schoolGrade: [3, 4, 5],
     educationalGoal: 'Aprender vocabulário em 3 idiomas com pronúncia',
     tags: ['ingles', 'espanhol', 'portugues', 'vocabulario', 'idiomas', 'audio', 'eai'],
     playCount: 0,
@@ -474,6 +490,69 @@ export const educationalGames: Game[] = [
     active: true,
     createdAt: new Date('2024-01-15'),
     updatedAt: new Date('2024-01-15'),
+  },
+  // === NOVOS JOGOS POR NÍVEL ESCOLAR ===
+  // 1º Ano - Alfabetização e Números
+  {
+    id: 'eai-alfabeto',
+    slug: 'alfabeto-divertido',
+    title: 'Alfabeto Divertido',
+    description: 'Aprenda todas as letras do alfabeto com sons, imagens e quiz interativo!',
+    thumbnailUrl: 'https://placehold.co/400x300/FF6B6B/white?text=ABC',
+    embedUrl: '/games/alfabeto-divertido.html',
+    area: 'EDUCATIONAL',
+    category: 'Português',
+    subject: 'Alfabetização',
+    ageRange: '4-6',
+    schoolGrade: 1,
+    educationalGoal: 'Reconhecer e pronunciar todas as letras do alfabeto',
+    tags: ['portugues', 'alfabeto', 'letras', 'alfabetizacao', '1ano', 'eai'],
+    playCount: 0,
+    featured: true,
+    active: true,
+    createdAt: new Date('2024-12-28'),
+    updatedAt: new Date('2024-12-28'),
+  },
+  {
+    id: 'eai-numeros-100',
+    slug: 'numeros-100',
+    title: 'Números até 100',
+    description: 'Aprenda a contar de 1 a 100 com objetos visuais, tabela numérica e jogos!',
+    thumbnailUrl: 'https://placehold.co/400x300/8B5CF6/white?text=123',
+    embedUrl: '/games/numeros-100.html',
+    area: 'EDUCATIONAL',
+    category: 'Matemática',
+    subject: 'Matemática',
+    ageRange: '4-6',
+    schoolGrade: 1,
+    educationalGoal: 'Contar e reconhecer números de 1 a 100',
+    tags: ['matematica', 'numeros', 'contagem', '1ano', 'eai'],
+    playCount: 0,
+    featured: true,
+    active: true,
+    createdAt: new Date('2024-12-28'),
+    updatedAt: new Date('2024-12-28'),
+  },
+  // 2º Ano - Soma e Subtração
+  {
+    id: 'eai-soma-subtracao',
+    slug: 'soma-subtracao',
+    title: 'Soma e Subtração',
+    description: 'Pratique adição e subtração com representação visual de objetos!',
+    thumbnailUrl: 'https://placehold.co/400x300/06B6D4/white?text=%2B%20%E2%88%92',
+    embedUrl: '/games/soma-subtracao.html',
+    area: 'EDUCATIONAL',
+    category: 'Matemática',
+    subject: 'Matemática',
+    ageRange: '7-9',
+    schoolGrade: [2, 3],
+    educationalGoal: 'Dominar operações de soma e subtração',
+    tags: ['matematica', 'soma', 'subtracao', 'operacoes', '2ano', '3ano', 'eai'],
+    playCount: 0,
+    featured: true,
+    active: true,
+    createdAt: new Date('2024-12-28'),
+    updatedAt: new Date('2024-12-28'),
   },
 ];
 
@@ -515,4 +594,42 @@ export function getRelatedEducationalGames(currentGame: Game, limit = 4): Game[]
           game.tags.some((tag) => currentGame.tags.includes(tag)))
     )
     .slice(0, limit);
+}
+
+export function getEducationalGamesByGrade(gradeSlug: string): Game[] {
+  if (gradeSlug === 'todos') return educationalGames;
+
+  const grade = schoolGrades.find(g => g.slug === gradeSlug);
+  if (!grade) return educationalGames;
+
+  return educationalGames.filter((game) => {
+    if (!game.schoolGrade) return false;
+    if (Array.isArray(game.schoolGrade)) {
+      return game.schoolGrade.includes(grade.grade);
+    }
+    return game.schoolGrade === grade.grade;
+  });
+}
+
+export function getEducationalGamesByAllFilters(category: string, ageRange: string, gradeSlug: string): Game[] {
+  return educationalGames.filter((game) => {
+    const matchCategory = category === 'todos' || game.category.toLowerCase() === category.toLowerCase();
+    const matchAge = ageRange === 'todos' || game.ageRange === ageRange;
+
+    let matchGrade = true;
+    if (gradeSlug !== 'todos') {
+      const grade = schoolGrades.find(g => g.slug === gradeSlug);
+      if (grade && game.schoolGrade) {
+        if (Array.isArray(game.schoolGrade)) {
+          matchGrade = game.schoolGrade.includes(grade.grade);
+        } else {
+          matchGrade = game.schoolGrade === grade.grade;
+        }
+      } else if (grade) {
+        matchGrade = false;
+      }
+    }
+
+    return matchCategory && matchAge && matchGrade;
+  });
 }

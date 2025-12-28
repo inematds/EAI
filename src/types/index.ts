@@ -12,6 +12,7 @@ export interface Game {
   category: string;
   subject?: string | null;
   ageRange?: string | null;
+  schoolGrade?: number | number[] | null; // 1-9 para anos do ensino fundamental
   educationalGoal?: string | null;
   tags: string[];
   playCount: number;

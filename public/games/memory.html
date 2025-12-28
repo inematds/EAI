@@ -296,6 +296,8 @@
           endGame();
         }
       } else {
+        // Penalidade por erro
+        EAI.applyPenalty(1);
         setTimeout(() => {
           card1.classList.remove('flipped');
           card2.classList.remove('flipped');
@@ -328,20 +330,26 @@
         message.textContent += ' - Novo recorde!';
       }
 
-      // Recompensas baseadas na performance
-      // Moedas: baseado na eficiência (mínimo 10, máximo 100)
-      const coinsEarned = Math.max(10, Math.min(100, Math.round(efficiency)));
-      setTimeout(() => giveReward('coins', coinsEarned), 500);
+      // Sistema de Recompensas EAI v2.0
+      // Para memory: considera "acertos" como pares encontrados com menos tentativas
+      // Eficiência perfeita seria totalPairs movimentos
+      setTimeout(() => {
+        const result = EAI.giveGameReward({
+          correct: matchedPairs,
+          total: totalPairs,
+          gameType: 'memory'  // Memory = 2 moedas base + 10 bônus
+        });
 
-      // Diamante: se completou com eficiência > 80%
-      if (efficiency >= 80) {
-        setTimeout(() => giveReward('diamonds', 1), 1500);
-      }
+        // Bônus por eficiência alta
+        if (efficiency >= 80) {
+          setTimeout(() => EAI.giveReward('diamonds', 1), 800);
+        }
 
-      // Ouro: se bateu recorde no modo difícil
-      if (isNewRecord && totalPairs === 12) {
-        setTimeout(() => giveReward('gold', 1), 2500);
-      }
+        // Ouro: se bateu recorde no modo difícil
+        if (isNewRecord && totalPairs === 12) {
+          setTimeout(() => EAI.giveReward('gold', 1), 1600);
+        }
+      }, 500);
     }
 
     function startGame() {

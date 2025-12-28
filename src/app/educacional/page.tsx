@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, TrendingUp, GraduationCap, Sparkles } from 'lucide-react';
-import { CategoryFilter, GameGrid, AgeFilter } from '@/components/games';
+import { CategoryFilter, GameGrid, AgeFilter, GradeFilter } from '@/components/games';
 import {
   educationalGames,
   educationalCategories,
   ageRanges,
-  getEducationalGamesByFilters,
+  schoolGrades,
+  getEducationalGamesByAllFilters,
   getFeaturedEducationalGames,
 } from '@/data/educational-games';
 
@@ -19,15 +20,11 @@ const externalGames = educationalGames.filter((g) => !g.embedUrl.startsWith('/')
 export default function EducacionalPage() {
   const [selectedCategory, setSelectedCategory] = useState('todos');
   const [selectedAge, setSelectedAge] = useState('todos');
+  const [selectedGrade, setSelectedGrade] = useState('todos');
 
-  const filteredGames = getEducationalGamesByFilters(selectedCategory, selectedAge).filter((g) => !g.embedUrl.startsWith('/'));
-  const filteredEaiGames = selectedCategory === 'todos' && selectedAge === 'todos'
-    ? eaiGames
-    : eaiGames.filter((g) => {
-        const matchCategory = selectedCategory === 'todos' || g.category.toLowerCase() === selectedCategory.toLowerCase();
-        const matchAge = selectedAge === 'todos' || g.ageRange === selectedAge;
-        return matchCategory && matchAge;
-      });
+  const allFiltered = getEducationalGamesByAllFilters(selectedCategory, selectedAge, selectedGrade);
+  const filteredGames = allFiltered.filter((g) => !g.embedUrl.startsWith('/'));
+  const filteredEaiGames = allFiltered.filter((g) => g.embedUrl.startsWith('/'));
   const featuredGames = getFeaturedEducationalGames();
 
   return (
@@ -125,6 +122,16 @@ export default function EducacionalPage() {
           </section>
         )}
 
+        {/* Grade Filter - Nível Escolar */}
+        <div className="mb-6">
+          <h2 className="text-sm font-medium text-white/50 mb-3">Nível Escolar</h2>
+          <GradeFilter
+            grades={schoolGrades}
+            selected={selectedGrade}
+            onSelect={setSelectedGrade}
+          />
+        </div>
+
         {/* Age Filter */}
         <div className="mb-6">
           <h2 className="text-sm font-medium text-white/50 mb-3">Faixa Etária</h2>
@@ -181,6 +188,7 @@ export default function EducacionalPage() {
               onClick={() => {
                 setSelectedCategory('todos');
                 setSelectedAge('todos');
+                setSelectedGrade('todos');
               }}
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:shadow-[0_0_30px_rgba(6,182,212,0.4)]"
             >
