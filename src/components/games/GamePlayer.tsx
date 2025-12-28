@@ -6,8 +6,8 @@ import { Game } from '@/types';
 import { cn } from '@/lib/utils';
 import { isFavorite, toggleFavorite, trackGameClick, addToHistory } from '@/lib/storage';
 
-// Detecta o basePath do Next.js
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+// basePath para GitHub Pages
+const basePath = '/EAI';
 
 interface GamePlayerProps {
   game: Game;
