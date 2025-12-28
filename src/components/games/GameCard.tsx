@@ -29,7 +29,7 @@ export function GameCard({ game, variant = 'default' }: GameCardProps) {
 
     // Check if it's an internal game (starts with /)
     if (game.embedUrl.startsWith('/')) {
-      window.open(window.location.origin + '/EAI' + game.embedUrl, '_blank');
+      window.open(window.location.origin + game.embedUrl, '_blank');
     } else {
       window.open(game.embedUrl, '_blank');
     }

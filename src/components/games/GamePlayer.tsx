@@ -6,8 +6,8 @@ import { Game } from '@/types';
 import { cn } from '@/lib/utils';
 import { isFavorite, toggleFavorite, trackGameClick, addToHistory } from '@/lib/storage';
 
-// basePath para GitHub Pages
-const basePath = '/EAI';
+// basePath para o domínio (não precisa mais para eai.inema.club)
+const basePath = '';
 
 interface GamePlayerProps {
   game: Game;
