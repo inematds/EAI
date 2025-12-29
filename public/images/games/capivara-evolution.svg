@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background - Natureza verde -->
+  <rect width="400" height="300" fill="#2d5a27"/>
+  <ellipse cx="200" cy="320" rx="250" ry="80" fill="#1a4d1a"/>
+
+  <!-- Sol -->
+  <circle cx="340" cy="50" r="30" fill="#FFD700" opacity="0.8"/>
+
+  <!-- Grama decorativa -->
+  <path d="M20,280 Q25,260 30,280 M50,275 Q55,255 60,275 M80,280 Q85,260 90,280" stroke="#3d7a37" stroke-width="3" fill="none"/>
+  <path d="M320,275 Q325,255 330,275 M350,280 Q355,260 360,280 M380,275 Q385,255 390,275" stroke="#3d7a37" stroke-width="3" fill="none"/>
+
+  <!-- Corpo da Capivara -->
+  <ellipse cx="200" cy="200" rx="100" ry="70" fill="#8B6914"/>
+
+  <!-- Barriga mais clara -->
+  <ellipse cx="200" cy="220" rx="70" ry="40" fill="#C4A44A"/>
+
+  <!-- Cabeça -->
+  <ellipse cx="200" cy="120" rx="55" ry="45" fill="#8B6914"/>
+
+  <!-- Focinho grande (característica da capivara) -->
+  <ellipse cx="200" cy="145" rx="35" ry="25" fill="#A67B2A"/>
+
+  <!-- Nariz -->
+  <ellipse cx="200" cy="140" rx="12" ry="8" fill="#4a3510"/>
+  <circle cx="194" cy="138" r="3" fill="#2a1f0a"/>
+  <circle cx="206" cy="138" r="3" fill="#2a1f0a"/>
+
+  <!-- Olhos (pequenos e fofos) -->
+  <circle cx="175" cy="110" r="10" fill="#2a1f0a"/>
+  <circle cx="225" cy="110" r="10" fill="#2a1f0a"/>
+  <circle cx="177" cy="108" r="4" fill="white"/>
+  <circle cx="227" cy="108" r="4" fill="white"/>
+
+  <!-- Orelhas pequenas e arredondadas -->
+  <ellipse cx="155" cy="85" rx="12" ry="15" fill="#8B6914"/>
+  <ellipse cx="245" cy="85" rx="12" ry="15" fill="#8B6914"/>
+  <ellipse cx="155" cy="87" rx="7" ry="9" fill="#A67B2A"/>
+  <ellipse cx="245" cy="87" rx="7" ry="9" fill="#A67B2A"/>
+
+  <!-- Patas dianteiras -->
+  <ellipse cx="130" cy="250" rx="20" ry="15" fill="#6B5010"/>
+  <ellipse cx="270" cy="250" rx="20" ry="15" fill="#6B5010"/>
+
+  <!-- Patas traseiras -->
+  <ellipse cx="110" cy="235" rx="18" ry="25" fill="#7B6015"/>
+  <ellipse cx="290" cy="235" rx="18" ry="25" fill="#7B6015"/>
+
+  <!-- Bigodes -->
+  <line x1="165" y1="140" x2="140" y2="135" stroke="#4a3510" stroke-width="2"/>
+  <line x1="165" y1="145" x2="138" y2="148" stroke="#4a3510" stroke-width="2"/>
+  <line x1="235" y1="140" x2="260" y2="135" stroke="#4a3510" stroke-width="2"/>
+  <line x1="235" y1="145" x2="262" y2="148" stroke="#4a3510" stroke-width="2"/>
+
+  <!-- Boca sorrindo -->
+  <path d="M185,155 Q200,165 215,155" stroke="#4a3510" stroke-width="2" fill="none"/>
+
+  <!-- Frutas ao redor -->
+  <circle cx="60" cy="200" r="15" fill="#FF6347"/>
+  <circle cx="60" cy="195" r="3" fill="#228B22"/>
+  <circle cx="340" cy="180" r="12" fill="#FFD700"/>
+  <circle cx="50" cy="240" r="10" fill="#9370DB"/>
+  <circle cx="350" cy="220" r="13" fill="#FF4500"/>
+
+  <!-- Estrelas/brilhos (evolução) -->
+  <text x="320" y="100" font-size="24" fill="#FFD700">✨</text>
+  <text x="70" cy="80" font-size="20" fill="#FFD700">⭐</text>
+
+  <!-- Título -->
+  <text x="200" y="35" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="24" fill="white" stroke="#2d5a27" stroke-width="1">Capivara Evolution</text>
+</svg>

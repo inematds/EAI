@@ -319,7 +319,7 @@ export const arcadeGames: Game[] = [
     slug: 'capivara-evolution',
     title: 'Capivara Evolution',
     description: 'Seja uma capivara e evolua! Colete frutas, ganhe poderes, batalhe contra animais, descubra filhotes, compre skins e explore 5 mundos mágicos. Chegue ao nível 9 para desbloquear os portais!',
-    thumbnailUrl: 'https://placehold.co/400x300/228B22/white?text=🦫+Capivara+Evolution',
+    thumbnailUrl: '/images/games/capivara-evolution.svg',
     embedUrl: '/games/capivara-evolution.html',
     area: 'ARCADE',
     category: 'Aventura',
