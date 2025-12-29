@@ -943,7 +943,7 @@
 <body>
     <!-- TELA DE TÍTULO -->
     <div id="title-screen">
-        <div class="title-capivara">🦫</div>
+        <div class="title-capivara"><img src="/images/games/capivara-evolution.svg" alt="Capivara" style="width: 120px; height: 120px;"></div>
         <h1 class="game-title">Capivara Evolution</h1>
         <p class="game-subtitle">Evolua, explore mundos e conquiste tudo!</p>
         <div class="title-buttons">
@@ -1285,11 +1285,19 @@
         let lastTime = 0;
         let keys = {};
         let animationId;
+        let capivaraImg = null;
+
+        // Carregar imagem da capivara
+        function loadCapivaraImage() {
+            capivaraImg = new Image();
+            capivaraImg.src = '/images/games/capivara-evolution.svg';
+        }
 
         // ===== INICIALIZAÇÃO =====
         function init() {
             canvas = document.getElementById('game-canvas');
             ctx = canvas.getContext('2d');
+            loadCapivaraImage();
 
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
@@ -1911,15 +1919,28 @@
             // Jogador
             const skin = SKINS.find(s => s.id === gameState.equippedSkin);
             const playerSprite = skin ? skin.sprite : '🦫';
+            const isDefaultSkin = !skin || skin.id === 'default';
 
             ctx.save();
-            if (gameState.player.direction === 'left') {
-                ctx.scale(-1, 1);
-                ctx.font = '50px Arial';
-                ctx.fillText(playerSprite, -gameState.player.x - 25, gameState.player.y + 15);
+            if (isDefaultSkin && capivaraImg && capivaraImg.complete) {
+                // Usar imagem SVG da capivara realista
+                const imgSize = 60;
+                if (gameState.player.direction === 'left') {
+                    ctx.scale(-1, 1);
+                    ctx.drawImage(capivaraImg, -gameState.player.x - imgSize/2, gameState.player.y - imgSize/2, imgSize, imgSize);
+                } else {
+                    ctx.drawImage(capivaraImg, gameState.player.x - imgSize/2, gameState.player.y - imgSize/2, imgSize, imgSize);
+                }
             } else {
-                ctx.font = '50px Arial';
-                ctx.fillText(playerSprite, gameState.player.x - 25, gameState.player.y + 15);
+                // Usar emoji para outras skins
+                if (gameState.player.direction === 'left') {
+                    ctx.scale(-1, 1);
+                    ctx.font = '50px Arial';
+                    ctx.fillText(playerSprite, -gameState.player.x - 25, gameState.player.y + 15);
+                } else {
+                    ctx.font = '50px Arial';
+                    ctx.fillText(playerSprite, gameState.player.x - 25, gameState.player.y + 15);
+                }
             }
             ctx.restore();
 

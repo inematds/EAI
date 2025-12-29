@@ -1,72 +1,160 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
-  <!-- Background - Natureza verde -->
-  <rect width="400" height="300" fill="#2d5a27"/>
-  <ellipse cx="200" cy="320" rx="250" ry="80" fill="#1a4d1a"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350">
+  <defs>
+    <!-- Gradientes para pelagem realista -->
+    <linearGradient id="pelagemCorpo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A67C52"/>
+      <stop offset="50%" style="stop-color:#8B6914"/>
+      <stop offset="100%" style="stop-color:#6B4E0A"/>
+    </linearGradient>
 
-  <!-- Sol -->
-  <circle cx="340" cy="50" r="30" fill="#FFD700" opacity="0.8"/>
+    <linearGradient id="pelagemCabeca" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#B8860B"/>
+      <stop offset="100%" style="stop-color:#8B6914"/>
+    </linearGradient>
 
-  <!-- Grama decorativa -->
-  <path d="M20,280 Q25,260 30,280 M50,275 Q55,255 60,275 M80,280 Q85,260 90,280" stroke="#3d7a37" stroke-width="3" fill="none"/>
-  <path d="M320,275 Q325,255 330,275 M350,280 Q355,260 360,280 M380,275 Q385,255 390,275" stroke="#3d7a37" stroke-width="3" fill="none"/>
+    <linearGradient id="pelagemFocinho" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9A86C"/>
+      <stop offset="100%" style="stop-color:#A67C52"/>
+    </linearGradient>
 
-  <!-- Corpo da Capivara -->
-  <ellipse cx="200" cy="200" rx="100" ry="70" fill="#8B6914"/>
+    <linearGradient id="sombraCorpo" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6B4E0A;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#4A3508;stop-opacity:0.6"/>
+    </linearGradient>
 
-  <!-- Barriga mais clara -->
-  <ellipse cx="200" cy="220" rx="70" ry="40" fill="#C4A44A"/>
+    <radialGradient id="olhoBrilho" cx="30%" cy="30%" r="50%">
+      <stop offset="0%" style="stop-color:#4A3508"/>
+      <stop offset="100%" style="stop-color:#1a1206"/>
+    </radialGradient>
+  </defs>
 
-  <!-- Cabeça -->
-  <ellipse cx="200" cy="120" rx="55" ry="45" fill="#8B6914"/>
+  <!-- Grupo: Sombras -->
+  <g id="sombras">
+    <ellipse cx="200" cy="340" rx="120" ry="15" fill="#000" opacity="0.15"/>
+  </g>
 
-  <!-- Focinho grande (característica da capivara) -->
-  <ellipse cx="200" cy="145" rx="35" ry="25" fill="#A67B2A"/>
+  <!-- Grupo: Corpo -->
+  <g id="corpo">
+    <!-- Corpo principal - robusto e arredondado -->
+    <ellipse cx="200" cy="230" rx="110" ry="85" fill="url(#pelagemCorpo)"/>
 
-  <!-- Nariz -->
-  <ellipse cx="200" cy="140" rx="12" ry="8" fill="#4a3510"/>
-  <circle cx="194" cy="138" r="3" fill="#2a1f0a"/>
-  <circle cx="206" cy="138" r="3" fill="#2a1f0a"/>
+    <!-- Textura do corpo - hachuras sutis -->
+    <path d="M120,200 Q140,195 150,210" stroke="#6B4E0A" stroke-width="1" fill="none" opacity="0.3"/>
+    <path d="M130,220 Q155,215 165,235" stroke="#6B4E0A" stroke-width="1" fill="none" opacity="0.3"/>
+    <path d="M140,245 Q165,240 175,260" stroke="#6B4E0A" stroke-width="1" fill="none" opacity="0.3"/>
+    <path d="M260,195 Q275,200 280,215" stroke="#6B4E0A" stroke-width="1" fill="none" opacity="0.3"/>
+    <path d="M250,220 Q270,225 275,240" stroke="#6B4E0A" stroke-width="1" fill="none" opacity="0.3"/>
 
-  <!-- Olhos (pequenos e fofos) -->
-  <circle cx="175" cy="110" r="10" fill="#2a1f0a"/>
-  <circle cx="225" cy="110" r="10" fill="#2a1f0a"/>
-  <circle cx="177" cy="108" r="4" fill="white"/>
-  <circle cx="227" cy="108" r="4" fill="white"/>
+    <!-- Sombra inferior do corpo -->
+    <ellipse cx="200" cy="280" rx="90" ry="35" fill="url(#sombraCorpo)"/>
 
-  <!-- Orelhas pequenas e arredondadas -->
-  <ellipse cx="155" cy="85" rx="12" ry="15" fill="#8B6914"/>
-  <ellipse cx="245" cy="85" rx="12" ry="15" fill="#8B6914"/>
-  <ellipse cx="155" cy="87" rx="7" ry="9" fill="#A67B2A"/>
-  <ellipse cx="245" cy="87" rx="7" ry="9" fill="#A67B2A"/>
+    <!-- Barriga mais clara -->
+    <ellipse cx="180" cy="260" rx="50" ry="35" fill="#C9A86C" opacity="0.6"/>
+  </g>
 
-  <!-- Patas dianteiras -->
-  <ellipse cx="130" cy="250" rx="20" ry="15" fill="#6B5010"/>
-  <ellipse cx="270" cy="250" rx="20" ry="15" fill="#6B5010"/>
+  <!-- Grupo: Patas traseiras -->
+  <g id="patas-traseiras">
+    <!-- Pata traseira esquerda -->
+    <ellipse cx="130" cy="300" rx="30" ry="20" fill="#7A5D1A"/>
+    <ellipse cx="120" cy="315" rx="22" ry="12" fill="#6B4E0A"/>
+    <!-- Dedos -->
+    <ellipse cx="108" cy="320" rx="6" ry="8" fill="#5A4008"/>
+    <ellipse cx="120" cy="322" rx="6" ry="8" fill="#5A4008"/>
+    <ellipse cx="132" cy="320" rx="6" ry="8" fill="#5A4008"/>
 
-  <!-- Patas traseiras -->
-  <ellipse cx="110" cy="235" rx="18" ry="25" fill="#7B6015"/>
-  <ellipse cx="290" cy="235" rx="18" ry="25" fill="#7B6015"/>
+    <!-- Pata traseira direita (parcialmente visível) -->
+    <ellipse cx="260" cy="295" rx="28" ry="18" fill="#7A5D1A"/>
+    <ellipse cx="268" cy="310" rx="20" ry="10" fill="#6B4E0A"/>
+  </g>
 
-  <!-- Bigodes -->
-  <line x1="165" y1="140" x2="140" y2="135" stroke="#4a3510" stroke-width="2"/>
-  <line x1="165" y1="145" x2="138" y2="148" stroke="#4a3510" stroke-width="2"/>
-  <line x1="235" y1="140" x2="260" y2="135" stroke="#4a3510" stroke-width="2"/>
-  <line x1="235" y1="145" x2="262" y2="148" stroke="#4a3510" stroke-width="2"/>
+  <!-- Grupo: Patas dianteiras -->
+  <g id="patas-dianteiras">
+    <!-- Pata dianteira esquerda -->
+    <ellipse cx="150" cy="290" rx="18" ry="35" fill="#8B6914"/>
+    <ellipse cx="148" cy="318" rx="15" ry="10" fill="#6B4E0A"/>
+    <!-- Dedos -->
+    <ellipse cx="138" cy="322" rx="5" ry="6" fill="#5A4008"/>
+    <ellipse cx="148" cy="324" rx="5" ry="6" fill="#5A4008"/>
+    <ellipse cx="158" cy="322" rx="5" ry="6" fill="#5A4008"/>
 
-  <!-- Boca sorrindo -->
-  <path d="M185,155 Q200,165 215,155" stroke="#4a3510" stroke-width="2" fill="none"/>
+    <!-- Pata dianteira direita -->
+    <ellipse cx="235" cy="285" rx="16" ry="32" fill="#8B6914"/>
+    <ellipse cx="238" cy="312" rx="14" ry="9" fill="#6B4E0A"/>
+    <!-- Dedos -->
+    <ellipse cx="228" cy="316" rx="5" ry="6" fill="#5A4008"/>
+    <ellipse cx="238" cy="318" rx="5" ry="6" fill="#5A4008"/>
+    <ellipse cx="248" cy="316" rx="5" ry="6" fill="#5A4008"/>
+  </g>
 
-  <!-- Frutas ao redor -->
-  <circle cx="60" cy="200" r="15" fill="#FF6347"/>
-  <circle cx="60" cy="195" r="3" fill="#228B22"/>
-  <circle cx="340" cy="180" r="12" fill="#FFD700"/>
-  <circle cx="50" cy="240" r="10" fill="#9370DB"/>
-  <circle cx="350" cy="220" r="13" fill="#FF4500"/>
+  <!-- Grupo: Cabeça -->
+  <g id="cabeca">
+    <!-- Cabeça principal -->
+    <ellipse cx="175" cy="130" rx="65" ry="55" fill="url(#pelagemCabeca)"/>
 
-  <!-- Estrelas/brilhos (evolução) -->
-  <text x="320" y="100" font-size="24" fill="#FFD700">✨</text>
-  <text x="70" cy="80" font-size="20" fill="#FFD700">⭐</text>
+    <!-- Textura da cabeça -->
+    <path d="M130,110 Q145,105 155,115" stroke="#6B4E0A" stroke-width="1" fill="none" opacity="0.25"/>
+    <path d="M135,130 Q150,125 160,135" stroke="#6B4E0A" stroke-width="1" fill="none" opacity="0.25"/>
 
-  <!-- Título -->
-  <text x="200" y="35" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="24" fill="white" stroke="#2d5a27" stroke-width="1">Capivara Evolution</text>
+    <!-- Sombra lateral da cabeça -->
+    <ellipse cx="220" cy="140" rx="25" ry="40" fill="#6B4E0A" opacity="0.2"/>
+  </g>
+
+  <!-- Grupo: Orelhas -->
+  <g id="orelhas">
+    <!-- Orelha esquerda -->
+    <ellipse cx="125" cy="85" rx="15" ry="20" fill="#8B6914"/>
+    <ellipse cx="125" cy="87" rx="9" ry="12" fill="#A67C52"/>
+    <ellipse cx="125" cy="89" rx="5" ry="7" fill="#C9A86C" opacity="0.5"/>
+
+    <!-- Orelha direita (levemente atrás) -->
+    <ellipse cx="210" cy="80" rx="14" ry="18" fill="#7A5D1A"/>
+    <ellipse cx="210" cy="82" rx="8" ry="11" fill="#8B6914"/>
+    <ellipse cx="210" cy="84" rx="4" ry="6" fill="#A67C52" opacity="0.5"/>
+  </g>
+
+  <!-- Grupo: Focinho -->
+  <g id="focinho">
+    <!-- Focinho largo e curto - característica principal -->
+    <ellipse cx="155" cy="160" rx="45" ry="35" fill="url(#pelagemFocinho)"/>
+
+    <!-- Parte superior do focinho mais escura -->
+    <ellipse cx="155" cy="150" rx="38" ry="20" fill="#A67C52"/>
+
+    <!-- Nariz grande -->
+    <ellipse cx="140" cy="155" rx="18" ry="14" fill="#4A3508"/>
+
+    <!-- Narinas -->
+    <ellipse cx="133" cy="153" rx="5" ry="4" fill="#2a1f0a"/>
+    <ellipse cx="147" cy="153" rx="5" ry="4" fill="#2a1f0a"/>
+
+    <!-- Brilho do nariz -->
+    <ellipse cx="136" cy="150" rx="3" ry="2" fill="#6B4E0A" opacity="0.5"/>
+
+    <!-- Boca -->
+    <path d="M130,170 Q145,180 160,172" stroke="#4A3508" stroke-width="2" fill="none"/>
+
+    <!-- Bigodes -->
+    <line x1="115" y1="160" x2="80" y2="155" stroke="#4A3508" stroke-width="1.5" opacity="0.6"/>
+    <line x1="115" y1="165" x2="78" y2="168" stroke="#4A3508" stroke-width="1.5" opacity="0.6"/>
+    <line x1="115" y1="170" x2="82" y2="180" stroke="#4A3508" stroke-width="1.5" opacity="0.6"/>
+    <line x1="175" y1="162" x2="200" y2="158" stroke="#4A3508" stroke-width="1.5" opacity="0.4"/>
+    <line x1="175" y1="168" x2="198" y2="172" stroke="#4A3508" stroke-width="1.5" opacity="0.4"/>
+  </g>
+
+  <!-- Grupo: Olhos -->
+  <g id="olhos">
+    <!-- Olho esquerdo - escuro e atento -->
+    <ellipse cx="145" cy="115" rx="12" ry="14" fill="url(#olhoBrilho)"/>
+    <ellipse cx="142" cy="112" rx="4" ry="5" fill="#3a2a10"/>
+    <circle cx="140" cy="110" r="2.5" fill="white" opacity="0.8"/>
+
+    <!-- Olho direito (levemente menor por perspectiva) -->
+    <ellipse cx="200" cy="110" rx="10" ry="12" fill="url(#olhoBrilho)"/>
+    <ellipse cx="198" cy="108" rx="3" ry="4" fill="#3a2a10"/>
+    <circle cx="196" cy="106" r="2" fill="white" opacity="0.7"/>
+
+    <!-- Sobrancelhas sutis -->
+    <path d="M133,100 Q145,95 157,100" stroke="#6B4E0A" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M190,97 Q200,93 210,98" stroke="#6B4E0A" stroke-width="1.5" fill="none" opacity="0.3"/>
+  </g>
 </svg>
