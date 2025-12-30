@@ -162,6 +162,22 @@ export const arcadeGames: Game[] = [
     createdAt: new Date('2024-12-30'),
     updatedAt: new Date('2024-12-30'),
   },
+  {
+    id: 'eai-fractal-worlds',
+    slug: 'fractal-worlds',
+    title: 'FRACTAL WORLDS',
+    description: 'Explore 5 mundos fractais onde as regras mudam durante o jogo! Mundo do Tempo, Energia, Logica, Criacao e Caos. Arvore de habilidades, desafios diarios, moedas e baus de recompensa!',
+    thumbnailUrl: 'https://placehold.co/400x300/0EA5E9/white?text=FRACTAL+WORLDS',
+    embedUrl: '/games/fractal-worlds.html',
+    area: 'ARCADE',
+    category: 'Aventura',
+    tags: ['aventura', 'exploracao', 'puzzle', 'fractal', 'mundos', 'habilidades', 'progressao', 'eai'],
+    playCount: 0,
+    featured: true,
+    active: true,
+    createdAt: new Date('2024-12-30'),
+    updatedAt: new Date('2024-12-30'),
+  },
 ];
 
 export function getGameBySlug(slug: string): Game | undefined {
