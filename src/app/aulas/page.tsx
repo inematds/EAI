@@ -309,9 +309,9 @@ export default function AulasPage() {
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/20 mb-4">
               <span className="text-2xl">🎁</span>
             </div>
-            <h3 className="font-display font-bold text-white mb-2">Baú EAI</h3>
+            <h3 className="font-display font-bold text-white mb-2">Caixa Mágica</h3>
             <p className="text-white/60 text-sm">
-              Colecione moedas e abra baús com recompensas especiais e surpresas!
+              Colecione moedas e abra caixas com recompensas especiais e surpresas!
             </p>
           </div>
         </div>
@@ -324,7 +324,7 @@ export default function AulasPage() {
               Pronto para começar sua jornada?
             </h2>
             <p className="text-white/60 max-w-xl mx-auto mb-6">
-              Escolha seu ano escolar acima e ganhe suas primeiras moedas para abrir o Baú EAI!
+              Escolha seu ano escolar acima e ganhe suas primeiras moedas para abrir a Caixa Mágica!
               Sua aventura de aprendizado começa agora.
             </p>
             <div className="flex items-center justify-center gap-2 text-purple-400">

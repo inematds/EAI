@@ -67,7 +67,7 @@ const achievements: Achievement[] = [
   { id: 'streak_7', title: 'Determinado', description: '7 dias seguidos de estudo', icon: '💪', xpReward: 50, coinReward: 30, unlocked: false },
   { id: 'games_5', title: 'Explorador', description: 'Jogou 5 jogos diferentes', icon: '🗺️', xpReward: 40, coinReward: 25, unlocked: false },
   { id: 'games_10', title: 'Mestre dos Jogos', description: 'Jogou 10 jogos diferentes', icon: '👑', xpReward: 75, coinReward: 50, unlocked: false },
-  { id: 'bau_first', title: 'Caçador de Tesouros', description: 'Abriu seu primeiro Baú EAI', icon: '🎁', xpReward: 15, coinReward: 0, unlocked: false },
+  { id: 'bau_first', title: 'Caçador de Tesouros', description: 'Abriu sua primeira Caixa Mágica', icon: '🎁', xpReward: 15, coinReward: 0, unlocked: false },
   { id: 'level_5', title: 'Em Ascensão', description: 'Alcançou o nível 5', icon: '⭐', xpReward: 100, coinReward: 50, unlocked: false },
   { id: 'level_10', title: 'Veterano', description: 'Alcançou o nível 10', icon: '🌟', xpReward: 200, coinReward: 100, unlocked: false },
 ];
@@ -317,7 +317,7 @@ export default function AulaAnoClient() {
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] transition"
               >
                 <Gift className="h-5 w-5" />
-                Baú EAI
+                Caixa Mágica
               </button>
             </div>
           </div>
@@ -330,7 +330,7 @@ export default function AulaAnoClient() {
             { id: 'lessons', label: `Planos de Aula (${lessonPlans.length})`, icon: BookOpen },
             { id: 'games', label: `Jogos (${gradeGames.length})`, icon: Gamepad2 },
             { id: 'profile', label: 'Perfil', icon: Users },
-            { id: 'bau', label: 'Baú EAI', icon: Gift },
+            { id: 'bau', label: 'Caixa Mágica', icon: Gift },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -366,7 +366,7 @@ export default function AulaAnoClient() {
               </div>
               <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
                 <div className="text-3xl font-bold text-pink-400">{studentProgress.bauOpened || 0}</div>
-                <div className="text-sm text-white/60">Baús Abertos</div>
+                <div className="text-sm text-white/60">Caixas Abertas</div>
               </div>
             </div>
 
@@ -639,7 +639,7 @@ export default function AulaAnoClient() {
                   </div>
                   <div>
                     <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-white/60">Baús Abertos</span>
+                      <span className="text-white/60">Caixas Abertas</span>
                       <span className="text-white">{studentProgress.bauOpened || 0}</span>
                     </div>
                     <div className="h-2 rounded-full bg-white/10 overflow-hidden">
@@ -701,11 +701,11 @@ export default function AulaAnoClient() {
             <div className="rounded-2xl bg-gradient-to-b from-amber-500/20 to-orange-500/10 border border-amber-500/30 p-8 text-center">
               <div className="text-8xl mb-6 animate-bounce">🎁</div>
               <h2 className="font-display text-3xl font-bold text-white mb-4">
-                Baú EAI
+                Caixa Mágica
               </h2>
               <p className="text-white/70 mb-6">
-                Abra baús para ganhar moedas, XP, avatares e stickers especiais!
-                Cada baú custa 25 moedas.
+                Abra caixas para ganhar moedas, XP, avatares e stickers especiais!
+                Cada caixa custa 25 moedas.
               </p>
 
               <div className="flex items-center justify-center gap-4 mb-6">
@@ -715,7 +715,7 @@ export default function AulaAnoClient() {
                 </div>
                 <div className="rounded-xl bg-white/10 px-6 py-3">
                   <div className="text-2xl font-bold text-purple-400">{studentProgress.bauOpened || 0}</div>
-                  <div className="text-sm text-white/60">Baús abertos</div>
+                  <div className="text-sm text-white/60">Caixas abertas</div>
                 </div>
               </div>
 
@@ -728,7 +728,7 @@ export default function AulaAnoClient() {
                     : 'bg-white/10 text-white/40 cursor-not-allowed'
                 }`}
               >
-                {studentProgress.coins >= 25 ? '🎁 Abrir Baú (25 moedas)' : '🔒 Moedas insuficientes'}
+                {studentProgress.coins >= 25 ? '🎁 Abrir Caixa (25 moedas)' : '🔒 Moedas insuficientes'}
               </button>
 
               {/* How to earn coins */}
@@ -768,7 +768,7 @@ export default function AulaAnoClient() {
                   {isOpeningBau ? '✨' : '🎁'}
                 </div>
                 <h2 className="font-display text-2xl font-bold text-white mb-4">
-                  {isOpeningBau ? 'Abrindo...' : 'Abrir Baú EAI?'}
+                  {isOpeningBau ? 'Abrindo...' : 'Abrir Caixa Mágica?'}
                 </h2>
                 {!isOpeningBau && (
                   <>
@@ -852,7 +852,7 @@ export default function AulaAnoClient() {
               })}
             </div>
             <p className="text-center text-white/50 text-sm mb-4">
-              Desbloqueie mais avatares abrindo o Baú EAI!
+              Desbloqueie mais avatares abrindo a Caixa Mágica!
             </p>
             <button
               onClick={() => setShowAvatarPicker(false)}
