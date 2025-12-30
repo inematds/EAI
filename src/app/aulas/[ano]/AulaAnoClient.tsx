@@ -4,31 +4,21 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
-  GraduationCap,
   BookOpen,
   Gamepad2,
   Star,
-  ChevronRight,
   Sparkles,
   Trophy,
   Target,
   Users,
-  Clock,
   Check,
   Lock,
   Gift,
   Flame,
-  Medal,
-  Crown,
-  Zap,
-  Heart,
   Settings,
-  ChevronLeft,
-  Play,
-  Award
+  Play
 } from 'lucide-react';
-import { schoolGrades, educationalGames, getEducationalGamesByGrade } from '@/data/educational-games';
-import { getLessonPlansByGrade, subjectColors, subjectIcons, LessonPlan } from '@/data/lesson-plans';
+import { schoolGrades, educationalGames } from '@/data/educational-games';
 
 interface StudentProgress {
   currentGrade: number | null;
@@ -79,12 +69,6 @@ const bauRewards = [
   { type: 'sticker', options: ['🏆', '🌈', '🚀', '💎', '🎪', '🎨', '🌸', '⚡'], icon: '🏷️', message: 'Sticker especial!' },
 ];
 
-const difficultyLabels = {
-  facil: { label: 'Fácil', color: 'bg-green-500/20 text-green-400 border-green-500/30' },
-  medio: { label: 'Médio', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
-  avancado: { label: 'Avançado', color: 'bg-red-500/20 text-red-400 border-red-500/30' },
-};
-
 export default function AulaAnoClient() {
   const params = useParams();
   const router = useRouter();
@@ -92,7 +76,7 @@ export default function AulaAnoClient() {
   const gradeNumber = parseInt(anoParam.replace('ano', ''));
 
   const [studentProgress, setStudentProgress] = useState<StudentProgress | null>(null);
-  const [activeTab, setActiveTab] = useState<'overview' | 'lessons' | 'games' | 'profile' | 'bau'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'profile' | 'bau'>('overview');
   const [showBauModal, setShowBauModal] = useState(false);
   const [bauResult, setBauResult] = useState<{ type: string; value: any; message: string } | null>(null);
   const [isOpeningBau, setIsOpeningBau] = useState(false);
@@ -100,7 +84,6 @@ export default function AulaAnoClient() {
 
   // Get grade info
   const gradeInfo = schoolGrades.find(g => g.grade === gradeNumber);
-  const lessonPlans = getLessonPlansByGrade(gradeNumber);
   const gradeGames = educationalGames.filter(game => {
     if (!game.schoolGrade) return false;
     if (Array.isArray(game.schoolGrade)) {
@@ -326,9 +309,7 @@ export default function AulaAnoClient() {
         {/* Tab Navigation */}
         <div className="flex flex-wrap gap-2 mb-8">
           {[
-            { id: 'overview', label: 'Visão Geral', icon: Target },
-            { id: 'lessons', label: `Planos de Aula (${lessonPlans.length})`, icon: BookOpen },
-            { id: 'games', label: `Jogos (${gradeGames.length})`, icon: Gamepad2 },
+            { id: 'overview', label: 'Minhas Tarefas', icon: Target },
             { id: 'profile', label: 'Perfil', icon: Users },
             { id: 'bau', label: 'Caixa Mágica', icon: Gift },
           ].map((tab) => (
@@ -353,16 +334,16 @@ export default function AulaAnoClient() {
             {/* Quick Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
-                <div className="text-3xl font-bold text-emerald-400">{lessonPlans.length}</div>
-                <div className="text-sm text-white/60">Planos de Aula</div>
-              </div>
-              <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
                 <div className="text-3xl font-bold text-blue-400">{gradeGames.length}</div>
-                <div className="text-sm text-white/60">Jogos Disponíveis</div>
+                <div className="text-sm text-white/60">Jogos do {gradeNumber}º Ano</div>
               </div>
               <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
-                <div className="text-3xl font-bold text-purple-400">{studentProgress.completedGames.length}</div>
-                <div className="text-sm text-white/60">Jogos Jogados</div>
+                <div className="text-3xl font-bold text-green-400">{studentProgress.completedGames.filter(g => gradeGames.some(gg => gg.slug === g)).length}</div>
+                <div className="text-sm text-white/60">Concluídos</div>
+              </div>
+              <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
+                <div className="text-3xl font-bold text-orange-400">{gradeGames.length - studentProgress.completedGames.filter(g => gradeGames.some(gg => gg.slug === g)).length}</div>
+                <div className="text-sm text-white/60">Pendentes</div>
               </div>
               <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
                 <div className="text-3xl font-bold text-pink-400">{studentProgress.bauOpened || 0}</div>
@@ -370,90 +351,97 @@ export default function AulaAnoClient() {
               </div>
             </div>
 
-            {/* Featured Lessons */}
+            {/* Games Checklist - Minhas Tarefas */}
             <div>
-              <h2 className="font-display text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-emerald-400" />
-                Planos de Aula Recomendados
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {lessonPlans.slice(0, 3).map((plan) => (
-                  <Link
-                    key={plan.id}
-                    href={`/plano-aula/${plan.slug}`}
-                    className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden hover:border-emerald-500/50 transition-all"
-                  >
-                    <div className={`h-20 bg-gradient-to-r ${subjectColors[plan.subject] || 'from-gray-500 to-gray-600'} relative`}>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-4xl opacity-50">{plan.subjectIcon}</span>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-display font-bold text-white mb-2 group-hover:text-emerald-400 transition line-clamp-1">
-                        {plan.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-xs text-white/50">
-                        <Clock className="h-3 w-3" />
-                        {plan.duration}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-display text-xl font-bold text-white flex items-center gap-2">
+                  <Target className="h-5 w-5 text-cyan-400" />
+                  Minhas Tarefas
+                </h2>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-1 text-green-400">
+                    <Check className="h-4 w-4" />
+                    <span>{studentProgress.completedGames.filter(g => gradeGames.some(gg => gg.slug === g)).length}</span>
+                  </div>
+                  <span className="text-white/40">/</span>
+                  <span className="text-white/60">{gradeGames.length} jogos</span>
+                </div>
               </div>
-              {lessonPlans.length > 3 && (
-                <button
-                  onClick={() => setActiveTab('lessons')}
-                  className="mt-4 text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1"
-                >
-                  Ver todos os {lessonPlans.length} planos
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              )}
-            </div>
 
-            {/* Featured Games */}
-            <div>
-              <h2 className="font-display text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Gamepad2 className="h-5 w-5 text-blue-400" />
-                Jogos Recomendados
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {gradeGames.slice(0, 4).map((game) => {
+              {/* Progress Bar */}
+              <div className="mb-6">
+                <div className="h-3 rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-500"
+                    style={{ width: `${gradeGames.length > 0 ? (studentProgress.completedGames.filter(g => gradeGames.some(gg => gg.slug === g)).length / gradeGames.length) * 100 : 0}%` }}
+                  />
+                </div>
+                <p className="text-xs text-white/50 mt-2">
+                  {studentProgress.completedGames.filter(g => gradeGames.some(gg => gg.slug === g)).length === gradeGames.length
+                    ? '🎉 Parabéns! Você completou todos os jogos!'
+                    : `Complete os jogos para ganhar XP e moedas!`}
+                </p>
+              </div>
+
+              {/* Games List */}
+              <div className="space-y-2">
+                {gradeGames.map((game, index) => {
                   const isPlayed = studentProgress.completedGames.includes(game.slug);
                   return (
                     <Link
                       key={game.id}
                       href={`/educacional/${game.slug}`}
                       onClick={() => markGamePlayed(game.slug)}
-                      className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden hover:border-blue-500/50 transition-all"
+                      className={`group flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                        isPlayed
+                          ? 'bg-green-500/10 border-green-500/30 hover:border-green-500/50'
+                          : 'bg-white/5 border-white/10 hover:border-purple-500/50 hover:bg-white/10'
+                      }`}
                     >
-                      <div className="relative aspect-[4/3] bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                        <Gamepad2 className="h-10 w-10 text-white/30" />
-                        {isPlayed && (
-                          <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-green-500/90 px-2 py-0.5 text-xs font-bold text-white">
-                            <Check className="h-3 w-3" />
+                      {/* Checkbox */}
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-lg shrink-0 ${
+                        isPlayed
+                          ? 'bg-green-500 text-white'
+                          : 'bg-white/10 text-white/30 group-hover:bg-purple-500/20 group-hover:text-purple-400'
+                      }`}>
+                        {isPlayed ? <Check className="h-5 w-5" /> : <span className="text-sm font-bold">{index + 1}</span>}
+                      </div>
+
+                      {/* Game Info */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`font-display font-bold text-sm mb-0.5 ${
+                          isPlayed ? 'text-green-400' : 'text-white group-hover:text-purple-400'
+                        } transition`}>
+                          {game.title}
+                        </h3>
+                        <p className="text-xs text-white/50 truncate">{game.description}</p>
+                      </div>
+
+                      {/* Category & Rewards */}
+                      <div className="hidden sm:flex items-center gap-3 shrink-0">
+                        <span className="px-2 py-1 rounded-md bg-white/10 text-xs text-white/60">
+                          {game.category}
+                        </span>
+                        {!isPlayed && (
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className="text-cyan-400">+10 XP</span>
+                            <span className="text-amber-400">+5 🪙</span>
                           </div>
                         )}
                       </div>
-                      <div className="p-3">
-                        <h3 className="font-display font-bold text-white text-sm mb-1 group-hover:text-blue-400 transition line-clamp-1">
-                          {game.title}
-                        </h3>
-                        <div className="text-xs text-white/50">{game.category}</div>
+
+                      {/* Play Button */}
+                      <div className={`flex h-10 w-10 items-center justify-center rounded-xl shrink-0 transition ${
+                        isPlayed
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500 group-hover:text-white'
+                      }`}>
+                        {isPlayed ? <Check className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                       </div>
                     </Link>
                   );
                 })}
               </div>
-              {gradeGames.length > 4 && (
-                <button
-                  onClick={() => setActiveTab('games')}
-                  className="mt-4 text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1"
-                >
-                  Ver todos os {gradeGames.length} jogos
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              )}
             </div>
 
             {/* Achievements Preview */}
@@ -483,95 +471,6 @@ export default function AulaAnoClient() {
                 })}
               </div>
             </div>
-          </div>
-        )}
-
-        {activeTab === 'lessons' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {lessonPlans.map((plan) => (
-              <Link
-                key={plan.id}
-                href={`/plano-aula/${plan.slug}`}
-                className="group relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)] transition-all duration-300"
-              >
-                <div className={`h-24 bg-gradient-to-r ${subjectColors[plan.subject] || 'from-gray-500 to-gray-600'} relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/20" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-5xl opacity-30">{plan.subjectIcon}</span>
-                  </div>
-                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/30 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white">
-                    <span>{plan.subjectIcon}</span>
-                    {plan.subject}
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-display font-bold text-white text-lg mb-2 group-hover:text-emerald-400 transition-colors line-clamp-2">
-                    {plan.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className={`px-2 py-0.5 rounded-md text-xs font-medium border ${difficultyLabels[plan.difficulty].color}`}>
-                      {difficultyLabels[plan.difficulty].label}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4 text-xs text-white/50">
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5" />
-                      {plan.duration}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Gamepad2 className="h-3.5 w-3.5" />
-                      {plan.games.length} jogo{plan.games.length !== 1 ? 's' : ''}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'games' && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {gradeGames.map((game) => {
-              const isPlayed = studentProgress.completedGames.includes(game.slug);
-              return (
-                <Link
-                  key={game.id}
-                  href={`/educacional/${game.slug}`}
-                  onClick={() => markGamePlayed(game.slug)}
-                  className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] transition-all"
-                >
-                  <div className="relative aspect-[4/3] bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                    <Gamepad2 className="h-12 w-12 text-white/20" />
-                    {isPlayed && (
-                      <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-green-500/90 px-2 py-0.5 text-xs font-bold text-white">
-                        <Check className="h-3 w-3" />
-                        Jogado
-                      </div>
-                    )}
-                    <div className="absolute bottom-2 left-2 rounded-full bg-black/50 px-2 py-0.5 text-xs text-white/80">
-                      {game.category}
-                    </div>
-                  </div>
-                  <div className="p-3">
-                    <h3 className="font-display font-bold text-white text-sm mb-1 group-hover:text-purple-400 transition line-clamp-2">
-                      {game.title}
-                    </h3>
-                    <p className="text-xs text-white/50 line-clamp-2">
-                      {game.description}
-                    </p>
-                  </div>
-                  <div className="px-3 pb-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-white/40">{game.ageRange}</span>
-                      <span className="flex items-center gap-1 text-xs text-purple-400 group-hover:text-purple-300">
-                        <Play className="h-3 w-3" />
-                        Jogar
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
           </div>
         )}
 
