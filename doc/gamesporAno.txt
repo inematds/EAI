@@ -1,0 +1,340 @@
+Perfeito. Abaixo está a **LISTA COMPLETA DE GAMES (JOGOS) NECESSÁRIOS PARA O FUNDAMENTAL I**, pensada para:
+
+* 🎮 **gamificação educacional**
+* 📘 **reutilização em vários planos**
+* 📄 **registro em JSON**
+* 🧒 **uso por aluno, pais ou professores**
+* 🏫 **alinhamento ao currículo do Ensino Fundamental I**
+
+Os jogos estão organizados por **TIPO**, **DISCIPLINA** e **DESCRIÇÃO PEDAGÓGICA**.
+
+---
+
+# 🎮 BIBLIOTECA DE GAMES – ENSINO FUNDAMENTAL I
+
+## 🧠 1. JOGOS DE LÍNGUA PORTUGUESA
+
+### 1. Bingo de Letras
+
+* **Tipo:** físico / papel
+* **Anos:** 1º
+* **Descrição:** Cartelas com letras do alfabeto. O mediador sorteia letras e o aluno marca.
+* **Aprendizagem:** reconhecimento das letras, associação visual
+* **Reutilizável:** sim (1º ao 2º)
+
+---
+
+### 2. Bingo de Sílabas
+
+* **Tipo:** físico / papel
+* **Anos:** 1º–2º
+* **Descrição:** Cartelas com sílabas simples (BA, BE, BI…).
+* **Aprendizagem:** consciência silábica e leitura inicial
+
+---
+
+### 3. Monta-Palavras
+
+* **Tipo:** físico / digital simples
+* **Anos:** 1º–3º
+* **Descrição:** Cartas com letras ou sílabas para formar palavras.
+* **Aprendizagem:** escrita, ortografia, leitura
+
+---
+
+### 4. Caça-Palavras
+
+* **Tipo:** papel / digital
+* **Anos:** 2º–5º
+* **Descrição:** Encontrar palavras escondidas em uma grade.
+* **Aprendizagem:** leitura, atenção, vocabulário
+
+---
+
+### 5. Jogo das Frases
+
+* **Tipo:** cartas / papel
+* **Anos:** 2º–4º
+* **Descrição:** Organizar palavras para formar frases corretas.
+* **Aprendizagem:** estrutura textual e gramática básica
+
+---
+
+### 6. Histórias em Cartas
+
+* **Tipo:** cartas
+* **Anos:** 3º–5º
+* **Descrição:** Cartas com personagens, lugares e ações para criar histórias.
+* **Aprendizagem:** narrativa, criatividade, escrita
+
+---
+
+### 7. Quiz de Leitura
+
+* **Tipo:** papel / digital
+* **Anos:** 3º–5º
+* **Descrição:** Perguntas sobre textos lidos.
+* **Aprendizagem:** interpretação de texto
+
+---
+
+### 8. RPG Narrativo Educativo
+
+* **Tipo:** narrativo / papel
+* **Anos:** 4º–5º
+* **Descrição:** O aluno cria decisões dentro de uma história guiada.
+* **Aprendizagem:** leitura, argumentação, produção textual
+
+---
+
+## 🔢 2. JOGOS DE MATEMÁTICA
+
+### 9. Jogo da Contagem
+
+* **Tipo:** físico
+* **Anos:** 1º
+* **Descrição:** Contar objetos e associar a números.
+* **Aprendizagem:** noção de quantidade
+
+---
+
+### 10. Trilha Matemática
+
+* **Tipo:** tabuleiro
+* **Anos:** 1º–3º
+* **Descrição:** Avançar casas resolvendo desafios matemáticos.
+* **Aprendizagem:** cálculo mental
+
+---
+
+### 11. Jogo do Dado (Operações)
+
+* **Tipo:** físico
+* **Anos:** 1º–4º
+* **Descrição:** Jogar dados para somar, subtrair, multiplicar.
+* **Aprendizagem:** operações básicas
+
+---
+
+### 12. Dominó Matemático
+
+* **Tipo:** físico
+* **Anos:** 2º–4º
+* **Descrição:** Relacionar operações com resultados.
+* **Aprendizagem:** cálculo e lógica
+
+---
+
+### 13. Mercadinho Educativo
+
+* **Tipo:** simulação
+* **Anos:** 2º–5º
+* **Descrição:** Compra e venda com dinheiro fictício.
+* **Aprendizagem:** sistema monetário, problemas reais
+
+---
+
+### 14. Desafio das Frações
+
+* **Tipo:** material concreto
+* **Anos:** 3º–5º
+* **Descrição:** Representar frações com objetos.
+* **Aprendizagem:** noção de fração
+
+---
+
+### 15. Jogo da Lógica
+
+* **Tipo:** quebra-cabeça
+* **Anos:** 3º–5º
+* **Descrição:** Sequências, padrões e desafios.
+* **Aprendizagem:** raciocínio lógico
+
+---
+
+### 16. Jogo de Estatística Simples
+
+* **Tipo:** gráfico / papel
+* **Anos:** 4º–5º
+* **Descrição:** Criar gráficos a partir de dados reais.
+* **Aprendizagem:** leitura de dados
+
+---
+
+## 🔬 3. JOGOS DE CIÊNCIAS
+
+### 17. Jogo dos Cinco Sentidos
+
+* **Tipo:** físico
+* **Anos:** 1º
+* **Descrição:** Explorar visão, tato, olfato, paladar e audição.
+* **Aprendizagem:** percepção corporal
+
+---
+
+### 18. Corpo Humano em Peças
+
+* **Tipo:** quebra-cabeça
+* **Anos:** 1º–3º
+* **Descrição:** Montar sistemas do corpo humano.
+* **Aprendizagem:** anatomia básica
+
+---
+
+### 19. Experimentos Guiados
+
+* **Tipo:** prático
+* **Anos:** 2º–5º
+* **Descrição:** Experimentos simples com registro.
+* **Aprendizagem:** método científico
+
+---
+
+### 20. Cadeia Alimentar em Cartas
+
+* **Tipo:** cartas
+* **Anos:** 3º–5º
+* **Descrição:** Relacionar produtores e consumidores.
+* **Aprendizagem:** ecossistemas
+
+---
+
+### 21. Jogo da Sustentabilidade
+
+* **Tipo:** simulação
+* **Anos:** 4º–5º
+* **Descrição:** Decisões ambientais.
+* **Aprendizagem:** educação ambiental
+
+---
+
+## 🌍 4. JOGOS DE HISTÓRIA E GEOGRAFIA
+
+### 22. Linha do Tempo Pessoal
+
+* **Tipo:** papel
+* **Anos:** 1º–2º
+* **Descrição:** Organizar eventos da própria vida.
+* **Aprendizagem:** noção de tempo histórico
+
+---
+
+### 23. Jogo da Família e Comunidade
+
+* **Tipo:** cartas
+* **Anos:** 1º–2º
+* **Descrição:** Papéis sociais e convivência.
+* **Aprendizagem:** cidadania
+
+---
+
+### 24. Mapa da Escola e Bairro
+
+* **Tipo:** desenho / jogo
+* **Anos:** 2º–3º
+* **Descrição:** Criar mapas simples.
+* **Aprendizagem:** noção espacial
+
+---
+
+### 25. Jogo das Regiões do Brasil
+
+* **Tipo:** cartas / tabuleiro
+* **Anos:** 3º–5º
+* **Descrição:** Associar regiões, estados e características.
+* **Aprendizagem:** geografia do Brasil
+
+---
+
+### 26. Simulação de Cidade
+
+* **Tipo:** projeto
+* **Anos:** 4º–5º
+* **Descrição:** Criar cidade sustentável.
+* **Aprendizagem:** organização social e geográfica
+
+---
+
+## 🎨 5. JOGOS DE ARTE E EXPRESSÃO
+
+### 27. Desafio de Desenho Criativo
+
+* **Tipo:** artístico
+* **Anos:** 1º–5º
+* **Descrição:** Criar desenhos a partir de temas.
+* **Aprendizagem:** expressão artística
+
+---
+
+### 28. Música e Ritmo Corporal
+
+* **Tipo:** corporal
+* **Anos:** 1º–5º
+* **Descrição:** Jogos rítmicos com o corpo.
+* **Aprendizagem:** percepção sonora
+
+---
+
+### 29. Teatro de Personagens
+
+* **Tipo:** dramatização
+* **Anos:** 2º–5º
+* **Descrição:** Encenação de histórias.
+* **Aprendizagem:** comunicação e criatividade
+
+---
+
+### 30. Stop Motion Simples
+
+* **Tipo:** audiovisual
+* **Anos:** 4º–5º
+* **Descrição:** Criar animações simples.
+* **Aprendizagem:** narrativa visual
+
+---
+
+## 🏆 6. JOGOS TRANSVERSAIS (TODOS OS ANOS)
+
+### 31. Missões Semanais
+
+* **Tipo:** desafio
+* **Anos:** 1º–5º
+* **Descrição:** Tarefas curtas com objetivos claros.
+* **Aprendizagem:** autonomia
+
+---
+
+### 32. Quiz Gamificado
+
+* **Tipo:** perguntas
+* **Anos:** 1º–5º
+* **Descrição:** Revisão de conteúdos.
+* **Aprendizagem:** fixação
+
+---
+
+### 33. Escape Room Educativo
+
+* **Tipo:** desafio lógico
+* **Anos:** 3º–5º
+* **Descrição:** Resolver enigmas para avançar.
+* **Aprendizagem:** resolução de problemas
+
+---
+
+# 📦 TOTAL DE GAMES
+
+👉 **33 jogos-base**, suficientes para **todo o Fundamental I**, todos **reutilizáveis**, **offline** e **compatíveis com JSON**.
+
+---
+
+## 🚀 PRÓXIMO PASSO (SUGESTÃO)
+
+Posso agora:
+
+1️⃣ Criar o **arquivo `games_base.json`** com todos esses jogos
+2️⃣ Relacionar **quais jogos cada ano usa**
+3️⃣ Criar **templates automáticos de plano por ano**
+4️⃣ Criar **sistema de pontuação e níveis padrão**
+
+👉 Diga qual você quer primeiro e eu sigo direto.
