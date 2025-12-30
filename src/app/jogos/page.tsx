@@ -7,12 +7,8 @@ import { GameGrid } from '@/components/games';
 import { arcadeGames } from '@/data/arcade-games';
 import { educationalGames } from '@/data/educational-games';
 
-// Filtrar apenas jogos EAI (embedUrl começa com /)
-const eaiArcadeGames = arcadeGames.filter((g) => g.embedUrl.startsWith('/'));
-const eaiEducationalGames = educationalGames.filter((g) => g.embedUrl.startsWith('/'));
-
-// Todos os jogos EAI combinados
-const allEaiGames = [...eaiArcadeGames, ...eaiEducationalGames];
+// Todos os jogos combinados (todos são EAI)
+const allGames = [...arcadeGames, ...educationalGames];
 
 type FilterType = 'todos' | 'arcade' | 'educacional';
 
@@ -20,12 +16,12 @@ export default function JogosPage() {
   const [filter, setFilter] = useState<FilterType>('todos');
 
   const filteredGames = filter === 'todos'
-    ? allEaiGames
+    ? allGames
     : filter === 'arcade'
-      ? eaiArcadeGames
-      : eaiEducationalGames;
+      ? arcadeGames
+      : educationalGames;
 
-  const totalPlayCount = allEaiGames.reduce((acc, g) => acc + g.playCount, 0);
+  const totalPlayCount = allGames.reduce((acc, g) => acc + g.playCount, 0);
 
   return (
     <main className="flex-1">
@@ -56,15 +52,15 @@ export default function JogosPage() {
         <div className="flex flex-wrap gap-3 mb-8">
           <div className="flex items-center gap-2 rounded-xl bg-purple-500/10 border border-purple-500/20 px-4 py-2.5 text-sm">
             <Sparkles className="h-4 w-4 text-purple-400" />
-            <span className="font-medium text-white">{allEaiGames.length} jogos EAI</span>
+            <span className="font-medium text-white">{allGames.length} jogos EAI</span>
           </div>
           <div className="flex items-center gap-2 rounded-xl bg-pink-500/10 border border-pink-500/20 px-4 py-2.5 text-sm">
             <Swords className="h-4 w-4 text-pink-400" />
-            <span className="font-medium text-white">{eaiArcadeGames.length} arcade</span>
+            <span className="font-medium text-white">{arcadeGames.length} arcade</span>
           </div>
           <div className="flex items-center gap-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 px-4 py-2.5 text-sm">
             <BookOpen className="h-4 w-4 text-cyan-400" />
-            <span className="font-medium text-white">{eaiEducationalGames.length} educacionais</span>
+            <span className="font-medium text-white">{educationalGames.length} educacionais</span>
           </div>
           <div className="flex items-center gap-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-2.5 text-sm">
             <TrendingUp className="h-4 w-4 text-emerald-400" />
@@ -85,7 +81,7 @@ export default function JogosPage() {
             }`}
           >
             <Sparkles className="h-4 w-4" />
-            Todos ({allEaiGames.length})
+            Todos ({allGames.length})
           </button>
           <button
             onClick={() => setFilter('arcade')}
@@ -96,7 +92,7 @@ export default function JogosPage() {
             }`}
           >
             <Swords className="h-4 w-4" />
-            Arcade ({eaiArcadeGames.length})
+            Arcade ({arcadeGames.length})
           </button>
           <button
             onClick={() => setFilter('educacional')}
@@ -107,7 +103,7 @@ export default function JogosPage() {
             }`}
           >
             <BookOpen className="h-4 w-4" />
-            Educacionais ({eaiEducationalGames.length})
+            Educacionais ({educationalGames.length})
           </button>
         </div>
 

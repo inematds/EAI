@@ -12,19 +12,13 @@ import {
   getEducationalGamesByAllFilters,
 } from '@/data/educational-games';
 
-// Apenas jogos EAI (embedUrl começa com /)
-const eaiGames = educationalGames.filter((g) => g.embedUrl.startsWith('/'));
-
 export default function EducacionalPage() {
   const [selectedCategory, setSelectedCategory] = useState('todos');
   const [selectedAge, setSelectedAge] = useState('todos');
   const [selectedGrade, setSelectedGrade] = useState('todos');
 
-  // Filtrar apenas jogos EAI
-  const allFiltered = getEducationalGamesByAllFilters(selectedCategory, selectedAge, selectedGrade);
-  const filteredGames = allFiltered.filter((g) => g.embedUrl.startsWith('/'));
-
-  const totalPlayCount = eaiGames.reduce((acc, g) => acc + g.playCount, 0);
+  const filteredGames = getEducationalGamesByAllFilters(selectedCategory, selectedAge, selectedGrade);
+  const totalPlayCount = educationalGames.reduce((acc, g) => acc + g.playCount, 0);
 
   return (
     <main className="flex-1">
@@ -55,7 +49,7 @@ export default function EducacionalPage() {
         <div className="flex flex-wrap gap-3 mb-10">
           <div className="flex items-center gap-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 px-4 py-2.5 text-sm">
             <Sparkles className="h-4 w-4 text-cyan-400" />
-            <span className="font-medium text-white">{eaiGames.length} jogos EAI</span>
+            <span className="font-medium text-white">{educationalGames.length} jogos EAI</span>
           </div>
           <div className="flex items-center gap-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-2.5 text-sm">
             <TrendingUp className="h-4 w-4 text-emerald-400" />
@@ -119,6 +113,10 @@ export default function EducacionalPage() {
                   <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
                     <Sparkles className="h-3 w-3" />
                     EAI
+                  </div>
+                  <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-cyan-600 to-blue-700 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
+                    <BookOpen className="h-3 w-3" />
+                    {game.category}
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <h3 className="font-display font-bold text-white text-lg">{game.title}</h3>
