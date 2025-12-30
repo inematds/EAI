@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, Search, Gamepad2, BookOpen, Briefcase, Wrench, Heart, Sparkles, Swords, GraduationCap } from 'lucide-react';
+import { Menu, X, Search, Gamepad2, BookOpen, Briefcase, Wrench, Heart, Sparkles, Swords, GraduationCap, Users } from 'lucide-react';
 
 const navigation = [
   { name: 'Jogos', href: '/jogos', icon: Sparkles, color: 'from-purple-500 to-pink-500', highlight: true },
   { name: 'Arcade', href: '/arcade', icon: Swords, color: 'from-pink-500 to-purple-500' },
   { name: 'Educacional', href: '/educacional', icon: BookOpen, color: 'from-cyan-500 to-blue-500' },
   { name: 'Plano de Aula', href: '/plano-aula', icon: GraduationCap, color: 'from-emerald-500 to-teal-500' },
+  { name: 'Aulas', href: '/aulas', icon: Users, color: 'from-purple-500 to-pink-500' },
   { name: 'Profissional', href: '/profissional', icon: Briefcase, soon: true },
   { name: 'Estudio', href: '/estudio', icon: Wrench, soon: true },
 ];
