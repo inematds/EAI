@@ -144,6 +144,24 @@ export const arcadeGames: Game[] = [
     createdAt: new Date('2024-12-28'),
     updatedAt: new Date('2024-12-28'),
   },
+
+  // === ESTRATEGIA ===
+  {
+    id: 'eai-nexus-arena',
+    slug: 'nexus-arena',
+    title: 'NEXUS ARENA',
+    description: 'Batalhas em arenas digitais onde pensar e a arma mais poderosa! Escolha sua classe, resolva desafios de logica, desbloqueie habilidades e derrote inimigos. Sistema de ranking, moedas e baus de recompensa!',
+    thumbnailUrl: 'https://placehold.co/400x300/6B21A8/white?text=NEXUS+ARENA',
+    embedUrl: '/games/nexus-arena.html',
+    area: 'ARCADE',
+    category: 'Estrategia',
+    tags: ['estrategia', 'logica', 'rpg', 'arena', 'batalha', 'ranking', 'multiplayer', 'eai'],
+    playCount: 0,
+    featured: true,
+    active: true,
+    createdAt: new Date('2024-12-30'),
+    updatedAt: new Date('2024-12-30'),
+  },
 ];
 
 export function getGameBySlug(slug: string): Game | undefined {
