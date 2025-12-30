@@ -1,0 +1,246 @@
+Perfeito. Vou te entregar **um modelo técnico e prático**, já pensando como **base de sistema/app**, mas **funcionando 100% offline**, com **JSON salvo localmente**.
+
+Abaixo está o **PROJETO DEFINITIVO – FUNDAMENTAL I**, dividido em:
+
+1️⃣ Arquitetura do funcionamento
+2️⃣ Estrutura dos arquivos JSON
+3️⃣ Modelo do **PLANO (base, somente leitura)**
+4️⃣ Modelo da **EXECUÇÃO (cópia local do aluno)**
+5️⃣ Fluxo de uso (aluno / pais / professor)
+6️⃣ Próximos passos possíveis
+
+---
+
+# 🎮 PROJETO EDUCACIONAL GAMIFICADO – FUNDAMENTAL I
+
+## Sistema Offline baseado em JSON Local
+
+---
+
+## 1️⃣ ARQUITETURA DE FUNCIONAMENTO (CONCEITO)
+
+### 📦 Princípio
+
+* Existe um **PLANO BASE** (modelo oficial)
+* Ao iniciar o uso:
+
+  * O sistema **COPIA o plano base**
+  * Cria um **arquivo de execução local**
+* Cada aluno tem seu próprio progresso
+* Nenhum dado sobrescreve o plano original
+
+### 🔁 Fluxo
+
+```
+Plano Base (somente leitura)
+        ↓ cópia
+Plano em Execução (local do aluno)
+        ↓
+Registro de progresso
+```
+
+---
+
+## 2️⃣ ORGANIZAÇÃO DE PASTAS (LOCAL)
+
+Exemplo (PC ou celular):
+
+```
+/educacao_gamificada/
+ ├── planos_base/
+ │    ├── fundamental1_1ano.json
+ │    ├── fundamental1_2ano.json
+ │    ├── fundamental1_3ano.json
+ │    ├── fundamental1_4ano.json
+ │    └── fundamental1_5ano.json
+ │
+ ├── alunos/
+ │    └── aluno_joao/
+ │         ├── perfil.json
+ │         ├── execucao_fundamental1_2ano.json
+ │         └── historico.json
+```
+
+---
+
+## 3️⃣ MODELO JSON – PLANO BASE (FUNDAMENTAL I)
+
+🔒 **Este arquivo NÃO muda**
+📘 Criado por professor ou sistema
+
+### `fundamental1_2ano.json` (exemplo)
+
+```json
+{
+  "plano_id": "F1-2ANO-PORT-001",
+  "nivel": "Ensino Fundamental I",
+  "ano_escolar": "2º Ano",
+  "disciplina": "Língua Portuguesa",
+  "nome_plano": "Exploradores das Palavras",
+  "descricao": "Plano gamificado para alfabetização e leitura inicial.",
+  "duracao_semanas": 4,
+
+  "objetivos_aprendizagem": [
+    "Reconhecer palavras simples",
+    "Formar frases curtas",
+    "Desenvolver leitura básica"
+  ],
+
+  "jogos_base": [
+    {
+      "jogo_id": "J001",
+      "nome": "Bingo de Sílabas",
+      "tipo": "fisico",
+      "conteudo": "sílabas",
+      "tempo_estimado_min": 20
+    },
+    {
+      "jogo_id": "J002",
+      "nome": "Caça-Palavras",
+      "tipo": "papel",
+      "conteudo": "leitura",
+      "tempo_estimado_min": 15
+    }
+  ],
+
+  "missoes": [
+    {
+      "missao_id": "M1",
+      "nome": "Descobrindo Sílabas",
+      "jogo_id": "J001",
+      "objetivo": "Identificar sílabas simples",
+      "criterio_conclusao": "80% de acertos",
+      "pontos": 10
+    },
+    {
+      "missao_id": "M2",
+      "nome": "Caça às Palavras",
+      "jogo_id": "J002",
+      "objetivo": "Encontrar palavras no texto",
+      "criterio_conclusao": "Completar atividade",
+      "pontos": 10
+    }
+  ],
+
+  "gamificacao": {
+    "nivel_inicial": 1,
+    "pontos_por_nivel": 50,
+    "medalhas": [
+      {
+        "id": "MED1",
+        "nome": "Leitor Iniciante",
+        "criterio": "Concluir 3 missões"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## 4️⃣ MODELO JSON – EXECUÇÃO (CÓPIA LOCAL DO ALUNO)
+
+📂 Criado automaticamente quando o aluno inicia
+✏️ **Este arquivo é editável e cresce com o uso**
+
+### `execucao_fundamental1_2ano.json`
+
+```json
+{
+  "execucao_id": "EXEC-ALUNO-JOAO-001",
+  "plano_base_id": "F1-2ANO-PORT-001",
+
+  "aluno": {
+    "id": "AL001",
+    "nome": "João",
+    "idade": 7,
+    "ano_escolar": "2º Ano"
+  },
+
+  "progresso": {
+    "nivel_atual": 1,
+    "pontos_totais": 0,
+    "missoes_concluidas": []
+  },
+
+  "registros_execucao": []
+}
+```
+
+---
+
+## 5️⃣ REGISTRO DE UMA SESSÃO (ADICIONADO AO JSON)
+
+Cada vez que o aluno joga, um bloco é **adicionado**:
+
+```json
+{
+  "data": "2025-06-12",
+  "missao_id": "M1",
+  "jogo": "Bingo de Sílabas",
+  "tempo_realizado_min": 18,
+  "resultado": "concluida",
+  "pontos_ganhos": 10,
+  "observacoes": "Boa identificação das sílabas"
+}
+```
+
+Isso entra dentro de:
+
+```json
+"registros_execucao": [ ... ]
+```
+
+E também atualiza:
+
+```json
+"missoes_concluidas": ["M1"],
+"pontos_totais": 10
+```
+
+---
+
+## 6️⃣ COMO CADA USUÁRIO UTILIZA
+
+### 👨‍🏫 Professor
+
+* Cria ou ajusta **plano base**
+* Distribui os arquivos
+* Analisa progresso (lendo JSON ou via sistema)
+
+### 👨‍👩‍👧 Pais
+
+* Acompanham execução
+* Inserem observações
+* Ajustam ritmo
+
+### 🧒 Aluno
+
+* Segue missões
+* Visualiza progresso
+* Evolui por níveis
+
+---
+
+## 🧠 VANTAGENS DO MODELO
+
+✔ Offline
+✔ Portável (PC / celular)
+✔ Fácil backup
+✔ Base para app futuro
+✔ Transparente
+✔ Adaptável por ano
+
+---
+
+## 🚀 PRÓXIMOS PASSOS (ESCOLHA)
+
+Posso seguir de três formas:
+
+1️⃣ Criar **TODOS os planos base do Fundamental I (1º ao 5º ano)**
+2️⃣ Criar um **JSON genérico reutilizável (template)**
+3️⃣ Criar a **lógica de progressão automática (níveis, medalhas)**
+4️⃣ Criar **biblioteca de jogos reutilizáveis em JSON**
+5️⃣ Pensar a **interface (app / web / desktop)**
+
+👉 Me diga qual você quer agora, e eu avanço direto.
