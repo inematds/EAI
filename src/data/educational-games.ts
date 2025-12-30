@@ -409,10 +409,15 @@ export function getEducationalGameBySlug(slug: string): Game | undefined {
   return educationalGames.find((game) => game.slug === slug);
 }
 
+// Funcao para normalizar texto (remover acentos)
+function normalizeText(text: string): string {
+  return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 export function getEducationalGamesByCategory(category: string): Game[] {
   if (category === 'todos') return educationalGames;
   return educationalGames.filter(
-    (game) => game.category.toLowerCase() === category.toLowerCase()
+    (game) => normalizeText(game.category) === normalizeText(category)
   );
 }
 
@@ -423,7 +428,7 @@ export function getEducationalGamesByAge(ageRange: string): Game[] {
 
 export function getEducationalGamesByFilters(category: string, ageRange: string): Game[] {
   return educationalGames.filter((game) => {
-    const matchCategory = category === 'todos' || game.category.toLowerCase() === category.toLowerCase();
+    const matchCategory = category === 'todos' || normalizeText(game.category) === normalizeText(category);
     const matchAge = ageRange === 'todos' || game.ageRange === ageRange;
     return matchCategory && matchAge;
   });
@@ -462,7 +467,8 @@ export function getEducationalGamesByGrade(gradeSlug: string): Game[] {
 
 export function getEducationalGamesByAllFilters(category: string, ageRange: string, gradeSlug: string): Game[] {
   return educationalGames.filter((game) => {
-    const matchCategory = category === 'todos' || game.category.toLowerCase() === category.toLowerCase();
+    // Compara categoria normalizando acentos
+    const matchCategory = category === 'todos' || normalizeText(game.category) === normalizeText(category);
     const matchAge = ageRange === 'todos' || game.ageRange === ageRange;
 
     let matchGrade = true;
