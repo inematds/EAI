@@ -1,6 +1,6 @@
 import { supabaseAdmin } from '@/lib/supabase'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 type VisitRow = { session_id: string; created_at: string }
 type ClickRow = { url: string; label: string | null; section: string | null; created_at: string }
