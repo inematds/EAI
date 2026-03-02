@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import { Header, Footer } from '@/components/layout';
+import VisitTracker from '@/components/VisitTracker';
 import './globals.css';
 
 const inter = Inter({
@@ -42,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.variable} ${poppins.variable}`}>
       <body className="font-sans min-h-screen flex flex-col">
+        <VisitTracker />
         <Header />
         {children}
         <Footer />
