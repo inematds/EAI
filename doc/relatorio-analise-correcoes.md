@@ -101,13 +101,34 @@ Análise completa do projeto com verificação de build, dados, jogos, component
 
 ---
 
+## Jogos Educacionais Criados (Fundamental II)
+
+Análise de cobertura identificou gap crítico no **Fundamental II (6º-9º ano)** — quase todas as matérias tinham zero jogos. 10 jogos foram criados:
+
+| Jogo | Matéria | Séries | Lacuna coberta |
+|------|---------|--------|----------------|
+| Equações Aventura | Matemática | 6-9 | Álgebra e equações |
+| Geometria Aventura | Matemática | 6-9 | Geometria, Pitágoras, trigonometria |
+| História: Brasil e Mundo | História | 3-9 | 7 eras históricas (maior gap) |
+| Química dos Elementos | Ciências | 8-9 | Tabela periódica e moléculas |
+| Geopolítica Mundial | Geografia | 8-9 | Geopolítica por continente |
+| Sequências Mágicas | Lógica | 1-2 | Padrões para crianças |
+| Lógica de Programação | Lógica | 8-9 | Programação visual com robô |
+| Arte Digital Studio | Artes | 6-9 | Desenho digital e teoria das cores |
+| Educação Financeira | Transversal | 6-9 | Orçamento e investimentos |
+| English Kids | Inglês | 1-2 | Primeiras palavras em inglês |
+
+---
+
 ## Estatísticas Finais
 
 | Métrica | Antes | Depois |
 |---------|-------|--------|
 | Jogos Arcade cadastrados | 20 | 40 |
-| Jogos Educacionais cadastrados | 69 | 69 |
-| Páginas geradas (build) | 126 | 146 |
+| Jogos Educacionais cadastrados | 69 | 79 |
+| Total de jogos na plataforma | 89 | 119 |
+| Páginas geradas (build) | 126 | 156 |
 | Links quebrados no Footer | 3 | 0 |
 | Páginas com tema incorreto | 3 | 0 |
 | Erros de build | 0 | 0 |
+| Séries sem nenhum jogo (8-9 ano) | 6 matérias | 0 |
