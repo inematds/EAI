@@ -38,18 +38,18 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Legal */}
+          {/* Mais */}
           <div>
-            <h4 className="font-display font-semibold text-white mb-4">Legal</h4>
+            <h4 className="font-display font-semibold text-white mb-4">Mais</h4>
             <nav className="flex flex-col gap-2 text-sm">
-              <Link href="/sobre" className="text-white/50 hover:text-white transition">
-                Sobre
+              <Link href="/busca" className="text-white/50 hover:text-white transition">
+                Buscar Jogos
               </Link>
-              <Link href="/termos" className="text-white/50 hover:text-white transition">
-                Termos de Uso
+              <Link href="/aulas" className="text-white/50 hover:text-white transition">
+                Planos de Aula
               </Link>
-              <Link href="/privacidade" className="text-white/50 hover:text-white transition">
-                Privacidade
+              <Link href="/stats" className="text-white/50 hover:text-white transition">
+                Estatísticas
               </Link>
             </nav>
           </div>

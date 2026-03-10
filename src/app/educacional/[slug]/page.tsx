@@ -22,11 +22,11 @@ export default function EducationalGamePage({ params }: GamePageProps) {
     return (
       <main className="flex-1">
         <div className="container-main py-8 text-center">
-          <h1 className="font-display text-2xl font-bold text-zinc-900 mb-4">
+          <h1 className="font-display text-2xl font-bold text-white mb-4">
             Jogo não encontrado
           </h1>
-          <p className="text-zinc-600 mb-6">O jogo educacional que você procura não existe.</p>
-          <Link href="/educacional" className="text-educational hover:underline">
+          <p className="text-white/60 mb-6">O jogo educacional que você procura não existe.</p>
+          <Link href="/educacional" className="text-cyan-400 hover:underline">
             Voltar para Educacional
           </Link>
         </div>
@@ -40,16 +40,16 @@ export default function EducationalGamePage({ params }: GamePageProps) {
     <main className="flex-1">
       <div className="container-main py-8">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-zinc-500 mb-6">
-          <Link href="/" className="hover:text-primary transition">
+        <nav className="flex items-center gap-2 text-sm text-white/50 mb-6">
+          <Link href="/" className="hover:text-cyan-400 transition">
             Home
           </Link>
           <span>/</span>
-          <Link href="/educacional" className="hover:text-primary transition">
+          <Link href="/educacional" className="hover:text-cyan-400 transition">
             Educacional
           </Link>
           <span>/</span>
-          <span className="text-zinc-900 line-clamp-1">{game.title}</span>
+          <span className="text-white line-clamp-1">{game.title}</span>
         </nav>
 
         {/* Game Player */}
@@ -61,37 +61,37 @@ export default function EducationalGamePage({ params }: GamePageProps) {
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             {/* Title and Description */}
-            <h1 className="font-display text-2xl font-bold text-zinc-900 sm:text-3xl mb-4">
+            <h1 className="font-display text-2xl font-bold text-white sm:text-3xl mb-4">
               {game.title}
             </h1>
-            <p className="text-zinc-600 text-lg mb-6">{game.description}</p>
+            <p className="text-white/60 text-lg mb-6">{game.description}</p>
 
             {/* Educational Goal */}
             {game.educationalGoal && (
-              <div className="rounded-xl bg-educational/5 border border-educational/20 p-4 mb-6">
-                <div className="flex items-center gap-2 text-educational font-medium mb-2">
+              <div className="rounded-xl bg-cyan-500/10 border border-cyan-500/20 p-4 mb-6">
+                <div className="flex items-center gap-2 text-cyan-400 font-medium mb-2">
                   <GraduationCap className="h-5 w-5" />
                   Objetivo Educacional
                 </div>
-                <p className="text-zinc-700">{game.educationalGoal}</p>
+                <p className="text-white/70">{game.educationalGoal}</p>
               </div>
             )}
 
             {/* Meta Info */}
             <div className="flex flex-wrap gap-4 mb-8">
-              <div className="flex items-center gap-2 rounded-lg bg-educational/10 px-4 py-2 text-sm">
-                <BookOpen className="h-4 w-4 text-educational" />
-                <span className="font-medium text-zinc-700">{game.category}</span>
+              <div className="flex items-center gap-2 rounded-lg bg-cyan-500/10 px-4 py-2 text-sm">
+                <BookOpen className="h-4 w-4 text-cyan-400" />
+                <span className="font-medium text-white/70">{game.category}</span>
               </div>
               {game.ageRange && (
-                <div className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2 text-sm">
-                  <Users className="h-4 w-4 text-primary" />
-                  <span className="font-medium text-zinc-700">{game.ageRange} anos</span>
+                <div className="flex items-center gap-2 rounded-lg bg-purple-500/10 px-4 py-2 text-sm">
+                  <Users className="h-4 w-4 text-purple-400" />
+                  <span className="font-medium text-white/70">{game.ageRange} anos</span>
                 </div>
               )}
-              <div className="flex items-center gap-2 rounded-lg bg-secondary/10 px-4 py-2 text-sm">
-                <TrendingUp className="h-4 w-4 text-secondary" />
-                <span className="font-medium text-zinc-700">
+              <div className="flex items-center gap-2 rounded-lg bg-pink-500/10 px-4 py-2 text-sm">
+                <TrendingUp className="h-4 w-4 text-pink-400" />
+                <span className="font-medium text-white/70">
                   {game.playCount.toLocaleString('pt-BR')} jogadas
                 </span>
               </div>
@@ -100,7 +100,7 @@ export default function EducationalGamePage({ params }: GamePageProps) {
             {/* Tags */}
             {game.tags.length > 0 && (
               <div className="mb-8">
-                <h2 className="flex items-center gap-2 text-sm font-medium text-zinc-500 mb-3">
+                <h2 className="flex items-center gap-2 text-sm font-medium text-white/50 mb-3">
                   <Tag className="h-4 w-4" />
                   Tags
                 </h2>
@@ -108,7 +108,7 @@ export default function EducationalGamePage({ params }: GamePageProps) {
                   {game.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-zinc-100 px-3 py-1 text-sm text-zinc-600"
+                      className="rounded-full bg-white/10 px-3 py-1 text-sm text-white/60"
                     >
                       {tag}
                     </span>
@@ -123,39 +123,39 @@ export default function EducationalGamePage({ params }: GamePageProps) {
             {/* Play Button */}
             <a
               href="#game-container"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-educational py-4 text-lg font-semibold text-white transition hover:bg-educational-dark"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 py-4 text-lg font-semibold text-white transition hover:from-cyan-700 hover:to-blue-700 shadow-[0_0_20px_rgba(6,182,212,0.3)]"
             >
               <BookOpen className="h-5 w-5" />
               Jogar Agora
             </a>
 
             {/* Info for Parents/Teachers */}
-            <div className="rounded-xl border border-zinc-200 p-4">
-              <h3 className="font-display font-semibold text-zinc-900 mb-3">
+            <div className="rounded-xl border border-white/10 p-4">
+              <h3 className="font-display font-semibold text-white mb-3">
                 Para Pais e Professores
               </h3>
-              <ul className="text-sm text-zinc-600 space-y-2">
+              <ul className="text-sm text-white/60 space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-educational">•</span>
+                  <span className="text-cyan-400">•</span>
                   Jogo educativo seguro para crianças
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-educational">•</span>
+                  <span className="text-cyan-400">•</span>
                   Sem anúncios ou compras
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-educational">•</span>
+                  <span className="text-cyan-400">•</span>
                   Desenvolve habilidades de {game.category.toLowerCase()}
                 </li>
               </ul>
             </div>
 
             {/* Share */}
-            <div className="rounded-xl border border-zinc-200 p-4">
-              <h3 className="font-display font-semibold text-zinc-900 mb-3">
+            <div className="rounded-xl border border-white/10 p-4">
+              <h3 className="font-display font-semibold text-white mb-3">
                 Compartilhar
               </h3>
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-white/50">
                 Gostou do jogo? Compartilhe com outros pais e professores!
               </p>
             </div>
@@ -163,7 +163,7 @@ export default function EducationalGamePage({ params }: GamePageProps) {
         </div>
 
         {/* Related Games */}
-        <div className="mt-12 pt-8 border-t border-zinc-200">
+        <div className="mt-12 pt-8 border-t border-white/10">
           <RelatedGames games={relatedGames} title="Jogos Educacionais Relacionados" />
         </div>
 
@@ -171,7 +171,7 @@ export default function EducationalGamePage({ params }: GamePageProps) {
         <div className="mt-8 text-center">
           <Link
             href="/educacional"
-            className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-educational transition"
+            className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-cyan-400 transition"
           >
             <ArrowLeft className="h-4 w-4" />
             Voltar para Educacional
